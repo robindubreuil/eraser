@@ -351,6 +351,7 @@ func (s *Server) setupRouter() *chi.Mux {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Compress(5))
 	r.Use(securityHeaders)
+	r.Use(maxBodySize(1 << 20))
 
 	csrfMiddleware := csrf.Protect(
 		s.csrfKey,
@@ -420,7 +421,7 @@ func securityHeaders(next http.Handler) http.Handler {
 		w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
 
 		csp := "default-src 'self'; " +
-			"script-src 'self' https://unpkg.com; " +
+			"script-src 'self'; " +
 			"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
 			"img-src 'self' data:; " +
 			"font-src 'self' https://fonts.gstatic.com; " +
@@ -440,6 +441,17 @@ func securityHeaders(next http.Handler) http.Handler {
 
 		next.ServeHTTP(w, r)
 	})
+}
+
+func maxBodySize(maxBytes int64) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.Method == http.MethodPost || r.Method == http.MethodPut || r.Method == http.MethodPatch {
+				r.Body = http.MaxBytesReader(w, r.Body, maxBytes)
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
 }
 
 func openBrowser(url string) {

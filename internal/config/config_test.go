@@ -97,7 +97,7 @@ email:
 		}
 	})
 
-	t.Run("insecure permissions warning on linux", func(t *testing.T) {
+	t.Run("insecure permissions rejected on linux", func(t *testing.T) {
 		if runtime.GOOS != "linux" {
 			t.Skip("permission check only on linux")
 		}
@@ -107,11 +107,11 @@ email:
 			t.Fatal(err)
 		}
 		cfg, err := Load(path)
-		if err != nil {
-			t.Fatalf("Load() with insecure perms should still load, got error: %v", err)
+		if err == nil {
+			t.Fatal("Load() with insecure perms should fail, got nil error")
 		}
-		if cfg == nil {
-			t.Error("expected config, got nil")
+		if cfg != nil {
+			t.Error("expected nil config on insecure permissions")
 		}
 	})
 

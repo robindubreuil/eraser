@@ -101,7 +101,7 @@ func DefaultConfigPath() string {
 
 func Load(path string) (*Config, error) {
 	if err := checkFilePermissions(path); err != nil {
-		fmt.Fprintf(os.Stderr, "WARNING: %v\n", err)
+		return nil, fmt.Errorf("insecure config file permissions: %w (fix with: chmod 600 %s)", err, path)
 	}
 
 	data, err := os.ReadFile(path)
