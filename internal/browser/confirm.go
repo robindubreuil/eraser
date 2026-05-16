@@ -22,7 +22,7 @@ type ConfirmationResult struct {
 
 // ConfirmationHandler handles clicking confirmation links from emails
 type ConfirmationHandler struct {
-	client       *http.Client
+	client        *http.Client
 	brokerDomains map[string]bool
 }
 
@@ -48,8 +48,7 @@ func NewConfirmationHandler(brokerDomains []string) *ConfirmationHandler {
 	return &ConfirmationHandler{
 		client: &http.Client{
 			Timeout: 30 * time.Second,
-			CheckRedirect: func(req *http.Request, via []*http.Request) error {
-				// Allow up to 10 redirects
+			CheckRedirect: func(_ *http.Request, via []*http.Request) error {
 				if len(via) >= 10 {
 					return fmt.Errorf("too many redirects")
 				}
@@ -124,7 +123,7 @@ func (h *ConfirmationHandler) ClickConfirmationLink(confirmURL string, validateD
 
 	// Track redirects
 	var redirects []string
-	h.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+	h.client.CheckRedirect = func(_ *http.Request, via []*http.Request) error {
 		if len(via) >= 10 {
 			return fmt.Errorf("too many redirects")
 		}

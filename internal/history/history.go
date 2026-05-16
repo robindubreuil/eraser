@@ -136,8 +136,8 @@ func NewStore(dbPath string) (*Store, error) {
 func (s *Store) migrate() error {
 	// First, try to add new columns to existing databases
 	// These must run before the index creation below
-	s.db.Exec(`ALTER TABLE removal_requests ADD COLUMN pipeline_status TEXT DEFAULT 'email_sent'`)
-	s.db.Exec(`ALTER TABLE pending_tasks ADD COLUMN opened_at DATETIME`)
+	s.db.Exec(`ALTER TABLE removal_requests ADD COLUMN pipeline_status TEXT DEFAULT 'email_sent'`) //nolint:errcheck
+	s.db.Exec(`ALTER TABLE pending_tasks ADD COLUMN opened_at DATETIME`)                           //nolint:errcheck
 
 	query := `
 	CREATE TABLE IF NOT EXISTS removal_requests (
@@ -167,6 +167,7 @@ func (s *Store) migrate() error {
 		response_type TEXT NOT NULL,
 		email_from TEXT,
 		email_subject TEXT,
+		email_body TEXT,
 		form_url TEXT,
 		confirm_url TEXT,
 		confidence REAL,
@@ -277,8 +278,8 @@ func (s *Store) GetRecentRequests(limit int) ([]Record, error) {
 }
 
 func (s *Store) GetStats() (total, sent, failed int, err error) {
-	query := `SELECT COUNT(*), SUM(CASE WHEN status='sent' THEN 1 ELSE 0 END),
-		SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END) FROM removal_requests`
+	query := `SELECT COUNT(*), COALESCE(SUM(CASE WHEN status='sent' THEN 1 ELSE 0 END), 0),
+		COALESCE(SUM(CASE WHEN status='failed' THEN 1 ELSE 0 END), 0) FROM removal_requests`
 
 	err = s.db.QueryRow(query).Scan(&total, &sent, &failed)
 	if err != nil {
@@ -353,6 +354,21 @@ func DefaultDBPath() string {
 		return "eraser_history.db"
 	}
 	return filepath.Join(home, ".eraser", "history.db")
+}
+
+func parseSQLiteTime(ns sql.NullString) time.Time {
+	if !ns.Valid {
+		return time.Time{}
+	}
+	t, err := time.Parse(time.RFC3339, ns.String)
+	if err == nil {
+		return t
+	}
+	t, err = time.Parse("2006-01-02 15:04:05", ns.String)
+	if err == nil {
+		return t
+	}
+	return time.Time{}
 }
 
 // ==================== Broker Response Methods ====================
@@ -481,25 +497,9 @@ func (s *Store) GetAllBrokerResponses() ([]BrokerResponse, error) {
 		r.ConfirmURL = confirmURL.String
 		r.NeedsReview = needsReviewInt == 1
 
-		// Parse time strings
-		if receivedAtStr.Valid {
-			r.ReceivedAt, _ = time.Parse(time.RFC3339, receivedAtStr.String)
-			if r.ReceivedAt.IsZero() {
-				r.ReceivedAt, _ = time.Parse("2006-01-02 15:04:05", receivedAtStr.String)
-			}
-		}
-		if processedAtStr.Valid {
-			r.ProcessedAt, _ = time.Parse(time.RFC3339, processedAtStr.String)
-			if r.ProcessedAt.IsZero() {
-				r.ProcessedAt, _ = time.Parse("2006-01-02 15:04:05", processedAtStr.String)
-			}
-		}
-		if createdAtStr.Valid {
-			r.CreatedAt, _ = time.Parse(time.RFC3339, createdAtStr.String)
-			if r.CreatedAt.IsZero() {
-				r.CreatedAt, _ = time.Parse("2006-01-02 15:04:05", createdAtStr.String)
-			}
-		}
+		r.ReceivedAt = parseSQLiteTime(receivedAtStr)
+		r.ProcessedAt = parseSQLiteTime(processedAtStr)
+		r.CreatedAt = parseSQLiteTime(createdAtStr)
 
 		responses = append(responses, r)
 	}
@@ -557,25 +557,9 @@ func (s *Store) GetBrokerResponses(responseType string, needsReview bool, limit 
 		r.ConfirmURL = confirmURL.String
 		r.NeedsReview = needsReviewInt == 1
 
-		// Parse time strings (SQLite stores as TEXT)
-		if receivedAtStr.Valid {
-			r.ReceivedAt, _ = time.Parse(time.RFC3339, receivedAtStr.String)
-			if r.ReceivedAt.IsZero() {
-				r.ReceivedAt, _ = time.Parse("2006-01-02 15:04:05", receivedAtStr.String)
-			}
-		}
-		if processedAtStr.Valid {
-			r.ProcessedAt, _ = time.Parse(time.RFC3339, processedAtStr.String)
-			if r.ProcessedAt.IsZero() {
-				r.ProcessedAt, _ = time.Parse("2006-01-02 15:04:05", processedAtStr.String)
-			}
-		}
-		if createdAtStr.Valid {
-			r.CreatedAt, _ = time.Parse(time.RFC3339, createdAtStr.String)
-			if r.CreatedAt.IsZero() {
-				r.CreatedAt, _ = time.Parse("2006-01-02 15:04:05", createdAtStr.String)
-			}
-		}
+		r.ReceivedAt = parseSQLiteTime(receivedAtStr)
+		r.ProcessedAt = parseSQLiteTime(processedAtStr)
+		r.CreatedAt = parseSQLiteTime(createdAtStr)
 
 		responses = append(responses, r)
 	}

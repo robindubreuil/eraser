@@ -409,7 +409,7 @@ func ClassifyResponse(email *Email) ClassifiedResponse {
 }
 
 // getClassificationReason returns a human-readable reason
-func getClassificationReason(responseType ResponseType, score int) string {
+func getClassificationReason(responseType ResponseType, _ int) string {
 	switch responseType {
 	case ResponseSuccess:
 		return "Email indicates removal request was completed successfully"
@@ -528,7 +528,7 @@ func ClassifyBySubjectOnly(subject string) (ResponseType, float64, bool) {
 
 	// Calculate confidence (lower for subject-only)
 	var confidence float64
-	needsReview := true
+	var needsReview bool
 
 	if maxScore >= 3 {
 		confidence = 0.7 // Strong subject match

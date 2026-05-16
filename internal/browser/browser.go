@@ -11,7 +11,7 @@ import (
 	"github.com/chromedp/cdproto/page"
 	"github.com/chromedp/chromedp"
 
-	"github.com/eraser-privacy/eraser/internal/config"
+	"github.com/robindubreuil/eraser/internal/config"
 )
 
 // Browser wraps chromedp for headless Chrome automation
@@ -26,39 +26,39 @@ type Browser struct {
 
 // BrowserConfig holds browser automation settings
 type BrowserConfig struct {
-	Headless       bool
-	Timeout        time.Duration
-	ScreenshotDir  string
-	UserAgent      string
-	WindowWidth    int
-	WindowHeight   int
-	WaitForUser    bool          // If true, pause when CAPTCHA detected for user to solve
-	WaitCallback   func() error  // Called when waiting for user (e.g., to prompt in terminal)
+	Headless      bool
+	Timeout       time.Duration
+	ScreenshotDir string
+	UserAgent     string
+	WindowWidth   int
+	WindowHeight  int
+	WaitForUser   bool         // If true, pause when CAPTCHA detected for user to solve
+	WaitCallback  func() error // Called when waiting for user (e.g., to prompt in terminal)
 }
 
 // DefaultConfig returns sensible default browser settings
 func DefaultConfig() BrowserConfig {
 	return BrowserConfig{
-		Headless:       true,
-		Timeout:        60 * time.Second, // Increased from 30s - many broker sites are slow
-		ScreenshotDir:  "",
-		UserAgent:      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-		WindowWidth:    1920,
-		WindowHeight:   1080,
+		Headless:      true,
+		Timeout:       60 * time.Second, // Increased from 30s - many broker sites are slow
+		ScreenshotDir: "",
+		UserAgent:     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+		WindowWidth:   1920,
+		WindowHeight:  1080,
 	}
 }
 
 // FormResult represents the outcome of a form fill attempt
 type FormResult struct {
-	Success        bool
-	URL            string
-	BrokerID       string
-	FieldsFilled   []string
-	FieldsMissing  []string
-	CaptchaFound   bool
-	CaptchaType    string
-	ScreenshotPath string
-	ErrorMessage   string
+	Success         bool
+	URL             string
+	BrokerID        string
+	FieldsFilled    []string
+	FieldsMissing   []string
+	CaptchaFound    bool
+	CaptchaType     string
+	ScreenshotPath  string
+	ErrorMessage    string
 	SubmitAttempted bool
 }
 
@@ -150,7 +150,7 @@ func (b *Browser) NavigateAndFill(url string, brokerID string, autoSubmit bool) 
 
 			// Call the callback (e.g., prompt user in terminal)
 			if err := b.config.WaitCallback(); err != nil {
-				result.ErrorMessage = fmt.Sprintf("user cancelled: %v", err)
+				result.ErrorMessage = fmt.Sprintf("user canceled: %v", err)
 				return result, err
 			}
 
@@ -191,7 +191,7 @@ func (b *Browser) NavigateAndFill(url string, brokerID string, autoSubmit bool) 
 
 			// Call the callback (e.g., prompt user in terminal)
 			if err := b.config.WaitCallback(); err != nil {
-				result.ErrorMessage = fmt.Sprintf("user cancelled: %v", err)
+				result.ErrorMessage = fmt.Sprintf("user canceled: %v", err)
 				return result, err
 			}
 
@@ -207,7 +207,7 @@ func (b *Browser) NavigateAndFill(url string, brokerID string, autoSubmit bool) 
 					// Take screenshot of result
 					time.Sleep(2 * time.Second)
 					if b.config.ScreenshotDir != "" {
-						b.takeScreenshot(ctx, brokerID, "submitted")
+						b.takeScreenshot(ctx, brokerID, "submitted") //nolint:errcheck
 					}
 				}
 			}
@@ -237,7 +237,7 @@ func (b *Browser) NavigateAndFill(url string, brokerID string, autoSubmit bool) 
 			// Take screenshot of result
 			time.Sleep(2 * time.Second)
 			if b.config.ScreenshotDir != "" {
-				b.takeScreenshot(ctx, brokerID, "submitted")
+				b.takeScreenshot(ctx, brokerID, "submitted") //nolint:errcheck
 			}
 		}
 	} else if len(result.FieldsFilled) > 0 {

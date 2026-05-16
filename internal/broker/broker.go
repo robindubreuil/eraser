@@ -29,19 +29,22 @@ func sanitizeBroker(b *Broker) {
 	if !isValidURL(b.Website) {
 		b.Website = ""
 	}
+	if strings.ContainsAny(b.Email, " \t\n\r") {
+		b.Email = ""
+	}
 }
 
 type Broker struct {
-	ID          string   `yaml:"id"`
-	Name        string   `yaml:"name"`
-	Email       string   `yaml:"email"`
-	Website     string   `yaml:"website,omitempty"`
-	OptOutURL   string   `yaml:"opt_out_url,omitempty"`
-	Region      string   `yaml:"region"` // "us", "eu", "global"
-	Category    string   `yaml:"category,omitempty"` // "people-search", "marketing", "background-check", etc.
-	Notes       string   `yaml:"notes,omitempty"`
-	RequiresID  bool     `yaml:"requires_id,omitempty"` // If they require ID verification
-	Tags        []string `yaml:"tags,omitempty"`
+	ID         string   `yaml:"id"`
+	Name       string   `yaml:"name"`
+	Email      string   `yaml:"email"`
+	Website    string   `yaml:"website,omitempty"`
+	OptOutURL  string   `yaml:"opt_out_url,omitempty"`
+	Region     string   `yaml:"region"`             // "us", "eu", "global"
+	Category   string   `yaml:"category,omitempty"` // "people-search", "marketing", "background-check", etc.
+	Notes      string   `yaml:"notes,omitempty"`
+	RequiresID bool     `yaml:"requires_id,omitempty"` // If they require ID verification
+	Tags       []string `yaml:"tags,omitempty"`
 }
 
 type BrokerDatabase struct {
@@ -62,6 +65,17 @@ func LoadFromFile(path string) (*BrokerDatabase, error) {
 	for i := range db.Brokers {
 		sanitizeBroker(&db.Brokers[i])
 	}
+
+	var filtered []Broker
+	for _, b := range db.Brokers {
+		if strings.TrimSpace(b.Email) == "" {
+			fmt.Fprintf(os.Stderr, "WARNING: skipping broker %q (%s): empty email\n", b.Name, b.ID)
+			continue
+		}
+		filtered = append(filtered, b)
+	}
+	db.Brokers = filtered
+
 	return &db, nil
 }
 
@@ -135,7 +149,7 @@ func (db *BrokerDatabase) Save(path string) error {
 	if err != nil {
 		return fmt.Errorf("failed to serialize brokers: %w", err)
 	}
-	return os.WriteFile(path, data, 0644)
+	return os.WriteFile(path, data, 0600)
 }
 
 func (db *BrokerDatabase) Add(broker Broker) error {
@@ -146,7 +160,17 @@ func (db *BrokerDatabase) Add(broker Broker) error {
 	return nil
 }
 
-// FindByEmail finds a broker by their email address
+func (db *BrokerDatabase) removeBy(match func(broker Broker) bool) *Broker {
+	for i := range db.Brokers {
+		if match(db.Brokers[i]) {
+			removed := db.Brokers[i]
+			db.Brokers = append(db.Brokers[:i], db.Brokers[i+1:]...)
+			return &removed
+		}
+	}
+	return nil
+}
+
 func (db *BrokerDatabase) FindByEmail(email string) *Broker {
 	email = strings.ToLower(email)
 	for i := range db.Brokers {
@@ -157,32 +181,14 @@ func (db *BrokerDatabase) FindByEmail(email string) *Broker {
 	return nil
 }
 
-// RemoveByEmail removes a broker by their email address
-// Returns the removed broker, or nil if not found
 func (db *BrokerDatabase) RemoveByEmail(email string) *Broker {
-	email = strings.ToLower(email)
-	for i := range db.Brokers {
-		if strings.ToLower(db.Brokers[i].Email) == email {
-			removed := db.Brokers[i]
-			db.Brokers = append(db.Brokers[:i], db.Brokers[i+1:]...)
-			return &removed
-		}
-	}
-	return nil
+	e := strings.ToLower(email)
+	return db.removeBy(func(b Broker) bool { return strings.ToLower(b.Email) == e })
 }
 
-// RemoveByID removes a broker by their ID
-// Returns the removed broker, or nil if not found
 func (db *BrokerDatabase) RemoveByID(id string) *Broker {
-	id = strings.ToLower(id)
-	for i := range db.Brokers {
-		if strings.ToLower(db.Brokers[i].ID) == id {
-			removed := db.Brokers[i]
-			db.Brokers = append(db.Brokers[:i], db.Brokers[i+1:]...)
-			return &removed
-		}
-	}
-	return nil
+	lo := strings.ToLower(id)
+	return db.removeBy(func(b Broker) bool { return strings.ToLower(b.ID) == lo })
 }
 
 // SaveWithBackup saves the database to file, creating a backup first

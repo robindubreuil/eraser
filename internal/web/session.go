@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eraser-privacy/eraser/internal/config"
+	"github.com/robindubreuil/eraser/internal/config"
 )
 
 // SessionStore manages secure server-side sessions
@@ -22,7 +22,7 @@ type Session struct {
 	ID        string
 	Step      string
 	Profile   config.Profile
-	Email     config.Email
+	Email     config.EmailConfig
 	CreatedAt time.Time
 	ExpiresAt time.Time
 }

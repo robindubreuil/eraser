@@ -75,8 +75,6 @@ type EmailConfig struct {
 	SMTP     SMTPConfig `yaml:"smtp,omitempty"`
 }
 
-type Email = EmailConfig
-
 type SMTPConfig struct {
 	Host     string `yaml:"host"`
 	Port     int    `yaml:"port"`
@@ -174,14 +172,16 @@ func (c *Config) Validate() error {
 		return fmt.Errorf("email: from address is required")
 	}
 
-	if c.Email.Provider != "smtp" {
-		return fmt.Errorf("email: unknown provider %q (only smtp is supported)", c.Email.Provider)
-	}
-	if c.Email.SMTP.Host == "" {
-		return fmt.Errorf("email.smtp: host is required")
-	}
-	if c.Email.SMTP.Port == 0 {
-		return fmt.Errorf("email.smtp: port is required")
+	switch c.Email.Provider {
+	case "smtp":
+		if c.Email.SMTP.Host == "" {
+			return fmt.Errorf("email.smtp: host is required")
+		}
+		if c.Email.SMTP.Port == 0 {
+			return fmt.Errorf("email.smtp: port is required")
+		}
+	default:
+		return fmt.Errorf("email: unknown provider %q (supported: smtp)", c.Email.Provider)
 	}
 
 	return nil

@@ -11,8 +11,8 @@ import (
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
-	"github.com/eraser-privacy/eraser/internal/broker"
-	"github.com/eraser-privacy/eraser/internal/config"
+	"github.com/robindubreuil/eraser/internal/broker"
+	"github.com/robindubreuil/eraser/internal/config"
 )
 
 // Monitor handles IMAP connection and email monitoring
@@ -24,17 +24,17 @@ type Monitor struct {
 
 // Email represents a parsed email from a broker
 type Email struct {
-	UID         uint32 // IMAP UID for operations like move/delete
-	MessageID   string
-	From        string
-	FromName    string // Sender display name (e.g., "Mail Delivery System")
-	FromDomain  string
-	Subject     string
-	Body        string
-	HTMLBody    string
-	ReceivedAt  time.Time
-	BrokerID    string // Matched broker ID (if found)
-	BrokerName  string // Matched broker name (if found)
+	UID        uint32 // IMAP UID for operations like move/delete
+	MessageID  string
+	From       string
+	FromName   string // Sender display name (e.g., "Mail Delivery System")
+	FromDomain string
+	Subject    string
+	Body       string
+	HTMLBody   string
+	ReceivedAt time.Time
+	BrokerID   string // Matched broker ID (if found)
+	BrokerName string // Matched broker name (if found)
 }
 
 // NewMonitor creates a new inbox monitor
@@ -78,7 +78,7 @@ func extractDomain(url string) string {
 }
 
 // Connect establishes IMAP connection
-func (m *Monitor) Connect(ctx context.Context) error {
+func (m *Monitor) Connect(_ context.Context) error { //nolint:revive
 	addr := fmt.Sprintf("%s:%d", m.config.Server, m.config.Port)
 
 	log.Printf("Connecting to IMAP server %s...", addr)
@@ -91,7 +91,7 @@ func (m *Monitor) Connect(ctx context.Context) error {
 	log.Printf("Connected, logging in as %s...", m.config.Email)
 
 	if err := c.Login(m.config.Email, m.config.Password); err != nil {
-		c.Logout()
+		c.Logout() //nolint:errcheck
 		return fmt.Errorf("failed to login: %w", err)
 	}
 
@@ -109,7 +109,7 @@ func (m *Monitor) Disconnect() error {
 }
 
 // FetchRecentEmails fetches emails from the last N days
-func (m *Monitor) FetchRecentEmails(ctx context.Context, days int) ([]Email, error) {
+func (m *Monitor) FetchRecentEmails(_ context.Context, days int) ([]Email, error) { //nolint:revive
 	if m.client == nil {
 		return nil, fmt.Errorf("not connected to IMAP server")
 	}
@@ -266,7 +266,7 @@ func (m *Monitor) FetchBrokerEmails(ctx context.Context, days int) ([]Email, err
 }
 
 // FetchBrokerEmailsFromFolder fetches broker emails from a specific folder
-func (m *Monitor) FetchBrokerEmailsFromFolder(ctx context.Context, folder string, days int) ([]Email, error) {
+func (m *Monitor) FetchBrokerEmailsFromFolder(_ context.Context, folder string, days int) ([]Email, error) { //nolint:revive
 	// Select the specified folder
 	mbox, err := m.client.Select(folder, false)
 	if err != nil {

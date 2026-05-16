@@ -168,7 +168,7 @@ func extractURLsFromHTML(html string) []string {
 	}
 
 	// Find all links
-	doc.Find("a[href]").Each(func(i int, s *goquery.Selection) {
+	doc.Find("a[href]").Each(func(_ int, s *goquery.Selection) {
 		if href, exists := s.Attr("href"); exists {
 			urls = append(urls, href)
 		}

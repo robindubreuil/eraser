@@ -6,7 +6,7 @@ import (
 	"net/mail"
 	"strings"
 
-	"github.com/eraser-privacy/eraser/internal/config"
+	"github.com/robindubreuil/eraser/internal/config"
 )
 
 type Message struct {

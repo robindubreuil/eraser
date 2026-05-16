@@ -7,8 +7,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/eraser-privacy/eraser/internal/broker"
-	"github.com/eraser-privacy/eraser/internal/config"
+	"github.com/robindubreuil/eraser/internal/broker"
+	"github.com/robindubreuil/eraser/internal/config"
 )
 
 //go:embed templates/*.tmpl
@@ -112,7 +112,7 @@ func (e *Engine) Render(templateName string, profile config.Profile, b broker.Br
 		return nil, fmt.Errorf("failed to render template: %w", err)
 	}
 
-	subject := e.getSubject(templateName, b.Name)
+	subject := e.getSubject(templateName)
 
 	return &Email{
 		Subject: subject,
@@ -120,14 +120,14 @@ func (e *Engine) Render(templateName string, profile config.Profile, b broker.Br
 	}, nil
 }
 
-func (e *Engine) getSubject(templateName, brokerName string) string {
+func (e *Engine) getSubject(templateName string) string {
 	switch templateName {
 	case "gdpr":
-		return fmt.Sprintf("GDPR Data Erasure Request - Article 17 Right to Erasure")
+		return "GDPR Data Erasure Request - Article 17 Right to Erasure"
 	case "ccpa":
-		return fmt.Sprintf("CCPA Data Deletion Request - Right to Delete Personal Information")
+		return "CCPA Data Deletion Request - Right to Delete Personal Information"
 	default:
-		return fmt.Sprintf("Personal Data Removal Request")
+		return "Personal Data Removal Request"
 	}
 }
 
