@@ -14,14 +14,14 @@ brokers:
     region: us
     category: marketing
 -   id: 33-mile-radius
-    name: 33 MILE RADIUS LLC
+    name: 33 Mile Radius LLC
     email: operations@ignitevisibility.com
     website: https://www.remodeling.com/
     opt_out_url: https://remodeling.com/do-not-sell/
     region: us
     category: marketing
 -   id: 33across
-    name: 33ACROSS Inc
+    name: 33Across Inc
     email: privacy@33across.com
     website: https://www.33across.com/
     opt_out_url: https://www.33across.com/wp-content/uploads/2020/04/33Across-CCPA-Notice-Collection-Policy_US.pdf
@@ -63,14 +63,14 @@ brokers:
     region: us
     category: marketing
 -   id: 6sense-insights
-    name: 6SENSE INSIGHTS Inc
+    name: 6Sense Insights Inc
     email: datasubjectrequests@6sense.com
     website: https://www.6sense.com/
     opt_out_url: https://6sense.com/privacy-center/
     region: us
     category: marketing
 -   id: a-direct-marketing
-    name: A DIRECT MARKETING Inc
+    name: A Direct Marketing Inc
     email: mark@bookyourdata.com
     website: https://www.bookyourdata.com/
     region: us
@@ -109,7 +109,7 @@ brokers:
     region: us
     category: marketing
 -   id: acronymix
-    name: ACRONYMIX LLC
+    name: Acronymix LLC
     email: privacy@acronymix.com
     website: https://www.acronymix.com/
     region: us
@@ -238,7 +238,7 @@ brokers:
     region: us
     category: marketing
 -   id: affinity-answers
-    name: AFFINITY ANSWERS CORPORATION
+    name: Affinity Answers Corporation
     email: dataprivacy@affinityanswers.com
     website: https://www.affinityanswers.com/
     opt_out_url: https://www.affinityanswers.com/your-privacy-choices/
@@ -370,7 +370,7 @@ brokers:
     region: us
     category: marketing
 -   id: american-spirit-data-solutions
-    name: AMERICAN SPIRIT DATA SOLUTIONS LLC
+    name: American Spirit Data Solutions LLC
     email: privacy@aspire-north.com
     website: https://www.aspire-north.com/
     opt_out_url: https://www.aspire-north.com/do-not-sell-my-personal-information--out-out-request-form.html
@@ -445,7 +445,7 @@ brokers:
     region: us
     category: marketing
 -   id: apollo-interactive
-    name: APOLLO INTERACTIVE LLC
+    name: Apollo Interactive LLC
     email: requests@apollointeractive.com
     website: https://www.apollointeractive.com/
     opt_out_url: https://www.apollointeractive.com/data-rights.php
@@ -465,7 +465,7 @@ brokers:
     region: us
     category: marketing
 -   id: aristotle-international
-    name: ARISTOTLE INTERNATIONAL Inc
+    name: Aristotle International Inc
     email: info@aristotle.com
     website: https://www.aristotle.com/
     opt_out_url: https://www.aristotle.com/privacy/do-not-sell-my-personal-info/
@@ -512,7 +512,7 @@ brokers:
     region: us
     category: marketing
 -   id: atdata
-    name: ATDATA LLC
+    name: ATData LLC
     email: privacysupport@atdata.com
     website: https://www.atdata.com/
     opt_out_url: https://instantdata.atdata.com/optout
@@ -573,7 +573,7 @@ brokers:
     region: us
     category: marketing
 -   id: azira
-    name: AZIRA LLC
+    name: Azira LLC
     email: sonal@azira.com
     website: https://www.azira.com/
     opt_out_url: https://submit-irm.trustarc.com/services/validation/0a80503b-1d56-4d50-a898-4377a0227dab
@@ -830,7 +830,7 @@ brokers:
     region: us
     category: marketing
 -   id: cardlytics
-    name: CARDLYTICS Inc
+    name: Cardlytics Inc
     email: legalnotices@cardlytics.com
     website: https://www.bridg.com/
     opt_out_url: https://datagrail.cardlytics.com/
@@ -883,7 +883,7 @@ brokers:
     region: us
     category: marketing
 -   id: cengage-learning
-    name: CENGAGE LEARNING Inc
+    name: Cengage Learning Inc
     email: privacy@cengage.com
     website: https://www.cengage.com/
     opt_out_url: https://info.cengage.com/LP=5633
@@ -916,7 +916,7 @@ brokers:
     region: us
     category: background-check
 -   id: choreograph
-    name: CHOREOGRAPH LLC
+    name: Choreograph LLC
     email: adam.little@choreograph.com
     website: https://www.choreograph.com/
     opt_out_url: https://amer-cpp.choreograph.com/manage-your-data/do-not-sell
@@ -963,7 +963,7 @@ brokers:
     region: us
     category: marketing
 -   id: claritas
-    name: CLARITAS LLC
+    name: Claritas LLC
     email: al.gadbut@claritas.com
     website: https://www.claritas.com/
     opt_out_url: https://privacyportal.onetrust.com/webform/68582716-6ce4-4f6e-bf08-78371b5f3292/6c7dc52d-0e2b-481f-9256-0755179e3783
@@ -1036,7 +1036,7 @@ brokers:
     region: us
     category: marketing
 -   id: commercial-real-estate-exchange
-    name: COMMERCIAL REAL ESTATE EXCHANGE Inc
+    name: Commercial Real Estate Exchange Inc
     email: privacy@crexi.com
     website: https://www.crexi.com/
     opt_out_url: https://crexi.bigidprivacy.cloud/consumer/#/o2TCsG9LJ7
@@ -1050,7 +1050,7 @@ brokers:
     category: marketing
 -   id: complementics
     name: Complementics
-    email: hello@complementics.com
+    email: akatavic@econtext.ai
     website: https://www.complementics.com/
     opt_out_url: https://www.complementics.com/optout-donotsell
     region: us
@@ -1063,7 +1063,7 @@ brokers:
     region: us
     category: marketing
 -   id: complete-medical-lists
-    name: COMPLETE MEDICAL LISTS Inc
+    name: Complete Medical Lists Inc
     email: tburnell@completemedicallists.com
     website: https://www.completemedicallists.com/
     opt_out_url: https://www.completemedicallists.com/ccpa.php
@@ -1130,13 +1130,13 @@ brokers:
     category: marketing
 -   id: contactout
     name: Contactout
-    email: support@contactout.com
+    email: albert@contactout.io
     website: https://www.contactout.com/
     opt_out_url: https://contactout.com/optout
     region: us
     category: marketing
 -   id: contemporary-information
-    name: CONTEMPORARY INFORMATION CORP.
+    name: Contemporary Information Corp.
     email: compliance@cicreports.com
     website: https://www.cicreports.com/
     region: us
@@ -1155,7 +1155,7 @@ brokers:
     region: us
     category: marketing
 -   id: convex-labs
-    name: CONVEX LABS LLC
+    name: Convex Labs LLC
     email: support@convexlabs.io
     website: https://www.convex.com/
     opt_out_url: https://www.convex.com/request-removal
@@ -1279,7 +1279,7 @@ brokers:
     region: us
     category: marketing
 -   id: data-partners
-    name: DATA PARTNERS Inc
+    name: Data Partners Inc
     email: info@datapartners.com
     website: https://www.datapartners.com/
     opt_out_url: https://datapartners.com/donotsellmyinformation
@@ -1306,7 +1306,7 @@ brokers:
     region: us
     category: marketing
 -   id: dataline
-    name: DATALINE Inc
+    name: Dataline Inc
     email: psobel@datalinedata.com
     website: https://www.datalinedata.com/
     region: us
@@ -1318,14 +1318,14 @@ brokers:
     region: us
     category: marketing
 -   id: datamentors
-    name: DATAMENTORS LLC
+    name: Datamentors LLC
     email: privacy@porchgroupmedia.com
     website: https://www.porchgroupmedia.com/
     opt_out_url: https://www.porchgroupmedia.com/inbound/do-not-sell-my-personal-information/
     region: us
     category: marketing
 -   id: datanyze
-    name: DATANYZE LLC
+    name: Datanyze LLC
     email: privacy@datanyze.com
     website: https://www.datanyze.com/
     opt_out_url: https://www.datanyze.com/privacy-center
@@ -1338,7 +1338,7 @@ brokers:
     region: us
     category: marketing
 -   id: datasys-group
-    name: DATASYS GROUP Inc
+    name: Datasys Group Inc
     email: privacy@datasys.com
     website: https://www.datasys.com/
     region: us
@@ -1365,7 +1365,7 @@ brokers:
     region: us
     category: marketing
 -   id: dealerdirect
-    name: DEALERDIRECT LLC
+    name: DealerDirect LLC
     email: fdcomply@forddirect.com
     website: https://www.forddirect.com/
     opt_out_url: https://privacyportal.onetrust.com/webform/1d20b685-0942-4b4d-a0af-b799c97f5cf6/2e4928b6-d77a-4f76-9518-1bfb9721669d
@@ -1403,7 +1403,7 @@ brokers:
     region: us
     category: marketing
 -   id: decisionlinks
-    name: DECISIONLINKS LLC
+    name: Decisionlinks LLC
     email: support@decisionlinks.com
     website: https://www.decisionlinks.com/
     opt_out_url: https://www.decisionlinks.com/opt-out
@@ -1497,14 +1497,14 @@ brokers:
     region: us
     category: marketing
 -   id: digital-segment
-    name: DIGITAL SEGMENT LLC
+    name: Digital Segment LLC
     email: info@digitalsegment.com
     website: https://www.digitalsegment.com/
     opt_out_url: https://www.digitalsegment.com/about/consumer-opt-out/
     region: us
     category: marketing
 -   id: digital-viking-media
-    name: DIGITAL VIKING MEDIA Inc
+    name: Digital Viking Media Inc
     email: optout@digitalvikingmedia.com
     website: https://www.digitalvikingmedia.com/
     region: us
@@ -1517,7 +1517,7 @@ brokers:
     region: us
     category: marketing
 -   id: direct-marketing-solutions
-    name: DIRECT MARKETING SOLUTIONS Inc
+    name: Direct Marketing Solutions Inc
     email: dataanalytics@teamdms.com
     website: https://www.teamdms.com/
     opt_out_url: https://www.teamdms.com/opt-out
@@ -1608,7 +1608,7 @@ brokers:
     region: us
     category: marketing
 -   id: dun-bradstreet
-    name: DUN & BRADSTREET Inc
+    name: Dun & Bradstreet Inc
     email: privacyofficer@dnb.com
     website: https://www.dnb.com/
     opt_out_url: https://www.netwisedata.com/consumer-privacy
@@ -1634,7 +1634,7 @@ brokers:
     region: us
     category: marketing
 -   id: economic-modeling
-    name: ECONOMIC MODELING LLC
+    name: Economic Modeling LLC
     email: legal@lightcast.io
     website: https://www.lightcast.io/
     opt_out_url: https://optout.networkadvertising.org/
@@ -1674,7 +1674,7 @@ brokers:
     region: us
     category: marketing
 -   id: electronic-voice-services
-    name: ELECTRONIC VOICE SERVICES Inc
+    name: Electronic Voice Services Inc
     email: richard@evs7.com
     website: https://www.telephonelists.biz/
     opt_out_url: https://www.evs7.com/personal-information-request
@@ -1705,7 +1705,7 @@ brokers:
     region: us
     category: marketing
 -   id: emergescom-incorporated
-    name: EMERGES.COM INCORPORATED
+    name: Emerges.Com Incorporated
     email: shawn@emerges.com
     website: https://www.emerges.com/
     opt_out_url: https://www.emerges.com/Government-Record-Opt-Out_ep_51-1.html
@@ -1725,7 +1725,7 @@ brokers:
     region: us
     category: marketing
 -   id: enigma-technologies
-    name: ENIGMA TECHNOLOGIES Inc
+    name: Enigma Technologies Inc
     email: privacy@enigma.com
     website: https://www.enigma.com/
     opt_out_url: https://www.enigma.com/company/do-not-share-or-sell-my-personal-information
@@ -1797,7 +1797,7 @@ brokers:
     region: us
     category: marketing
 -   id: exact-opco
-    name: EXACT OPCO LLC
+    name: Exact Opco LLC
     email: privacy@exactcustomer.com
     website: https://www.solarpower-experts.com/
     opt_out_url: https://www.exactcustomer.com/DoNotSell.aspx
@@ -1818,7 +1818,7 @@ brokers:
     region: global
     category: marketing
 -   id: explorium
-    name: EXPLORIUM Inc
+    name: Explorium Inc
     email: oshrat@explorium.ai
     website: https://www.explorium.ai/
     opt_out_url: https://www.explorium.ai/do-not-sell-my-personal-information/
@@ -1852,7 +1852,7 @@ brokers:
     region: us
     category: marketing
 -   id: family-tree-now
-    name: FAMILY TREE NOW LLC
+    name: Family Tree Now LLC
     email: privacy@familytreenow.com
     website: https://www.usphonebook.com/
     opt_out_url: https://www.zendesk.com/company/agreements-and-terms/privacy-notice/
@@ -1961,7 +1961,7 @@ brokers:
     region: us
     category: marketing
 -   id: foo-monk
-    name: FOO MONK LLC
+    name: Foo Monk LLC
     email: privacy@instantly.ai
     website: https://www.instantly.ai/
     opt_out_url: https://help.instantly.ai/en/collections/9392788-instantly-privacy-center
@@ -1974,7 +1974,7 @@ brokers:
     region: us
     category: marketing
 -   id: forewarn
-    name: FOREWARN LLC
+    name: Forewarn LLC
     email: legal.compliance@forewarn.com
     website: https://www.forewarn.com/
     opt_out_url: https://www.forewarn.com/opt-out-policy/
@@ -2014,7 +2014,7 @@ brokers:
     region: us
     category: marketing
 -   id: free-data-services
-    name: FREE DATA SERVICES LLC
+    name: Free Data Services LLC
     email: support@truepeoplesearch.com
     website: https://www.truepeoplesearch.com/
     region: us
@@ -2087,7 +2087,7 @@ brokers:
     region: us
     category: marketing
 -   id: ga-uc-holdings
-    name: GA-UC HOLDINGS Inc
+    name: GA-UC Holdings Inc
     email: privacy@unacast.com
     website: https://www.unacast.com/
     opt_out_url: https://www.unacast.com/opt-out
@@ -2106,7 +2106,7 @@ brokers:
     region: us
     category: marketing
 -   id: getemails
-    name: GETEMAILS LLC
+    name: GetEmails LLC
     email: support@retention.com
     website: https://www.getemails.com/
     opt_out_url: https://app.retention.com/optout/
@@ -2197,7 +2197,7 @@ brokers:
     region: us
     category: marketing
 -   id: great-lakes-list
-    name: GREAT LAKES LIST Inc
+    name: Great Lakes List Inc
     email: ccpa@greatlakeslists.com
     website: https://www.greatlakeslists.com/
     opt_out_url: https://www.greatlakeslists.com/opt_out_request.php
@@ -2236,7 +2236,7 @@ brokers:
     region: us
     category: marketing
 -   id: guidestar-direct
-    name: GUIDESTAR DIRECT CORP
+    name: Guidestar Direct Corp
     email: info@carneydirect.com
     website: https://www.carneydirect.com/
     region: us
@@ -2256,7 +2256,7 @@ brokers:
     category: marketing
 -   id: h1-insights
     name: H1 Insights Inc.
-    email: inquiries@h1insights.com
+    email: inquiries@h1.co
     website: https://www.h1insights.com/
     opt_out_url: https://www.h1.co/legal/privacy-preferences
     region: us
@@ -2268,7 +2268,7 @@ brokers:
     region: us
     category: marketing
 -   id: hd-information
-    name: HD INFORMATION LLC
+    name: HD Information LLC
     email: hdi_support@hygenicsdata.com
     website: https://www.hygenicsdata.com/
     opt_out_url: https://myprivacy.equifax.com/opt-in-opt-out/personal-info
@@ -2308,8 +2308,8 @@ brokers:
     region: us
     category: marketing
 -   id: heartbeatai
-    name: HEARTBEAT.AI Inc
-    email: contact@swordfish.ai
+    name: Heartbeat.AI Inc
+    email: ben@heartbeat.ai
     website: https://www.swordfish.ai/
     opt_out_url: https://heartbeat.ai/optout
     region: us
@@ -2342,7 +2342,7 @@ brokers:
     region: global
     category: background-check
 -   id: hireteammate
-    name: HIRETEAMMATE Inc
+    name: HireTeamMate Inc
     email: privacy@hireez.com
     website: https://www.hireez.com/
     opt_out_url: https://app.hireez.com/ownyourdata
@@ -2501,7 +2501,7 @@ brokers:
     category: marketing
 -   id: infinite-media-concepts
     name: Infinite Media Concepts Inc
-    email: sheck@mlxp.com
+    email: unsubscribe@mailinglists.com
     website: https://www.mlxp.com/
     region: us
     category: marketing
@@ -2539,7 +2539,7 @@ brokers:
     region: us
     category: marketing
 -   id: infopay
-    name: INFOPAY Inc
+    name: InfoPay Inc
     email: compliance@infopay.com
     website: https://www.infopay.com/
     region: us
@@ -2682,14 +2682,14 @@ brokers:
     region: us
     category: marketing
 -   id: intentsify
-    name: INTENTSIFY LLC
+    name: Intentsify LLC
     email: privacy@intentsify.io
     website: https://www.intentsify.io/
     opt_out_url: https://app.intentsify.io/opt-out
     region: us
     category: marketing
 -   id: interactive-data
-    name: INTERACTIVE DATA LLC
+    name: Interactive Data LLC
     email: legal.compliance@ididata.com
     website: https://www.ididata.com/
     opt_out_url: https://ididata.com/idis-privacy-statement#privacy
@@ -2755,7 +2755,7 @@ brokers:
     region: us
     category: marketing
 -   id: j2-martech
-    name: J2 MARTECH CORP
+    name: J2 Martech Corp
     email: privacy@fullcontact.com
     website: https://www.ziffdavis.com/
     opt_out_url: https://platform.fullcontact.com/your-privacy-choices
@@ -2840,7 +2840,7 @@ brokers:
     region: us
     category: marketing
 -   id: kloudend
-    name: KLOUDEND Inc
+    name: Kloudend Inc
     email: legal@kloudend.com
     website: https://www.kloudend.com/
     opt_out_url: https://ipapi.co/donotsell/
@@ -2859,7 +2859,7 @@ brokers:
     region: us
     category: marketing
 -   id: kochava
-    name: KOCHAVA Inc.
+    name: Kochava Inc.
     email: legal@kochava.com
     website: https://www.kochava.com/
     opt_out_url: https://www.kochava.com/opt-out-do-not-sell-request-process/
@@ -2914,7 +2914,7 @@ brokers:
     region: us
     category: marketing
 -   id: lead-me-media
-    name: LEAD ME MEDIA LLC
+    name: Lead Me Media LLC
     email: texasregistry@leadmemedia.com
     website: https://www.leadmemedia.com/
     opt_out_url: https://policy.leadmemedia.com/California/californiaform.html
@@ -2922,7 +2922,7 @@ brokers:
     category: marketing
 -   id: lead411
     name: Lead411 Corporation
-    email: lead411_privacy@l4mail.com
+    email: tom@lead411.io
     website: https://www.lead411.com/
     opt_out_url: https://lead411.com/your-privacy-choices/
     region: us
@@ -2942,7 +2942,7 @@ brokers:
     region: us
     category: marketing
 -   id: leadiq
-    name: LEADIQ Inc
+    name: LeadIQ Inc
     email: accounting@leadiq.com
     website: https://www.leadiq.com/
     opt_out_url: https://privacy.leadiq.com/privacy-center
@@ -2996,7 +2996,7 @@ brokers:
     category: marketing
 -   id: lexisnexis
     name: LexisNexis Risk Solutions
-    email: privacy.information.mgr@lexisnexis.com
+    email: consumer.documents@lexisnexisrisk.com
     website: https://risk.lexisnexis.com
     opt_out_url: https://optout.lexisnexis.com
     region: global
@@ -3127,7 +3127,7 @@ brokers:
     region: us
     category: marketing
 -   id: loopme
-    name: LOOPME LTD
+    name: LoopMe Ltd
     email: legal@loopme.com
     website: https://www.loopme.com/
     region: us
@@ -3193,7 +3193,7 @@ brokers:
     region: us
     category: marketing
 -   id: magnite
-    name: MAGNITE Inc
+    name: Magnite Inc
     email: privacy@magnite.com
     website: https://www.magnite.com/
     opt_out_url: https://www.magnite.com/legal/user-choice-portal/#optout
@@ -3254,14 +3254,14 @@ brokers:
     region: us
     category: marketing
 -   id: matchbook-data
-    name: MATCHBOOK DATA LLC
+    name: Matchbook Data LLC
     email: privacy@matchbookdata.com
     website: https://www.matchbookdata.com/
     opt_out_url: https://www.matchbookdata.com/opt-out-form/
     region: us
     category: marketing
 -   id: maxmind
-    name: MAXMIND Inc
+    name: MaxMind Inc
     email: legal@maxmind.com
     website: https://www.maxmind.com/
     opt_out_url: https://www.maxmind.com/en/opt-out
@@ -3316,7 +3316,7 @@ brokers:
     region: us
     category: marketing
 -   id: mediawallah
-    name: MEDIAWALLAH Inc
+    name: MediaWallah Inc
     email: privacy@mediawallah.com
     website: https://www.mediawallah.com/
     opt_out_url: https://mediawallah.com/donotsell/
@@ -3335,7 +3335,7 @@ brokers:
     region: us
     category: marketing
 -   id: melissa-data
-    name: MELISSA DATA CORPORATION
+    name: Melissa Data Corporation
     email: dennis.bedford@melissa.com
     website: https://www.melissa.com/
     opt_out_url: https://apps.melissa.com/user/consumerprivacy.aspx
@@ -3356,7 +3356,7 @@ brokers:
     region: us
     category: marketing
 -   id: message-digital
-    name: MESSAGE DIGITAL LLC
+    name: Message Digital LLC
     email: privacy@messagedigital.com
     website: https://www.messagedigital.com/
     opt_out_url: https://www.messagedigital.com/my-data
@@ -3480,7 +3480,7 @@ brokers:
     region: us
     category: marketing
 -   id: my-renter-checker
-    name: MY RENTER CHECKER LLC
+    name: My Renter Checker LLC
     email: myrenterchecker@gmail.com
     website: https://www.myrenterchecker.com/
     region: us
@@ -3527,7 +3527,7 @@ brokers:
     region: us
     category: marketing
 -   id: national-student-clearinghouse
-    name: NATIONAL STUDENT CLEARINGHOUSE
+    name: National Student Clearinghouse
     email: legal@studentclearinghouse.org
     website: https://www.studentclearinghouse.org/
     region: us
@@ -3540,7 +3540,7 @@ brokers:
     region: us
     category: marketing
 -   id: nc-ventures
-    name: NC VENTURES LLC
+    name: NC Ventures LLC
     email: ncs.privacy@ncsolutions.com
     website: https://www.ncsolutions.com/
     opt_out_url: https://ncsolutions.com/do-not-sell-my-information/
@@ -3736,7 +3736,7 @@ brokers:
     region: us
     category: marketing
 -   id: online-media-group
-    name: ONLINE MEDIA GROUP Inc.
+    name: Online Media Group Inc.
     email: privacy@omginc.xyz
     website: https://www.omginc.xyz/
     opt_out_url: https://www.omginc.xyz/privacy#ccpa
@@ -3789,7 +3789,7 @@ brokers:
     region: us
     category: marketing
 -   id: origin8
-    name: ORIGIN8 Inc
+    name: Origin8 Inc
     email: compliance@pushint.com
     website: https://www.pushint.com/
     opt_out_url: https://pushint.com/manage-my-data
@@ -3803,7 +3803,7 @@ brokers:
     region: us
     category: marketing
 -   id: outlogic
-    name: OUTLOGIC LLC
+    name: Outlogic LLC
     email: privacy@outlogic.io
     website: https://www.outlogic.io/
     opt_out_url: https://outlogic.io/opt-out-form/
@@ -3838,7 +3838,7 @@ brokers:
     region: us
     category: marketing
 -   id: paramount-lists
-    name: PARAMOUNT LISTS Inc
+    name: Paramount Lists Inc
     email: ccpa@paramountdirectmarketing.com
     website: https://www.paramountdirectmarketing.com/
     opt_out_url: https://www.paramountdirectmarketing.com/opt_out_request.php
@@ -3864,7 +3864,7 @@ brokers:
     region: us
     category: marketing
 -   id: pathway-ventures
-    name: PATHWAY VENTURES LLC
+    name: Pathway Ventures LLC
     email: privacyofficer@indivizio.com
     website: https://www.indivizio.com/
     opt_out_url: https://www.protectdataprivacy.com/
@@ -3969,7 +3969,7 @@ brokers:
     region: us
     category: marketing
 -   id: placeiq
-    name: PLACEIQ Inc
+    name: PlaceIQ Inc
     email: placeiq.privacy@precisely.com
     website: https://www.precisely.com/
     opt_out_url: https://www.precisely.com/your-privacy-choices
@@ -4048,7 +4048,7 @@ brokers:
     region: us
     category: marketing
 -   id: postpilot
-    name: POSTPILOT Inc
+    name: PostPilot Inc
     email: operations@postpilot.com
     website: https://www.postpilot.com/
     opt_out_url: https://www.postpilot.com/opt-out-of-mailings-form
@@ -4067,7 +4067,7 @@ brokers:
     region: us
     category: marketing
 -   id: predictive-pop
-    name: PREDICTIVE POP Inc
+    name: Predictive Pop Inc
     email: shane@audigent.com
     website: https://www.audigent.com/
     opt_out_url: https://www.audigent.com/?optout=1
@@ -4082,7 +4082,7 @@ brokers:
     category: marketing
 -   id: preqin
     name: Preqin Ltd
-    email: dp@preqin.com
+    email: preqin.dp@blackrock.com
     website: https://www.preqin.com/
     region: us
     category: marketing
@@ -4146,7 +4146,7 @@ brokers:
     region: us
     category: marketing
 -   id: publicnsa
-    name: PUBLICNSA LLC
+    name: PublicNSA LLC
     email: privacy@bigdbm.com
     website: https://www.bigdbm.com/
     opt_out_url: https://optout.bigdbm.com/
@@ -4171,7 +4171,7 @@ brokers:
     region: us
     category: people-search
 -   id: pubmatic
-    name: PUBMATIC Inc
+    name: PubMatic Inc
     email: pubmaticprivacy@pubmatic.com
     website: https://www.pubmatic.com/
     opt_out_url: https://pubmatic.com/legal/opt-out/
@@ -4265,7 +4265,7 @@ brokers:
     region: us
     category: marketing
 -   id: real-intent
-    name: REAL INTENT Inc.
+    name: Real Intent Inc.
     email: contact@realintent.co
     website: https://www.realintent.co/
     opt_out_url: https://www.realintent.co/do-not-sell
@@ -4347,7 +4347,7 @@ brokers:
     region: us
     category: marketing
 -   id: reklaim
-    name: REKLAIM LTD
+    name: Reklaim Ltd
     email: info@reklaimyours.com
     website: https://www.reklaimyours.com/
     opt_out_url: https://www.reklaimyours.com/optout/
@@ -4543,7 +4543,7 @@ brokers:
     region: us
     category: marketing
 -   id: salutary-data
-    name: SALUTARY DATA LLC
+    name: Salutary Data LLC
     email: privacy@salutarydata.com
     website: https://www.salutarydata.com/
     opt_out_url: https://www.salutarydata.com/privacy-opt-out-and-disclosure-form/
@@ -4669,7 +4669,7 @@ brokers:
     region: us
     category: marketing
 -   id: sheerid
-    name: SHEERID Inc
+    name: SheerID Inc
     email: privacy@sheerid.com
     website: https://www.sheerid.com/
     opt_out_url: https://www.sheerid.com/privacy-notice-for-audience-development-products-services/?_cord_id=6ddcc513-32c1-4799-832f-5c1d99acad88
@@ -4682,7 +4682,7 @@ brokers:
     region: us
     category: marketing
 -   id: simio-cloud
-    name: SIMIO CLOUD LLC
+    name: Simio Cloud LLC
     email: privacy@simiocloud.com
     website: https://www.simiocloud.com/
     opt_out_url: https://simiocloud.com/optout
@@ -4697,7 +4697,7 @@ brokers:
     category: marketing
 -   id: skipmasher
     name: Skipmasher, Inc.
-    email: skipsmasher.com@gmail.com
+    email: support@privatereports.com
     website: https://www.skipsmasher.com/
     opt_out_url: https://www.skipsmasher.com/Consumers/
     region: us
@@ -4737,14 +4737,14 @@ brokers:
     region: us
     category: marketing
 -   id: snovio
-    name: SNOVIO Inc
+    name: Snovio Inc
     email: help@snov.io
     website: https://www.snov.io/
     opt_out_url: https://www.snov.io/do-not-sell-my-personal-information
     region: us
     category: marketing
 -   id: social-catfish
-    name: SOCIAL CATFISH LLC
+    name: Social Catfish LLC
     email: welcome@socialcatfish.com
     website: https://www.socialcatfish.com/
     opt_out_url: https://www.socialcatfish.com/opt-out/?id=request_optout
@@ -4791,7 +4791,7 @@ brokers:
     region: us
     category: marketing
 -   id: speedeon-data
-    name: SPEEDEON DATA LLC
+    name: Speedeon Data LLC
     email: nbarry@speedeondata.com
     website: https://www.speedeondata.com/
     opt_out_url: https://optout.speedeondata.com/
@@ -4825,7 +4825,7 @@ brokers:
     region: us
     category: marketing
 -   id: stackadapt
-    name: STACKADAPT Inc
+    name: StackAdapt Inc
     email: legal@stackadapt.com
     website: https://www.stackadapt.com/
     opt_out_url: https://www.stackadapt.com/legal-document-centre/opt-out-of-sale-targeted-advertising
@@ -4872,7 +4872,7 @@ brokers:
     region: us
     category: marketing
 -   id: steppingblocks
-    name: STEPPINGBLOCKS Inc
+    name: SteppingBlocks Inc
     email: privacy@steppingblocks.com
     website: https://www.steppingblocks.com/
     opt_out_url: https://www.steppingblocks.com/personal-information-inquiry
@@ -4885,7 +4885,7 @@ brokers:
     region: global
     category: background-check
 -   id: sterling-data-company
-    name: STERLING DATA COMPANY LLC
+    name: Sterling Data Company LLC
     email: privacy@sterling.ai
     website: https://www.sterling.ai/
     opt_out_url: https://sterling.ai/do-not-sell/
@@ -4964,14 +4964,14 @@ brokers:
     region: us
     category: marketing
 -   id: t-mobile-usa
-    name: T-MOBILE USA Inc
+    name: T-Mobile USA Inc
     email: mmp-privacy@t-mobile.com
     website: https://www.t-mobile.com/
     opt_out_url: https://www.t-mobile.com/dns?INTNAV=fNav%3ADoNotSell&Brand=Magenta&Site=Sell_Web&Origin_URL=https%3A%2F%2Fwww.t-mobile.com
     region: us
     category: marketing
 -   id: taboola
-    name: TABOOLA Inc
+    name: Taboola Inc
     email: privacy@taboola.com
     website: https://www.taboola.com/
     region: us
@@ -4991,7 +4991,7 @@ brokers:
     region: global
     category: marketing
 -   id: targetsmart-communications
-    name: TARGETSMART COMMUNICATIONS LLC
+    name: Targetsmart Communications LLC
     email: privacy@targetsmart.com
     website: https://www.targetsmart.com/
     opt_out_url: https://privacy.targetsmart.com/general/opt_out
@@ -5016,7 +5016,7 @@ brokers:
     region: us
     category: marketing
 -   id: techtarget
-    name: TECHTARGET Inc
+    name: TechTarget Inc
     email: privacy@techtarget.com
     website: https://www.techtarget.com/
     opt_out_url: https://techtarget.zendesk.com/hc/en-us/requests/new?ticket_form_id=360004852434
@@ -5050,7 +5050,7 @@ brokers:
     region: us
     category: people-search
 -   id: the-alesco-group
-    name: THE ALESCO GROUP LLC
+    name: The Alesco Group LLC
     email: paul@alescodata.com
     website: https://www.alescodata.com/
     opt_out_url: https://alescodata.com/opt-out-request/
@@ -5083,7 +5083,7 @@ brokers:
     region: us
     category: marketing
 -   id: throtle
-    name: THROTLE Inc
+    name: Throtle Inc
     email: mboyle@throtle.io
     website: https://www.throtle.io/
     opt_out_url: https://www.throtle.io/website-privacy-policy/#cookie-id
@@ -5177,7 +5177,7 @@ brokers:
     region: us
     category: people-search
 -   id: truth-now
-    name: TRUTH NOW LLC
+    name: Truth Now LLC
     email: support@checksecrets.com
     website: https://www.checksecrets.com/
     opt_out_url: https://www.checksecrets.com/optOut/name/landing.
@@ -5282,7 +5282,7 @@ brokers:
     region: us
     category: marketing
 -   id: us-data
-    name: US DATA CORPORATION
+    name: US Data Corporation
     email: abradley@usdatacorporation.com
     website: https://www.usdatacorporation.com/
     opt_out_url: https://www.usdatacorporation.com/opt-out
@@ -5435,7 +5435,7 @@ brokers:
     region: us
     category: marketing
 -   id: visual-visitor
-    name: VISUAL VISITOR LLC
+    name: Visual Visitor LLC
     email: privacy@visualvisitor.com
     website: https://www.visualvisitor.com/
     opt_out_url: https://www.visualvisitor.com/opt-out/
@@ -5456,7 +5456,7 @@ brokers:
     region: us
     category: marketing
 -   id: we-inform
-    name: WE INFORM LLC
+    name: We Inform LLC
     email: support@weinform.org
     website: https://www.weinform.org/
     opt_out_url: https://www.weinform.org/optOut/name/landing
@@ -5538,7 +5538,7 @@ brokers:
     category: marketing
 -   id: wiza
     name: Wiza, Inc.
-    email: hello@wiza.co
+    email: harrison@wiza.com
     website: https://www.wiza.co/
     opt_out_url: https://www.wiza.co/optout_directory
     region: us
@@ -5572,7 +5572,7 @@ brokers:
     category: marketing
 -   id: xcelerated-data
     name: Xcelerated Data LLC
-    email: privacy@xcelerated.com
+    email: mike@buyingsignals.com
     website: https://www.xcelerated.com/
     region: us
     category: marketing
@@ -5636,7 +5636,7 @@ brokers:
     region: us
     category: marketing
 -   id: zs-associates
-    name: ZS ASSOCIATES Inc
+    name: Zs Associates Inc
     email: dataprivacy@zs.com
     website: https://www.zs.com/
     opt_out_url: https://www.zs.com/data-request

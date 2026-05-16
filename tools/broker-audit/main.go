@@ -41,35 +41,35 @@ type CPPAEntry struct {
 }
 
 type MatchResult struct {
-	Name           string `json:"name"`
-	Matched        bool   `json:"matched"`
-	MatchType      string `json:"match_type,omitempty"`
-	MatchedTo      string `json:"matched_to,omitempty"`
-	EmailMatch     bool   `json:"email_match"`
-	WebsiteMatch   bool   `json:"website_match"`
-	CPPAEmail      string `json:"cppa_email,omitempty"`
-	CPPAWebsite    string `json:"cppa_website,omitempty"`
-	CPPAOptOut     string `json:"cppa_optout,omitempty"`
-	OurEmail       string `json:"our_email,omitempty"`
-	OurWebsite     string `json:"our_website,omitempty"`
+	Name         string `json:"name"`
+	Matched      bool   `json:"matched"`
+	MatchType    string `json:"match_type,omitempty"`
+	MatchedTo    string `json:"matched_to,omitempty"`
+	EmailMatch   bool   `json:"email_match"`
+	WebsiteMatch bool   `json:"website_match"`
+	CPPAEmail    string `json:"cppa_email,omitempty"`
+	CPPAWebsite  string `json:"cppa_website,omitempty"`
+	CPPAOptOut   string `json:"cppa_optout,omitempty"`
+	OurEmail     string `json:"our_email,omitempty"`
+	OurWebsite   string `json:"our_website,omitempty"`
 }
 
 type AuditReport struct {
-	Timestamp          string        `json:"timestamp"`
-	OurBrokerCount     int           `json:"our_broker_count"`
-	CPPABrokerCount    int           `json:"cppa_broker_count"`
-	CPPAMatched        int           `json:"cppa_matched"`
-	CPPAMissing        int           `json:"cppa_missing"`
-	CPPAUnmatched      []MatchResult `json:"cppa_unmatched"`
-	OurUnmatched       []MatchResult `json:"our_unmatched"`
-	EmailMismatches    []MatchResult `json:"email_mismatches"`
-	WebsiteMismatches  []MatchResult `json:"website_mismatches"`
-	GmailBrokers       []string      `json:"gmail_brokers"`
-	MissingOptOut      []string      `json:"missing_optout"`
-	MissingWebsite     []string      `json:"missing_website"`
-	DuplicateNames     []string      `json:"duplicate_names"`
-	DuplicateEmails    []string      `json:"duplicate_emails"`
-	Suggestions        []string      `json:"suggestions"`
+	Timestamp         string        `json:"timestamp"`
+	OurBrokerCount    int           `json:"our_broker_count"`
+	CPPABrokerCount   int           `json:"cppa_broker_count"`
+	CPPAMatched       int           `json:"cppa_matched"`
+	CPPAMissing       int           `json:"cppa_missing"`
+	CPPAUnmatched     []MatchResult `json:"cppa_unmatched"`
+	OurUnmatched      []MatchResult `json:"our_unmatched"`
+	EmailMismatches   []MatchResult `json:"email_mismatches"`
+	WebsiteMismatches []MatchResult `json:"website_mismatches"`
+	GmailBrokers      []string      `json:"gmail_brokers"`
+	MissingOptOut     []string      `json:"missing_optout"`
+	MissingWebsite    []string      `json:"missing_website"`
+	DuplicateNames    []string      `json:"duplicate_names"`
+	DuplicateEmails   []string      `json:"duplicate_emails"`
+	Suggestions       []string      `json:"suggestions"`
 }
 
 func main() {
@@ -106,8 +106,8 @@ func main() {
 	}
 
 	report := &AuditReport{
-		Timestamp:       time.Now().UTC().Format(time.RFC3339),
-		OurBrokerCount:  len(db.Brokers),
+		Timestamp:      time.Now().UTC().Format(time.RFC3339),
+		OurBrokerCount: len(db.Brokers),
 	}
 
 	fmt.Printf("Loaded %d brokers from %s\n", len(db.Brokers), brokersFile)
@@ -455,7 +455,7 @@ func runQualityChecks(db *BrokerDatabase, report *AuditReport) {
 func runHTTPValidation(db *BrokerDatabase, report *AuditReport) {
 	client := &http.Client{
 		Timeout: 5 * time.Second,
-		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+		CheckRedirect: func(_ *http.Request, via []*http.Request) error {
 			if len(via) >= 5 {
 				return fmt.Errorf("too many redirects")
 			}
