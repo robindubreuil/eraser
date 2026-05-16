@@ -1,0 +1,6 @@
+{{if eq .Status "sent"}}<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Sent</span>{{end}}
+{{if eq .Status "failed"}}<span class="text-red-600" title="{{.Error}}">Failed</span>{{end}}
+{{if eq .Status "rate-limited"}}<span class="text-yellow-600">Rate limit exceeded. Please wait a moment before sending more emails.</span>{{end}}
+{{if eq .Status "not-found"}}<span class="text-red-600">Broker not found</span>{{end}}
+{{if eq .Status "error"}}<span class="text-red-600">Error: {{.Error}}</span>{{end}}
+{{if eq .Status "template-error"}}<span class="text-red-600">Template error: {{.Error}}</span>{{end}}
