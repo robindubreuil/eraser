@@ -47,13 +47,13 @@ type RateLimiter struct {
 	window   time.Duration
 }
 
-func NewRateLimiter(limit int, window time.Duration) *RateLimiter {
+func NewRateLimiter(ctx context.Context, limit int, window time.Duration) *RateLimiter {
 	rl := &RateLimiter{
 		requests: make(map[string][]time.Time),
 		limit:    limit,
 		window:   window,
 	}
-	go rl.cleanupLoop()
+	go rl.cleanupLoop(ctx)
 	return rl
 }
 
@@ -83,22 +83,27 @@ func (rl *RateLimiter) Allow(key string) bool {
 	return true
 }
 
-func (rl *RateLimiter) cleanupLoop() {
+func (rl *RateLimiter) cleanupLoop(ctx context.Context) {
 	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
 
-	for range ticker.C {
-		rl.mu.Lock()
-		windowStart := time.Now().Add(-rl.window)
-		for key, times := range rl.requests {
-			recent := rl.filterRecent(times, windowStart)
-			if len(recent) == 0 {
-				delete(rl.requests, key)
-			} else {
-				rl.requests[key] = recent
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-ticker.C:
+			rl.mu.Lock()
+			windowStart := time.Now().Add(-rl.window)
+			for key, times := range rl.requests {
+				recent := rl.filterRecent(times, windowStart)
+				if len(recent) == 0 {
+					delete(rl.requests, key)
+				} else {
+					rl.requests[key] = recent
+				}
 			}
+			rl.mu.Unlock()
 		}
-		rl.mu.Unlock()
 	}
 }
 
@@ -118,7 +123,7 @@ type Server struct {
 	jobPersistence *JobPersistence
 }
 
-func NewServer(port int, cfg *config.Config, configPath string, brokerDB *broker.BrokerDatabase, historyStore *history.Store, tmplEngine *emaTemplate.Engine) (*Server, error) {
+func NewServer(ctx context.Context, port int, cfg *config.Config, configPath string, brokerDB *broker.BrokerDatabase, historyStore *history.Store, tmplEngine *emaTemplate.Engine) (*Server, error) {
 	csrfKey := make([]byte, 32)
 	if _, err := rand.Read(csrfKey); err != nil {
 		return nil, fmt.Errorf("failed to generate CSRF key: %w", err)
@@ -135,8 +140,8 @@ func NewServer(port int, cfg *config.Config, configPath string, brokerDB *broker
 		tmplEngine:     tmplEngine,
 		port:           port,
 		csrfKey:        csrfKey,
-		sessions:       NewSessionStore(defaultSessionTTL),
-		rateLimiter:    NewRateLimiter(defaultRateLimit, defaultRateWindow),
+		sessions:       NewSessionStore(ctx, defaultSessionTTL),
+		rateLimiter:    NewRateLimiter(ctx, defaultRateLimit, defaultRateWindow),
 		jobManager:     NewJobManager(),
 		jobPersistence: NewJobPersistence(dataDir),
 	}

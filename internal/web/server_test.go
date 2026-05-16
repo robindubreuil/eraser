@@ -62,8 +62,8 @@ func newTestServerWithConfig(t *testing.T, cfg *config.Config) *Server {
 		tmplEngine:     tmplEngine,
 		port:           0,
 		csrfKey:        csrfKey,
-		sessions:       NewSessionStore(30 * time.Minute),
-		rateLimiter:    NewRateLimiter(30, time.Minute),
+		sessions:       NewSessionStore(context.Background(), 30*time.Minute),
+		rateLimiter:    NewRateLimiter(context.Background(), 30, time.Minute),
 		jobManager:     NewJobManager(),
 		jobPersistence: NewJobPersistence(dir),
 	}
@@ -710,7 +710,7 @@ func TestGetUniqueValues(t *testing.T) {
 }
 
 func TestRateLimiter(t *testing.T) {
-	rl := NewRateLimiter(3, time.Minute)
+	rl := NewRateLimiter(context.Background(), 3, time.Minute)
 
 	if !rl.Allow("key1") {
 		t.Error("first request should be allowed")
@@ -730,7 +730,7 @@ func TestRateLimiter(t *testing.T) {
 }
 
 func TestSessionStore(t *testing.T) {
-	store := NewSessionStore(30 * time.Minute)
+	store := NewSessionStore(context.Background(), 30*time.Minute)
 
 	t.Run("create and get session", func(t *testing.T) {
 		id, err := store.Create()
@@ -800,7 +800,7 @@ func TestSessionStore(t *testing.T) {
 	})
 
 	t.Run("count sessions", func(t *testing.T) {
-		store := NewSessionStore(30 * time.Minute)
+		store := NewSessionStore(context.Background(), 30*time.Minute)
 		store.Create()
 		store.Create()
 		store.Create()

@@ -24,7 +24,10 @@ func resolveBrokerPath() string {
 	if _, err := os.Stat("data/brokers.yaml"); err == nil {
 		return "data/brokers.yaml"
 	}
-	exe, _ := os.Executable()
+	exe, err := os.Executable()
+	if err != nil {
+		return "data/brokers.yaml"
+	}
 	return filepath.Join(filepath.Dir(exe), "data", "brokers.yaml")
 }
 

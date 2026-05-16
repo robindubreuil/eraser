@@ -1,6 +1,7 @@
 package web
 
 import (
+	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"sync"
@@ -28,14 +29,13 @@ type Session struct {
 }
 
 // NewSessionStore creates a new session store with automatic cleanup
-func NewSessionStore(ttl time.Duration) *SessionStore {
+func NewSessionStore(ctx context.Context, ttl time.Duration) *SessionStore {
 	store := &SessionStore{
 		sessions: make(map[string]*Session),
 		ttl:      ttl,
 	}
 
-	// Start background cleanup goroutine
-	go store.cleanupLoop()
+	go store.cleanupLoop(ctx)
 
 	return store
 }
@@ -126,12 +126,17 @@ func (s *SessionStore) Delete(id string) {
 }
 
 // cleanupLoop periodically removes expired sessions
-func (s *SessionStore) cleanupLoop() {
+func (s *SessionStore) cleanupLoop(ctx context.Context) {
 	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
 
-	for range ticker.C {
-		s.cleanup()
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-ticker.C:
+			s.cleanup()
+		}
 	}
 }
 

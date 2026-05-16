@@ -95,7 +95,6 @@
                 <div>
                     <label for="smtp_password" class="label">App Password</label>
                     <input type="password" name="smtp_password" id="smtp_password"
-                        value="{{.Email.SMTP.Password}}"
                         class="input {{if .Errors.smtp_password}}border-error{{end}}"
                         placeholder="xxxx xxxx xxxx xxxx">
                     {{if .Errors.smtp_password}}

@@ -54,20 +54,25 @@
             const data = await resp.json();
 
             if (resp.ok) {
-                document.getElementById('clear-result').innerHTML = `
-                    <div class="bg-green-100 text-green-800 px-4 py-3 rounded">
-                        ${data.message}. <a href="/history" class="underline">Refresh page</a>
-                    </div>
-                `;
+                const div = document.createElement('div');
+                div.className = 'bg-green-100 text-green-800 px-4 py-3 rounded';
+                div.textContent = data.message + '. ';
+                const a = document.createElement('a');
+                a.href = '/history';
+                a.className = 'underline';
+                a.textContent = 'Refresh page';
+                div.appendChild(a);
+                document.getElementById('clear-result').innerHTML = '';
+                document.getElementById('clear-result').appendChild(div);
             } else {
                 throw new Error(data.error || 'Failed to clear records');
             }
         } catch (err) {
-            document.getElementById('clear-result').innerHTML = `
-                <div class="bg-red-100 text-red-800 px-4 py-3 rounded">
-                    Error: ${err.message}
-                </div>
-            `;
+            const div = document.createElement('div');
+            div.className = 'bg-red-100 text-red-800 px-4 py-3 rounded';
+            div.textContent = 'Error: ' + err.message;
+            document.getElementById('clear-result').innerHTML = '';
+            document.getElementById('clear-result').appendChild(div);
         }
 
         btn.disabled = false;

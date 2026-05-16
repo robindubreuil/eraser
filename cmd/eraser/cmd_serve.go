@@ -72,7 +72,10 @@ func runServe(port int) error {
 	}
 
 	// Create and start web server
-	server, err := web.NewServer(port, cfg, configPath, brokerDB, store, tmplEngine)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	server, err := web.NewServer(ctx, port, cfg, configPath, brokerDB, store, tmplEngine)
 	if err != nil {
 		return fmt.Errorf("failed to create web server: %w", err)
 	}
