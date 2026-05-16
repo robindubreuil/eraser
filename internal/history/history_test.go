@@ -2,7 +2,10 @@ package history
 
 import (
 	"database/sql"
+	"os"
 	"path/filepath"
+	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -590,5 +593,618 @@ func TestUpdateBrokerResponseBody(t *testing.T) {
 	all, _ := store.GetAllBrokerResponses()
 	if len(all) != 1 || all[0].EmailBody != "updated body" {
 		t.Errorf("EmailBody not updated")
+	}
+}
+
+func TestDefaultDBPath(t *testing.T) {
+	path := DefaultDBPath()
+	if path == "" {
+		t.Error("DefaultDBPath() returned empty string")
+	}
+	_, err := os.UserHomeDir()
+	if err == nil && !strings.Contains(path, ".eraser") {
+		t.Errorf("DefaultDBPath() = %q, expected to contain .eraser", path)
+	}
+}
+
+func TestGetAllBrokerStatuses(t *testing.T) {
+	store := newTestStore(t)
+
+	t.Run("empty database", func(t *testing.T) {
+		statuses, err := store.GetAllBrokerStatuses()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(statuses) != 0 {
+			t.Errorf("expected 0 statuses, got %d", len(statuses))
+		}
+	})
+
+	t.Run("multiple brokers", func(t *testing.T) {
+		store.Add(&Record{
+			BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+			Template: "gdpr", Status: StatusSent, SentAt: time.Now().Add(-2 * time.Hour),
+		})
+		store.Add(&Record{
+			BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+			Template: "gdpr", Status: StatusFailed, Error: "timeout", SentAt: time.Now(),
+		})
+		store.Add(&Record{
+			BrokerID: "b", BrokerName: "B", Email: "t@e.com",
+			Template: "ccpa", Status: StatusSent, SentAt: time.Now().Add(-30 * time.Minute),
+		})
+
+		statuses, err := store.GetAllBrokerStatuses()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(statuses) != 2 {
+			t.Fatalf("expected 2 brokers, got %d", len(statuses))
+		}
+
+		bsA := statuses["a"]
+		if bsA.Status != StatusFailed {
+			t.Errorf("broker a Status = %q, want %q", bsA.Status, StatusFailed)
+		}
+		if bsA.TotalSent != 2 {
+			t.Errorf("broker a TotalSent = %d, want 2", bsA.TotalSent)
+		}
+
+		bsB := statuses["b"]
+		if bsB.Status != StatusSent {
+			t.Errorf("broker b Status = %q, want %q", bsB.Status, StatusSent)
+		}
+		if bsB.TotalSent != 1 {
+			t.Errorf("broker b TotalSent = %d, want 1", bsB.TotalSent)
+		}
+	})
+}
+
+func TestGetBrokerResponses_CombinedFilter(t *testing.T) {
+	store := newTestStore(t)
+
+	store.AddBrokerResponse(&BrokerResponse{
+		BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+		EmailFrom: "x@y.com", EmailSubject: "s1", Confidence: 0.7,
+		NeedsReview: true, ReceivedAt: time.Now(),
+	})
+	store.AddBrokerResponse(&BrokerResponse{
+		BrokerID: "b", BrokerName: "B", ResponseType: "form_required",
+		EmailFrom: "x@y.com", EmailSubject: "s2", Confidence: 0.9,
+		NeedsReview: false, ReceivedAt: time.Now(),
+	})
+	store.AddBrokerResponse(&BrokerResponse{
+		BrokerID: "c", BrokerName: "C", ResponseType: "success",
+		EmailFrom: "x@y.com", EmailSubject: "s3", Confidence: 0.95,
+		NeedsReview: true, ReceivedAt: time.Now(),
+	})
+
+	tests := []struct {
+		name         string
+		responseType string
+		needsReview  bool
+		limit        int
+		wantCount    int
+	}{
+		{"type + needs_review", "form_required", true, 10, 1},
+		{"type only", "form_required", false, 10, 2},
+		{"needs_review only", "", true, 10, 2},
+		{"no filters", "", false, 10, 3},
+		{"limit", "", false, 2, 2},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			responses, err := store.GetBrokerResponses(tt.responseType, tt.needsReview, tt.limit)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(responses) != tt.wantCount {
+				t.Errorf("got %d responses, want %d", len(responses), tt.wantCount)
+			}
+		})
+	}
+}
+
+func TestGetBrokerResponses_EmptyDB(t *testing.T) {
+	store := newTestStore(t)
+
+	responses, err := store.GetBrokerResponses("", false, 10)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(responses) != 0 {
+		t.Errorf("expected 0 responses from empty DB, got %d", len(responses))
+	}
+}
+
+func TestGetAllBrokerResponses_Empty(t *testing.T) {
+	store := newTestStore(t)
+
+	responses, err := store.GetAllBrokerResponses()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(responses) != 0 {
+		t.Errorf("expected 0, got %d", len(responses))
+	}
+}
+
+func TestGetResponseStats_Empty(t *testing.T) {
+	store := newTestStore(t)
+
+	stats, err := store.GetResponseStats()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(stats) != 0 {
+		t.Errorf("expected empty stats, got %d entries", len(stats))
+	}
+}
+
+func TestMarkTaskOpened_Idempotent(t *testing.T) {
+	store := newTestStore(t)
+
+	task := &PendingTask{BrokerID: "a", BrokerName: "A", TaskType: TaskCaptcha}
+	store.AddPendingTask(task)
+
+	if err := store.MarkTaskOpened(task.ID); err != nil {
+		t.Fatalf("first MarkTaskOpened() error = %v", err)
+	}
+	got, _ := store.GetPendingTaskByID(task.ID)
+	firstOpen := got.OpenedAt.Time
+
+	time.Sleep(10 * time.Millisecond)
+
+	if err := store.MarkTaskOpened(task.ID); err != nil {
+		t.Fatalf("second MarkTaskOpened() error = %v", err)
+	}
+	got, _ = store.GetPendingTaskByID(task.ID)
+	if !got.OpenedAt.Time.Equal(firstOpen) {
+		t.Error("MarkTaskOpened should be idempotent - opened_at changed on second call")
+	}
+}
+
+func TestGetPendingTasks_FilterCombos(t *testing.T) {
+	store := newTestStore(t)
+
+	t1 := &PendingTask{BrokerID: "a", BrokerName: "A", TaskType: TaskCaptcha}
+	store.AddPendingTask(t1)
+	t2 := &PendingTask{BrokerID: "b", BrokerName: "B", TaskType: TaskManualForm}
+	store.AddPendingTask(t2)
+	store.CompletePendingTask(t2.ID, "completed")
+
+	tests := []struct {
+		name      string
+		taskType  TaskType
+		status    string
+		wantCount int
+	}{
+		{"no filters", "", "", 2},
+		{"type only", TaskCaptcha, "", 1},
+		{"status only", "", "pending", 1},
+		{"type + status match", TaskManualForm, "completed", 1},
+		{"type + status mismatch", TaskCaptcha, "completed", 0},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tasks, err := store.GetPendingTasks(tt.taskType, tt.status)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(tasks) != tt.wantCount {
+				t.Errorf("got %d tasks, want %d", len(tasks), tt.wantCount)
+			}
+		})
+	}
+}
+
+func TestAddPendingTask_SetsStatus(t *testing.T) {
+	store := newTestStore(t)
+
+	task := &PendingTask{
+		BrokerID:       "a",
+		BrokerName:     "A",
+		TaskType:       TaskCaptcha,
+		FormURL:        "https://example.com",
+		ScreenshotPath: "/tmp/shot.png",
+		BrowserState:   `{"cookies":[]}`,
+		Notes:          "test note",
+		Status:         "ignored",
+	}
+	store.AddPendingTask(task)
+
+	got, _ := store.GetPendingTaskByID(task.ID)
+	if got.Status != "pending" {
+		t.Errorf("Status = %q, want %q (AddPendingTask always sets pending)", got.Status, "pending")
+	}
+	if got.BrowserState != `{"cookies":[]}` {
+		t.Errorf("BrowserState = %q, unexpected", got.BrowserState)
+	}
+	if got.ScreenshotPath != "/tmp/shot.png" {
+		t.Errorf("ScreenshotPath = %q, unexpected", got.ScreenshotPath)
+	}
+	if got.CreatedAt.IsZero() {
+		t.Error("CreatedAt should be set")
+	}
+}
+
+func TestGetFormsWithStatus(t *testing.T) {
+	tests := []struct {
+		name       string
+		setup      func(*Store)
+		wantCount  int
+		wantStatus string
+		wantBroker string
+	}{
+		{
+			name:      "empty database",
+			setup:     func(s *Store) {},
+			wantCount: 0,
+		},
+		{
+			name: "pending form",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form here", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+			},
+			wantCount:  1,
+			wantStatus: "pending",
+			wantBroker: "a",
+		},
+		{
+			name: "completed task shows filled",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+				task := &PendingTask{
+					BrokerID: "a", BrokerName: "A", TaskType: TaskCaptcha,
+					FormURL: "https://form.example.com",
+				}
+				s.AddPendingTask(task)
+				s.CompletePendingTask(task.ID, "completed")
+			},
+			wantCount:  1,
+			wantStatus: "filled",
+			wantBroker: "a",
+		},
+		{
+			name: "pending captcha task",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+				task := &PendingTask{
+					BrokerID: "a", BrokerName: "A", TaskType: TaskCaptcha,
+					FormURL: "https://form.example.com",
+				}
+				s.AddPendingTask(task)
+			},
+			wantCount:  1,
+			wantStatus: "captcha",
+			wantBroker: "a",
+		},
+		{
+			name: "skipped task",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+				task := &PendingTask{
+					BrokerID: "a", BrokerName: "A", TaskType: TaskManualForm,
+					FormURL: "https://form.example.com",
+				}
+				s.AddPendingTask(task)
+				s.CompletePendingTask(task.ID, "skipped")
+			},
+			wantCount:  1,
+			wantStatus: "skipped",
+			wantBroker: "a",
+		},
+		{
+			name: "pipeline status filled",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.UpdatePipelineStatus("a", PipelineFormFilled)
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+			},
+			wantCount:  1,
+			wantStatus: "filled",
+			wantBroker: "a",
+		},
+		{
+			name: "pipeline status confirmed",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.UpdatePipelineStatus("a", PipelineConfirmed)
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+			},
+			wantCount:  1,
+			wantStatus: "filled",
+			wantBroker: "a",
+		},
+		{
+			name: "pipeline status failed",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.UpdatePipelineStatus("a", PipelineFailed)
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+			},
+			wantCount:  1,
+			wantStatus: "failed",
+			wantBroker: "a",
+		},
+		{
+			name: "pipeline status rejected",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.UpdatePipelineStatus("a", PipelineRejected)
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://form.example.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+			},
+			wantCount:  1,
+			wantStatus: "skipped",
+			wantBroker: "a",
+		},
+		{
+			name: "deduplicates by broker_id",
+			setup: func(s *Store) {
+				s.Add(&Record{
+					BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+					Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+				})
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form1", FormURL: "https://f1.com",
+					Confidence: 0.9, ReceivedAt: time.Now(),
+				})
+				s.AddBrokerResponse(&BrokerResponse{
+					BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+					EmailFrom: "x@y.com", EmailSubject: "form2", FormURL: "https://f2.com",
+					Confidence: 0.8, ReceivedAt: time.Now(),
+				})
+			},
+			wantCount:  1,
+			wantStatus: "pending",
+			wantBroker: "a",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			store := newTestStore(t)
+			tt.setup(store)
+
+			forms, err := store.GetFormsWithStatus()
+			if err != nil {
+				t.Fatalf("GetFormsWithStatus() error = %v", err)
+			}
+			if len(forms) != tt.wantCount {
+				t.Fatalf("got %d forms, want %d", len(forms), tt.wantCount)
+			}
+			if tt.wantCount > 0 {
+				if forms[0].Status != tt.wantStatus {
+					t.Errorf("Status = %q, want %q", forms[0].Status, tt.wantStatus)
+				}
+				if tt.wantBroker != "" && forms[0].BrokerID != tt.wantBroker {
+					t.Errorf("BrokerID = %q, want %q", forms[0].BrokerID, tt.wantBroker)
+				}
+			}
+		})
+	}
+}
+
+func TestGetFormStats(t *testing.T) {
+	store := newTestStore(t)
+
+	store.Add(&Record{
+		BrokerID: "a", BrokerName: "A", Email: "t@e.com",
+		Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+	})
+	store.AddBrokerResponse(&BrokerResponse{
+		BrokerID: "a", BrokerName: "A", ResponseType: "form_required",
+		EmailFrom: "x@y.com", EmailSubject: "form", FormURL: "https://f.com",
+		Confidence: 0.9, ReceivedAt: time.Now(),
+	})
+
+	pending, filled, captcha, failed, skipped, err := store.GetFormStats()
+	if err != nil {
+		t.Fatalf("GetFormStats() error = %v", err)
+	}
+	if pending != 1 {
+		t.Errorf("pending = %d, want 1", pending)
+	}
+	if filled != 0 {
+		t.Errorf("filled = %d, want 0", filled)
+	}
+	if captcha != 0 {
+		t.Errorf("captcha = %d, want 0", captcha)
+	}
+	if failed != 0 {
+		t.Errorf("failed = %d, want 0", failed)
+	}
+	if skipped != 0 {
+		t.Errorf("skipped = %d, want 0", skipped)
+	}
+}
+
+func TestGetFormStats_Empty(t *testing.T) {
+	store := newTestStore(t)
+
+	pending, filled, captcha, failed, skipped, err := store.GetFormStats()
+	if err != nil {
+		t.Fatalf("GetFormStats() error = %v", err)
+	}
+	if pending != 0 || filled != 0 || captcha != 0 || failed != 0 || skipped != 0 {
+		t.Errorf("all stats should be 0: p=%d f=%d c=%d fa=%d s=%d", pending, filled, captcha, failed, skipped)
+	}
+}
+
+func TestGetPendingTaskStats_Empty(t *testing.T) {
+	store := newTestStore(t)
+
+	pending, completed, skipped, err := store.GetPendingTaskStats()
+	if err != nil {
+		t.Fatalf("GetPendingTaskStats() error = %v", err)
+	}
+	if pending != 0 || completed != 0 || skipped != 0 {
+		t.Errorf("empty DB: p=%d c=%d s=%d, want all 0", pending, completed, skipped)
+	}
+}
+
+func TestDeleteByStatus_NoMatch(t *testing.T) {
+	store := newTestStore(t)
+
+	deleted, err := store.DeleteByStatus(StatusSent)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if deleted != 0 {
+		t.Errorf("deleted = %d, want 0 on empty DB", deleted)
+	}
+}
+
+func TestGetRecentRequests_Empty(t *testing.T) {
+	store := newTestStore(t)
+
+	records, err := store.GetRecentRequests(10)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(records) != 0 {
+		t.Errorf("expected 0 records, got %d", len(records))
+	}
+}
+
+func TestGetMonthlyStats_Empty(t *testing.T) {
+	store := newTestStore(t)
+
+	sent, failed, err := store.GetMonthlyStats()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if sent != 0 || failed != 0 {
+		t.Errorf("sent=%d failed=%d, want both 0", sent, failed)
+	}
+}
+
+func TestGetPipelineStats_Empty(t *testing.T) {
+	store := newTestStore(t)
+
+	stats, err := store.GetPipelineStats()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(stats) != 0 {
+		t.Errorf("expected empty stats, got %d entries", len(stats))
+	}
+}
+
+func TestAddBrokerResponse_NeedsReviewTrue(t *testing.T) {
+	store := newTestStore(t)
+
+	resp := &BrokerResponse{
+		BrokerID: "a", BrokerName: "A", ResponseType: "unknown",
+		EmailFrom: "x@y.com", EmailSubject: "s1", Confidence: 0.3,
+		NeedsReview: true, ReceivedAt: time.Now(),
+	}
+	store.AddBrokerResponse(resp)
+
+	got, _ := store.GetBrokerResponses("", true, 10)
+	if len(got) != 1 || !got[0].NeedsReview {
+		t.Error("NeedsReview should be true")
+	}
+}
+
+func TestConcurrentAccess(t *testing.T) {
+	store := newTestStore(t)
+
+	store.Add(&Record{
+		BrokerID: "broker", BrokerName: "Broker", Email: "t@e.com",
+		Template: "gdpr", Status: StatusSent, SentAt: time.Now(),
+	})
+	store.AddBrokerResponse(&BrokerResponse{
+		BrokerID: "a", BrokerName: "A", ResponseType: "success",
+		EmailFrom: "x@y.com", EmailSubject: "s", Confidence: 0.9, ReceivedAt: time.Now(),
+	})
+	task := &PendingTask{BrokerID: "a", BrokerName: "A", TaskType: TaskCaptcha}
+	store.AddPendingTask(task)
+
+	var wg sync.WaitGroup
+	for range 20 {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			store.GetStats()
+			store.GetRecentRequests(5)
+			store.GetAllBrokerStatuses()
+			store.GetBrokerResponses("", false, 10)
+			store.GetPendingTasks("", "")
+			store.GetPipelineStats()
+			store.GetResponseStats()
+		}()
+	}
+	wg.Wait()
+
+	total, sent, failed, err := store.GetStats()
+	if err != nil {
+		t.Fatalf("GetStats() after concurrent reads: %v", err)
+	}
+	if total != 1 || sent != 1 || failed != 0 {
+		t.Errorf("total=%d sent=%d failed=%d, want 1/1/0", total, sent, failed)
 	}
 }

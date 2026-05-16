@@ -2,13 +2,13 @@
 
 > **Maintained fork** of [eraser-privacy/eraser](https://github.com/eraser-privacy/eraser) by Robin Dubreuil.
 
-Take back your privacy. Eraser sends data removal requests to 760+ data brokers on your behalf—for free.
+Take back your privacy. Eraser sends data removal requests to **903 data brokers** on your behalf—for free.
 
 You know those sites like Spokeo, BeenVerified, and Whitepages that have your home address, phone number, and family members' names? They're called data brokers, and there are hundreds of them. Services like Incogni and DeleteMe charge $100+/year to send opt-out requests to these companies. Eraser does the same thing, but it's open source and completely free.
 
 ### What to Expect
 
-**The good:** Eraser automatically sends removal request emails to 760+ data brokers. Many brokers process these requests automatically—you send the email, they remove your data, done.
+**The good:** Eraser automatically sends removal request emails to 903 data brokers across the US, UK, EU, and global regions. Many brokers process these requests automatically—you send the email, they remove your data, done.
 
 **The reality:** Some brokers require additional steps. They might send you a confirmation link to click, ask you to fill out a form on their website, or request identity verification. Eraser tracks these responses and shows you exactly what needs manual attention.
 
@@ -52,7 +52,7 @@ The wizard walks you through entering your personal information (the data broker
 **Step 4: Send Removal Requests**
 
 From the dashboard, you can:
-- Browse the list of 760+ data brokers
+- Browse the list of 903 data brokers
 - Send requests one at a time or in bulk
 - Track which requests have been sent and their status
 
@@ -111,7 +111,7 @@ go build -o eraser ./cmd/eraser
 | `eraser init` | Interactive config setup |
 | `eraser send` | Send removal requests |
 | `eraser send --dry-run` | Preview without sending |
-| `eraser list-brokers` | Show all 760+ brokers |
+| `eraser list-brokers` | Show all 903 brokers |
 | `eraser status` | View history and stats |
 | `eraser status --limit 50` | Show more history |
 | `eraser add-broker` | Add a custom broker |
@@ -182,8 +182,8 @@ The broker database is at `data/brokers.yaml`. To add one:
   email: privacy@example.com
   website: https://example.com
   opt_out_url: https://example.com/optout
-  region: us  # us, eu, or global
-  category: people-search  # people-search, marketing, or background-check
+  region: us  # us, eu, uk, or global
+  category: people-search  # marketing, people-search, background-check, credit, ad-tech, financial, identity
 ```
 
 Or use the interactive command:
@@ -191,6 +191,26 @@ Or use the interactive command:
 ```bash
 ./eraser add-broker
 ```
+
+---
+
+## Broker Database
+
+The broker database covers **903 data brokers** across 4 regions and 7 categories:
+
+| Category | Description |
+|----------|-------------|
+| marketing | Marketing and advertising data brokers |
+| people-search | People-search directories |
+| background-check | Background check and screening services |
+| credit | Credit reporting and financial data |
+| ad-tech | Advertising technology platforms |
+| financial | Financial data aggregators |
+| identity | Identity verification and lookup services |
+
+- **98%+ coverage** of the CA CPPA registry
+- **79% of brokers have opt-out URLs** listed
+- **Weekly automated validation** via CI to catch stale emails and broken links
 
 ---
 
@@ -214,7 +234,7 @@ Yes, with caveats:
 - **It's not instant.** Brokers have up to 30-45 days to process requests (varies by law). Some are faster.
 - **You'll need to repeat this.** Data brokers buy and sell data continuously. Running Eraser monthly keeps you off their lists.
 
-**The Pipeline view** in Eraser's web UI shows you exactly which brokers need manual attention. It's not fully automated, but it's free—and it does the tedious work of sending 760+ emails and tracking responses for you.
+**The Pipeline view** in Eraser's web UI shows you exactly which brokers need manual attention. It's not fully automated, but it's free—and it does the tedious work of sending 903 emails and tracking responses for you.
 
 ---
 
@@ -222,10 +242,23 @@ Yes, with caveats:
 
 | Service | Price | Brokers | Open Source |
 |---------|-------|---------|-------------|
-| **Eraser** *(this fork)* | Free | 760+ | Yes |
+| **Eraser** *(this fork)* | Free | 903 | Yes |
 | Incogni | $77/year | 180+ | No |
 | DeleteMe | $129/year | 750+ | No |
 | Privacy Duck | $500+/year | 500+ | No |
+
+---
+
+## Test Coverage
+
+| Package | Coverage |
+|---------|----------|
+| broker | 91.8% |
+| config | 93.0% |
+| email | 72.5% |
+| history | 86.2% |
+| template | 89.7% |
+| web | 68.0% |
 
 ---
 
@@ -244,41 +277,50 @@ Contributions are welcome. The most helpful things:
 
 ```
 eraser/
-├── cmd/eraser/               # CLI entry point (split command files)
-│   ├── main.go               # Root command and wiring
-│   ├── cmd_send.go           # Send command
-│   ├── cmd_serve.go          # Web UI server command
-│   ├── cmd_init.go           # Interactive setup
-│   ├── cmd_status.go         # History viewer
-│   ├── cmd_list_brokers.go   # Broker listing
-│   ├── cmd_add_broker.go     # Add custom broker
-│   ├── cmd_pipeline.go       # Pipeline command
-│   ├── cmd_monitor.go        # Monitor inbox
-│   ├── cmd_confirm.go        # Confirm requests
-│   ├── cmd_fill.go           # Fill forms
-│   └── cmd_cleanup_bounces.go
+├── cmd/eraser/                    # CLI entry point (split command files)
+│   ├── main.go                    # Root command and wiring
+│   ├── cmd_send.go                # Send command
+│   ├── cmd_serve.go               # Web UI server command
+│   ├── cmd_init.go                # Interactive setup
+│   ├── cmd_status.go              # History viewer
+│   ├── cmd_list_brokers.go        # Broker listing
+│   ├── cmd_add_broker.go          # Add custom broker
+│   ├── cmd_pipeline.go            # Pipeline command
+│   ├── cmd_monitor.go             # Monitor inbox
+│   ├── cmd_confirm.go             # Confirm requests
+│   ├── cmd_fill.go                # Fill forms
+│   └── cmd_cleanup_bounces.go     # Bounce cleanup
 ├── internal/
-│   ├── broker/               # Broker loading and filtering
-│   ├── browser/              # Browser automation for form filling
-│   ├── config/               # Configuration handling
-│   ├── email/                # SMTP email sender
-│   ├── history/              # SQLite request tracking
-│   ├── inbox/                # Inbox monitoring
-│   ├── template/             # Email template rendering
-│   └── web/                  # Web UI (split handler files)
-│       ├── server.go         # Server setup and routing
-│       ├── handlers_pages.go # Page handlers
-│       ├── handlers_api.go   # API handlers
-│       ├── handlers_setup.go # Setup wizard
-│       ├── handlers_inbox.go # Inbox handlers
-│       ├── handlers_tasks.go # Task handlers
-│       ├── handlers_settings.go
-│       ├── job.go            # Background jobs
-│       ├── session.go        # Session management
-│       ├── templates/        # HTML templates
-│       └── static/           # CSS/JS assets
-├── data/brokers.yaml         # 760+ broker database
-└── config.example.yaml       # Example configuration
+│   ├── broker/                    # Broker loading and filtering
+│   ├── browser/                   # Browser automation for form filling
+│   │   ├── browser.go
+│   │   ├── captcha.go
+│   │   ├── confirm.go
+│   │   └── filler.go
+│   ├── config/                    # Configuration handling
+│   ├── email/                     # SMTP email sender
+│   ├── history/                   # SQLite request tracking
+│   ├── inbox/                     # Inbox monitoring and response parsing
+│   │   ├── monitor.go
+│   │   ├── parser.go
+│   │   └── classifier.go
+│   ├── template/                  # Email template rendering
+│   └── web/                       # Web UI
+│       ├── server.go              # Server setup and routing
+│       ├── handlers_pages.go      # Page handlers
+│       ├── handlers_api.go        # API handlers
+│       ├── handlers_setup.go      # Setup wizard
+│       ├── handlers_inbox.go      # Inbox handlers
+│       ├── handlers_tasks.go      # Task handlers
+│       ├── handlers_settings.go   # Settings handlers
+│       ├── job.go                 # Background jobs
+│       ├── session.go             # Session management
+│       ├── templates/             # HTML templates
+│       └── static/                # CSS/JS assets
+├── data/brokers.yaml              # 903 broker database
+├── tools/broker-audit/            # Broker validation tooling
+├── .github/workflows/             # CI: broker-validation (weekly), ci
+└── config.example.yaml            # Example configuration
 ```
 
 ---

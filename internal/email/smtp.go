@@ -15,6 +15,19 @@ type SMTPSender struct {
 	from   string
 }
 
+type contextKeyType struct{}
+
+var sequenceKey = contextKeyType{}
+
+func ContextWithSequence(ctx context.Context, seq int) context.Context {
+	return context.WithValue(ctx, sequenceKey, seq)
+}
+
+func sequenceFromContext(ctx context.Context) int {
+	v, _ := ctx.Value(sequenceKey).(int)
+	return v
+}
+
 func NewSMTPSender(cfg config.SMTPConfig, from string) *SMTPSender {
 	return &SMTPSender{config: cfg, from: from}
 }
@@ -58,7 +71,7 @@ func (s *SMTPSender) Send(ctx context.Context, msg Message) Result {
 
 	return Result{
 		Success:   true,
-		MessageID: fmt.Sprintf("smtp-%s-%d", msg.To, ctx.Value("sequence")),
+		MessageID: fmt.Sprintf("smtp-%s-%d", msg.To, sequenceFromContext(ctx)),
 	}
 }
 

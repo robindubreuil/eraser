@@ -326,13 +326,13 @@ func (s *Store) GetAllBrokerStatuses() (map[string]BrokerStatus, error) {
 	statuses := make(map[string]BrokerStatus)
 	for rows.Next() {
 		var bs BrokerStatus
-		var lastSent sql.NullTime
+		var lastSentStr sql.NullString
 		var status string
 
-		if err := rows.Scan(&bs.BrokerID, &lastSent, &status, &bs.TotalSent); err != nil {
+		if err := rows.Scan(&bs.BrokerID, &lastSentStr, &status, &bs.TotalSent); err != nil {
 			return nil, fmt.Errorf("failed to scan broker status: %w", err)
 		}
-		bs.LastSent = lastSent.Time
+		bs.LastSent = parseSQLiteTime(lastSentStr)
 		bs.Status = Status(status)
 		statuses[bs.BrokerID] = bs
 	}
