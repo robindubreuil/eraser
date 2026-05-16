@@ -192,6 +192,11 @@ func TestCleanURL(t *testing.T) {
 			input: "https://broker.com/remove?email=a@b.com#confirm",
 			want:  "https://broker.com/remove?email=a@b.com#confirm",
 		},
+		{
+			name:  "invalid escape sequence",
+			input: "https://example.com/%zz",
+			want:  "",
+		},
 	}
 
 	for _, tt := range tests {
@@ -253,6 +258,11 @@ func TestIsTrackingURL(t *testing.T) {
 		{
 			name:  "open gif",
 			input: "https://mailer.com/open.gif",
+			want:  true,
+		},
+		{
+			name:  "generic gif detected as tracking",
+			input: "https://cdn.example.com/img/banner.gif",
 			want:  true,
 		},
 	}
@@ -896,6 +906,17 @@ func TestGetPrimaryFormURL(t *testing.T) {
 			},
 			brokerDomain: "broker.com",
 			want:         "https://broker.com/opt-out",
+		},
+		{
+			name: "all form urls disqualified",
+			urls: ExtractedURLs{
+				FormURLs: []string{
+					"https://broker.com/privacy-policy",
+					"https://broker.com/login",
+				},
+			},
+			brokerDomain: "broker.com",
+			want:         "",
 		},
 	}
 
