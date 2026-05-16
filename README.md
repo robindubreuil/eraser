@@ -198,6 +198,13 @@ Or use the interactive command:
 
 The broker database covers **903 data brokers** across 4 regions and 7 categories:
 
+| Region | Count |
+|--------|-------|
+| US | 839 |
+| UK | 31 |
+| EU | 19 |
+| Global | 14 |
+
 | Category | Description |
 |----------|-------------|
 | marketing | Marketing and advertising data brokers |
@@ -208,9 +215,19 @@ The broker database covers **903 data brokers** across 4 regions and 7 categorie
 | financial | Financial data aggregators |
 | identity | Identity verification and lookup services |
 
+- **92% opt-out URL coverage** (832/903 brokers)
 - **98%+ coverage** of the CA CPPA registry
-- **79% of brokers have opt-out URLs** listed
-- **Weekly automated validation** via CI to catch stale emails and broken links
+- **Weekly CI validation with quality gates** to catch stale emails and broken links
+
+---
+
+## Security
+
+- **CSP** without `unsafe-inline` or `unsafe-eval`
+- **CSRF protection** on all state-changing endpoints
+- **Input validation** (email, status, path traversal)
+- **No error leakage** in responses
+- **Go 1.23** compatible, `x/net` CVE fixed
 
 ---
 
@@ -253,12 +270,15 @@ Yes, with caveats:
 
 | Package | Coverage |
 |---------|----------|
+| cmd/eraser | 6.1% |
 | broker | 91.8% |
 | config | 93.0% |
-| email | 72.5% |
+| email | 89.9% |
 | history | 86.2% |
+| inbox | 60.3% |
 | template | 89.7% |
-| web | 68.0% |
+| web | 76.3% |
+| broker-audit | 68.2% |
 
 ---
 
@@ -279,6 +299,7 @@ Contributions are welcome. The most helpful things:
 eraser/
 ├── cmd/eraser/                    # CLI entry point (split command files)
 │   ├── main.go                    # Root command and wiring
+│   ├── main_test.go               # CLI tests
 │   ├── cmd_send.go                # Send command
 │   ├── cmd_serve.go               # Web UI server command
 │   ├── cmd_init.go                # Interactive setup
@@ -292,19 +313,40 @@ eraser/
 │   └── cmd_cleanup_bounces.go     # Bounce cleanup
 ├── internal/
 │   ├── broker/                    # Broker loading and filtering
+│   │   ├── broker.go
+│   │   └── broker_test.go
 │   ├── browser/                   # Browser automation for form filling
 │   │   ├── browser.go
 │   │   ├── captcha.go
 │   │   ├── confirm.go
 │   │   └── filler.go
 │   ├── config/                    # Configuration handling
+│   │   ├── config.go
+│   │   └── config_test.go
 │   ├── email/                     # SMTP email sender
+│   │   ├── sender.go
+│   │   ├── smtp.go
+│   │   ├── sender_test.go
+│   │   └── smtp_coverage_test.go
 │   ├── history/                   # SQLite request tracking
+│   │   ├── history.go
+│   │   └── history_test.go
 │   ├── inbox/                     # Inbox monitoring and response parsing
 │   │   ├── monitor.go
 │   │   ├── parser.go
-│   │   └── classifier.go
+│   │   ├── classifier.go
+│   │   ├── monitor_test.go
+│   │   ├── parser_test.go
+│   │   ├── classifier_test.go
+│   │   ├── coverage_test.go
+│   │   └── classifier_coverage_test.go
 │   ├── template/                  # Email template rendering
+│   │   ├── template.go
+│   │   ├── template_test.go
+│   │   └── templates/
+│   │       ├── ccpa.tmpl
+│   │       ├── gdpr.tmpl
+│   │       └── generic.tmpl
 │   └── web/                       # Web UI
 │       ├── server.go              # Server setup and routing
 │       ├── handlers_pages.go      # Page handlers
@@ -315,12 +357,20 @@ eraser/
 │       ├── handlers_settings.go   # Settings handlers
 │       ├── job.go                 # Background jobs
 │       ├── session.go             # Session management
+│       ├── server_test.go
+│       ├── coverage_test.go
 │       ├── templates/             # HTML templates
 │       └── static/                # CSS/JS assets
-├── data/brokers.yaml              # 903 broker database
 ├── tools/broker-audit/            # Broker validation tooling
+│   ├── main.go
+│   └── main_test.go
+├── data/brokers.yaml              # 903 broker database
 ├── .github/workflows/             # CI: broker-validation (weekly), ci
-└── config.example.yaml            # Example configuration
+├── .golangci.yml                  # Linter config
+├── go.mod
+├── go.sum
+├── config.example.yaml            # Example configuration
+└── LICENSE                        # MIT
 ```
 
 ---
