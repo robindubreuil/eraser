@@ -1,6 +1,6 @@
-<div class="bg-{{.BgColor}}-100 border border-{{.BorderColor}}-400 text-{{.TextColor}} px-4 py-3 rounded">
-    <strong>{{.Title}}</strong>
-    {{if .Message}}<p class="mt-1 text-sm">{{.Message}}</p>{{end}}
-    {{if .HTML}}<div class="mt-1 text-sm">{{.HTML}}</div>{{end}}
+<div style="background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3);" class="px-4 py-3 rounded">
+    <strong class="text-red-400">{{.Title}}</strong>
+    {{if .Message}}<p class="mt-1 text-sm text-secondary">{{.Message}}</p>{{end}}
+    {{if .HTML}}<div class="mt-1 text-sm text-secondary">{{.HTML}}</div>{{end}}
 </div>
 {{if .Footer}}<div class="mt-4">{{.Footer}}</div>{{end}}

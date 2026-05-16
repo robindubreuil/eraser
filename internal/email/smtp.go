@@ -10,6 +10,8 @@ import (
 	"github.com/robindubreuil/eraser/internal/config"
 )
 
+var tlsDial = tls.Dial
+
 type SMTPSender struct {
 	config config.SMTPConfig
 	from   string
@@ -87,7 +89,7 @@ func sanitizeSMTPError(err error) error {
 }
 
 func (s *SMTPSender) sendWithTLS(addr string, auth smtp.Auth, from, to string, msg []byte) error {
-	conn, err := tls.Dial("tcp", addr, &tls.Config{
+	conn, err := tlsDial("tcp", addr, &tls.Config{
 		ServerName: s.config.Host,
 		MinVersion: tls.VersionTLS12,
 	})

@@ -46,11 +46,16 @@
                 <div class="space-y-4">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center
-                            {{if eq .Task.TaskType "captcha"}}bg-yellow-100 text-yellow-600
-                            {{else if eq .Task.TaskType "manual_form"}}bg-blue-100 text-blue-600
-                            {{else if eq .Task.TaskType "review"}}bg-orange-100 text-orange-600
-                            {{else if eq .Task.TaskType "confirmation"}}bg-indigo-100 text-indigo-600
-                            {{else}}bg-gray-100 text-gray-600{{end}}">
+                            {{if eq .Task.TaskType "captcha"}}text-amber-400
+                            {{else if eq .Task.TaskType "manual_form"}}text-blue-400
+                            {{else if eq .Task.TaskType "review"}}text-orange-400
+                            {{else if eq .Task.TaskType "confirmation"}}text-indigo-400
+                            {{else}}text-slate-400{{end}}"
+                            style="background: {{if eq .Task.TaskType "captcha"}}rgba(245, 158, 11, 0.15)
+                            {{else if eq .Task.TaskType "manual_form"}}rgba(59, 130, 246, 0.15)
+                            {{else if eq .Task.TaskType "review"}}rgba(249, 115, 22, 0.15)
+                            {{else if eq .Task.TaskType "confirmation"}}rgba(99, 102, 241, 0.15)
+                            {{else}}var(--bg-elevated){{end}};">
                             {{if eq .Task.TaskType "captcha"}}
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
@@ -88,13 +93,13 @@
                         <div>
                             <p class="text-sm text-muted">Status</p>
                             <span class="inline-flex items-center gap-1.5 text-sm font-medium
-                                {{if eq .Task.Status "pending"}}text-yellow-500
-                                {{else if eq .Task.Status "completed"}}text-green-500
-                                {{else}}text-gray-500{{end}}">
+                                {{if eq .Task.Status "pending"}}text-amber-500
+                                {{else if eq .Task.Status "completed"}}text-emerald-500
+                                {{else}}text-slate-400{{end}}">
                                 <span class="w-2 h-2 rounded-full
-                                    {{if eq .Task.Status "pending"}}bg-yellow-500
-                                    {{else if eq .Task.Status "completed"}}bg-green-500
-                                    {{else}}bg-gray-500{{end}}"></span>
+                                    {{if eq .Task.Status "pending"}}bg-amber-500
+                                    {{else if eq .Task.Status "completed"}}bg-emerald-500
+                                    {{else}}bg-slate-500{{end}}"></span>
                                 {{.Task.Status}}
                             </span>
                         </div>

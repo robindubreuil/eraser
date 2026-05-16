@@ -23,14 +23,14 @@
 
     <!-- Daily limit info banner -->
     {{if gt .Filtered 250}}
-    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+    <div class="rounded-lg p-4 mb-6" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
         <div class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <div>
-                <p class="text-blue-800 text-sm">
-                    <strong>Sending {{.Filtered}} emails will take multiple days.</strong>
+                <p class="text-secondary text-sm">
+                    <strong class="text-blue-400">Sending {{.Filtered}} emails will take multiple days.</strong>
                     To avoid email provider rate limits, Eraser sends up to 250 emails per day.
                     Remaining emails will automatically continue when you restart the app the next day.
                 </p>
@@ -350,13 +350,13 @@ function showProgressUI() {
         <div class="card p-4">
             <div class="flex items-center justify-between mb-2">
                 <span class="font-medium text-primary">Sending emails...</span>
-                <button onclick="cancelJob()" class="btn btn-ghost text-sm py-1 px-3 text-red-600 hover:bg-red-50">
+                <button onclick="cancelJob()" class="btn btn-ghost text-sm py-1 px-3 text-red-400 hover:bg-red-500/10">
                     Cancel
                 </button>
             </div>
             <div id="current-broker" class="text-sm text-secondary mb-2"></div>
-            <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                <div id="progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all" style="width: 0%"></div>
+            <div class="w-full rounded-full h-2 mb-2" style="background: var(--border);">
+                <div id="progress-bar" class="bg-emerald-500 h-2 rounded-full transition-all" style="width: 0%"></div>
             </div>
             <div id="progress-text" class="text-xs text-muted">0 of 0 complete (0 sent, 0 failed)</div>
         </div>
@@ -428,25 +428,25 @@ function showCompletionMessage(job) {
         const sent = escapeHTML(String(job.sent));
         const remaining = escapeHTML(String(job.total - job.sent - job.failed));
         progressArea.innerHTML = `
-            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div class="rounded-lg p-4" style="background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3);">
                 <div class="flex items-start gap-3">
-                    <svg class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                     </svg>
                     <div>
-                        <h3 class="font-semibold text-red-800">Email Authentication Failed</h3>
-                        <p class="text-red-700 text-sm mt-1">Sent ${sent} emails before stopping. Your email provider blocked further sends.</p>
-                        <div class="mt-3 p-3 rounded border border-red-100" style="background: var(--bg-elevated);">
+                        <h3 class="font-semibold text-red-400">Email Authentication Failed</h3>
+                        <p class="text-secondary text-sm mt-1">Sent ${sent} emails before stopping. Your email provider blocked further sends.</p>
+                        <div class="mt-3 p-3 rounded border border-[var(--border)]" style="background: var(--bg-elevated);">
                             <p class="font-medium text-primary mb-2">What to do:</p>
                             <ol class="text-sm text-secondary space-y-1 list-decimal list-inside">
                                 <li>Check your email account for security alerts</li>
-                                <li>If using Gmail, <a href="https://myaccount.google.com/apppasswords" target="_blank" class="text-blue-600 underline">generate a new app password</a></li>
+                                <li>If using Gmail, <a href="https://myaccount.google.com/apppasswords" target="_blank" class="text-accent underline">generate a new app password</a></li>
                                 <li>Wait 24 hours before trying again (rate limits reset daily)</li>
-                                <li>Update your email settings in <a href="/settings" class="text-blue-600 underline">Settings</a></li>
+                                <li>Update your email settings in <a href="/settings" class="text-accent underline">Settings</a></li>
                             </ol>
                         </div>
-                        <p class="text-sm text-gray-600 mt-3">
-                            <strong>${remaining} brokers remaining.</strong>
+                        <p class="text-sm text-muted mt-3">
+                            <strong class="text-secondary">${remaining} brokers remaining.</strong>
                             Filter by "Pending" status to send to them later.
                         </p>
                     </div>
@@ -456,15 +456,17 @@ function showCompletionMessage(job) {
         return;
     }
 
-    const statusClass = job.status === 'canceled' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800';
+    const statusClass = job.status === 'canceled' ? 'text-amber-400' : 'text-emerald-400';
+    const statusBg = job.status === 'canceled' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(16, 185, 129, 0.1)';
+    const statusBorder = job.status === 'canceled' ? 'rgba(245, 158, 11, 0.3)' : 'rgba(16, 185, 129, 0.3)';
     const statusText = job.status === 'canceled' ? 'Canceled' : 'Complete';
     const sent = escapeHTML(String(job.sent));
     const failed = escapeHTML(String(job.failed));
 
     progressArea.innerHTML = `
-        <div class="${statusClass} px-4 py-3 rounded">
+        <div class="${statusClass} px-4 py-3 rounded" style="background: ${statusBg}; border: 1px solid ${statusBorder};">
             <strong>${statusText}!</strong> Sent ${sent} emails (${failed} failed).
-            <a href="/brokers" class="underline ml-2">Refresh page</a>
+            <a href="/brokers" class="text-accent underline ml-2">Refresh page</a>
         </div>
     `;
 }
@@ -489,7 +491,9 @@ async function cancelJob() {
 function showError(message) {
     const progressArea = document.getElementById('send-all-progress');
     const div = document.createElement('div');
-    div.className = 'bg-red-100 text-red-800 px-4 py-3 rounded';
+    div.className = 'text-red-400 px-4 py-3 rounded';
+    div.style.background = 'rgba(244, 63, 94, 0.1)';
+    div.style.border = '1px solid rgba(244, 63, 94, 0.3)';
     const strong = document.createElement('strong');
     strong.textContent = 'Error: ';
     div.appendChild(strong);

@@ -24,7 +24,8 @@
         <button
             id="clear-failed-btn"
             onclick="clearFailedRecords()"
-            class="px-4 py-2 rounded-lg text-sm font-medium bg-red-100 text-red-700 hover:bg-red-200 transition-colors flex items-center gap-2"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-red-400"
+            style="background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3);"
         >
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -55,7 +56,9 @@
 
             if (resp.ok) {
                 const div = document.createElement('div');
-                div.className = 'bg-green-100 text-green-800 px-4 py-3 rounded';
+                div.className = 'text-emerald-400 px-4 py-3 rounded';
+                div.style.background = 'rgba(16, 185, 129, 0.1)';
+                div.style.border = '1px solid rgba(16, 185, 129, 0.3)';
                 div.textContent = data.message + '. ';
                 const a = document.createElement('a');
                 a.href = '/history';
@@ -69,7 +72,9 @@
             }
         } catch (err) {
             const div = document.createElement('div');
-            div.className = 'bg-red-100 text-red-800 px-4 py-3 rounded';
+            div.className = 'text-red-400 px-4 py-3 rounded';
+            div.style.background = 'rgba(244, 63, 94, 0.1)';
+            div.style.border = '1px solid rgba(244, 63, 94, 0.3)';
             div.textContent = 'Error: ' + err.message;
             document.getElementById('clear-result').innerHTML = '';
             document.getElementById('clear-result').appendChild(div);

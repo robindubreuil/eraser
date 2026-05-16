@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 
 	"gopkg.in/yaml.v3"
@@ -54,22 +56,30 @@ type MatchResult struct {
 	OurWebsite   string `json:"our_website,omitempty"`
 }
 
+type MXDomainResult struct {
+	Domain string `json:"domain"`
+	HasMX  bool   `json:"has_mx"`
+}
+
 type AuditReport struct {
-	Timestamp         string        `json:"timestamp"`
-	OurBrokerCount    int           `json:"our_broker_count"`
-	CPPABrokerCount   int           `json:"cppa_broker_count"`
-	CPPAMatched       int           `json:"cppa_matched"`
-	CPPAMissing       int           `json:"cppa_missing"`
-	CPPAUnmatched     []MatchResult `json:"cppa_unmatched"`
-	OurUnmatched      []MatchResult `json:"our_unmatched"`
-	EmailMismatches   []MatchResult `json:"email_mismatches"`
-	WebsiteMismatches []MatchResult `json:"website_mismatches"`
-	GmailBrokers      []string      `json:"gmail_brokers"`
-	MissingOptOut     []string      `json:"missing_optout"`
-	MissingWebsite    []string      `json:"missing_website"`
-	DuplicateNames    []string      `json:"duplicate_names"`
-	DuplicateEmails   []string      `json:"duplicate_emails"`
-	Suggestions       []string      `json:"suggestions"`
+	Timestamp         string           `json:"timestamp"`
+	OurBrokerCount    int              `json:"our_broker_count"`
+	CPPABrokerCount   int              `json:"cppa_broker_count"`
+	CPPAMatched       int              `json:"cppa_matched"`
+	CPPAMissing       int              `json:"cppa_missing"`
+	CPPAUnmatched     []MatchResult    `json:"cppa_unmatched"`
+	OurUnmatched      []MatchResult    `json:"our_unmatched"`
+	EmailMismatches   []MatchResult    `json:"email_mismatches"`
+	WebsiteMismatches []MatchResult    `json:"website_mismatches"`
+	GmailBrokers      []string         `json:"gmail_brokers"`
+	MissingOptOut     []string         `json:"missing_optout"`
+	MissingWebsite    []string         `json:"missing_website"`
+	DuplicateNames    []string         `json:"duplicate_names"`
+	DuplicateEmails   []string         `json:"duplicate_emails"`
+	MXNoRecords       []string         `json:"mx_no_records"`
+	MXDomainsChecked  []MXDomainResult `json:"mx_domains_checked"`
+	MXFailThreshold   bool             `json:"mx_fail_threshold"`
+	Suggestions       []string         `json:"suggestions"`
 }
 
 func main() {
@@ -114,6 +124,9 @@ func main() {
 
 	// Basic quality checks
 	runQualityChecks(db, report)
+
+	// MX record validation
+	validateMXRecords(db, report)
 
 	// CPPA cross-reference
 	if fetchCPPA {
@@ -526,6 +539,89 @@ func runHTTPValidation(db *BrokerDatabase, report *AuditReport) {
 	}
 }
 
+func validateMXRecords(db *BrokerDatabase, report *AuditReport) {
+	domainSet := make(map[string]bool)
+	domainToBrokers := make(map[string][]string)
+	for _, b := range db.Brokers {
+		d := emailDomain(b.Email)
+		if d == "" {
+			continue
+		}
+		domainSet[d] = true
+		domainToBrokers[d] = append(domainToBrokers[d], b.Name)
+	}
+
+	domains := make([]string, 0, len(domainSet))
+	for d := range domainSet {
+		domains = append(domains, d)
+	}
+
+	fmt.Printf("  Checking MX records for %d unique domains (20 concurrent)...\n", len(domains))
+
+	type mxResult struct {
+		domain string
+		hasMX  bool
+	}
+
+	ch := make(chan mxResult, len(domains))
+	sem := make(chan struct{}, 20)
+	var wg sync.WaitGroup
+
+	for _, domain := range domains {
+		wg.Add(1)
+		sem <- struct{}{}
+		go func(d string) {
+			defer func() { <-sem }()
+			defer wg.Done()
+			mx, _ := net.LookupMX(d)
+			ch <- mxResult{d, len(mx) > 0}
+		}(domain)
+	}
+
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
+
+	mxStatus := make(map[string]bool)
+	for r := range ch {
+		mxStatus[r.domain] = r.hasMX
+	}
+
+	var noMXDomains []MXDomainResult
+	domainHasMX := make(map[string]bool)
+	for _, d := range domains {
+		has := mxStatus[d]
+		domainHasMX[d] = has
+		report.MXDomainsChecked = append(report.MXDomainsChecked, MXDomainResult{d, has})
+		if !has {
+			noMXDomains = append(noMXDomains, MXDomainResult{d, false})
+		}
+	}
+
+	var noMXBrokers []string
+	for _, b := range db.Brokers {
+		d := emailDomain(b.Email)
+		if d != "" && !domainHasMX[d] {
+			noMXBrokers = append(noMXBrokers, b.Name)
+		}
+	}
+	report.MXNoRecords = noMXBrokers
+
+	fmt.Printf("  MX check: %d/%d domains have no MX records (%d brokers affected)\n",
+		len(noMXDomains), len(domains), len(noMXBrokers))
+	for _, nr := range noMXDomains {
+		fmt.Printf("    NO MX: %-40s (brokers: %s)\n", nr.Domain, strings.Join(domainToBrokers[nr.Domain], ", "))
+	}
+
+	badPct := pct(len(noMXBrokers), len(db.Brokers))
+	if badPct > 5.0 {
+		report.MXFailThreshold = true
+		report.Suggestions = append(report.Suggestions,
+			fmt.Sprintf("MX GATE: %.1f%% of brokers have domains with no MX records (threshold: 5%%)", badPct))
+	}
+}
+
 func printReport(report *AuditReport) {
 	fmt.Println("\n========== BROKER AUDIT REPORT ==========")
 	fmt.Printf("Timestamp: %s\n", report.Timestamp)
@@ -583,6 +679,14 @@ func printReport(report *AuditReport) {
 	fmt.Printf("Missing website: %d/%d\n", len(report.MissingWebsite), report.OurBrokerCount)
 	fmt.Printf("Duplicate emails: %d\n", len(report.DuplicateEmails))
 	fmt.Printf("Duplicate names: %d\n", len(report.DuplicateNames))
+
+	fmt.Printf("MX no records: %d brokers\n", len(report.MXNoRecords))
+	for _, n := range report.MXNoRecords {
+		fmt.Printf("  - %s\n", n)
+	}
+	if report.MXFailThreshold {
+		fmt.Println("  ** QUALITY GATE FAILED: >5% brokers have no MX records **")
+	}
 
 	if len(report.Suggestions) > 0 {
 		fmt.Printf("\n--- SUGGESTIONS (%d) ---\n", len(report.Suggestions))

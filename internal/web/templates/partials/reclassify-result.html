@@ -1,19 +1,19 @@
-<div class="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded">
-    <strong>Reclassification complete!</strong> Processed {{.Total}} records.
-    <div class="mt-2 text-sm grid grid-cols-2 gap-2">
-        <div>Updated: <span class="font-semibold">{{.Updated}}</span></div>
-        <div>Unchanged: <span class="font-semibold">{{.Unchanged}}</span></div>
+<div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);" class="px-4 py-3 rounded">
+    <strong class="text-emerald-400">Reclassification complete!</strong> <span class="text-secondary">Processed {{.Total}} records.</span>
+    <div class="mt-2 text-sm text-secondary grid grid-cols-2 gap-2">
+        <div>Updated: <span class="font-semibold text-primary">{{.Updated}}</span></div>
+        <div>Unchanged: <span class="font-semibold text-slate-400">{{.Unchanged}}</span></div>
     </div>
-    <div class="mt-2 text-sm grid grid-cols-3 gap-2">
-        <div>Pending: <span class="font-semibold">{{.Pending}}</span></div>
-        <div>Rejected: <span class="font-semibold">{{.Rejected}}</span></div>
-        <div>Success: <span class="font-semibold">{{.Success}}</span></div>
-        <div>Form required: <span class="font-semibold">{{.FormRequired}}</span></div>
-        <div>Confirm required: <span class="font-semibold">{{.ConfirmRequired}}</span></div>
-        <div>Unknown: <span class="font-semibold">{{.Unknown}}</span></div>
+    <div class="mt-2 text-sm text-secondary grid grid-cols-3 gap-2">
+        <div>Pending: <span class="font-semibold text-slate-400">{{.Pending}}</span></div>
+        <div>Rejected: <span class="font-semibold text-red-400">{{.Rejected}}</span></div>
+        <div>Success: <span class="font-semibold text-emerald-400">{{.Success}}</span></div>
+        <div>Form required: <span class="font-semibold text-amber-400">{{.FormRequired}}</span></div>
+        <div>Confirm required: <span class="font-semibold text-indigo-400">{{.ConfirmRequired}}</span></div>
+        <div>Unknown: <span class="font-semibold text-slate-400">{{.Unknown}}</span></div>
     </div>
     <p class="mt-2 text-sm">
-        <a href="/tasks" class="underline font-medium">View action items</a> |
-        <a href="/pipeline" class="underline" onclick="window.location.reload()">Refresh page</a>
+        <a href="/tasks" class="text-accent hover:underline font-medium">View action items</a> |
+        <a href="/pipeline" class="text-accent hover:underline" onclick="window.location.reload()">Refresh page</a>
     </p>
 </div>

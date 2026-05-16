@@ -1,14 +1,14 @@
-<div class="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded">
-    <strong>Scan complete!</strong> Found {{.Total}} broker emails.
-    <div class="mt-2 text-sm grid grid-cols-2 gap-2">
-        <div>Success: <span class="font-semibold">{{.Success}}</span></div>
-        <div>Form required: <span class="font-semibold">{{.FormRequired}}</span></div>
-        <div>Confirm required: <span class="font-semibold">{{.ConfirmRequired}}</span></div>
-        <div>Rejected: <span class="font-semibold">{{.Rejected}}</span></div>
-        <div>Unknown: <span class="font-semibold">{{.Unknown}}</span></div>
+<div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);" class="px-4 py-3 rounded">
+    <strong class="text-emerald-400">Scan complete!</strong> <span class="text-secondary">Found {{.Total}} broker emails.</span>
+    <div class="mt-2 text-sm text-secondary grid grid-cols-2 gap-2">
+        <div>Success: <span class="font-semibold text-emerald-400">{{.Success}}</span></div>
+        <div>Form required: <span class="font-semibold text-amber-400">{{.FormRequired}}</span></div>
+        <div>Confirm required: <span class="font-semibold text-indigo-400">{{.ConfirmRequired}}</span></div>
+        <div>Rejected: <span class="font-semibold text-red-400">{{.Rejected}}</span></div>
+        <div>Unknown: <span class="font-semibold text-slate-400">{{.Unknown}}</span></div>
     </div>
     <p class="mt-2 text-sm">
-        <a href="{{.Link}}" class="underline font-medium">View pending tasks</a> |
-        <a href="{{.RefreshLink}}" class="underline" onclick="window.location.reload()">Refresh page</a>
+        <a href="{{.Link}}" class="text-accent hover:underline font-medium">View pending tasks</a> |
+        <a href="{{.RefreshLink}}" class="text-accent hover:underline" onclick="window.location.reload()">Refresh page</a>
     </p>
 </div>
