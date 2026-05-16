@@ -1,0 +1,42 @@
+name: Broker Validation
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday 6 AM UTC
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Cross-reference CPPA registry
+        run: |
+          go run tools/broker-audit/main.go data/brokers.yaml \
+            --fetch-cppa \
+            --validate \
+            --json broker-audit-report.json
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: broker-audit-report
+          path: broker-audit-report.json
+          retention-days: 30
+
+      - name: Check for new dead brokers
+        run: |
+          DEAD=$(python3 -c "
+          import json
+          with open('broker-audit-report.json') as f:
+              r = json.load(f)
+          dead = [s for s in r.get('suggestions',[]) if 'dead' in s.lower() or 'unreachable' in s.lower()]
+          print(len(dead))
+          ")
+          echo "Dead URL suggestions: $DEAD"
+          # Don't fail the workflow, just report
