@@ -420,7 +420,7 @@ func securityHeaders(next http.Handler) http.Handler {
 		w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
 
 		csp := "default-src 'self'; " +
-			"script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com; " +
+			"script-src 'self' https://unpkg.com; " +
 			"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
 			"img-src 'self' data:; " +
 			"font-src 'self' https://fonts.gstatic.com; " +

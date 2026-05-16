@@ -50,6 +50,10 @@ func (s *Server) handleTaskComplete(w http.ResponseWriter, r *http.Request) {
 	if status == "" {
 		status = "completed"
 	}
+	validStatuses := map[string]bool{"completed": true, "skipped": true, "failed": true}
+	if !validStatuses[status] {
+		status = "completed"
+	}
 
 	if s.historyStore == nil {
 		w.WriteHeader(http.StatusInternalServerError)

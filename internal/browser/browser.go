@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"time"
 
 	"github.com/chromedp/cdproto/page"
@@ -307,7 +308,9 @@ func (b *Browser) takeScreenshot(ctx context.Context, brokerID, suffix string) (
 		return "", err
 	}
 
-	filename := fmt.Sprintf("%s_%s_%d.png", brokerID, suffix, time.Now().Unix())
+	safeID := regexp.MustCompile(`[^a-zA-Z0-9_-]`).ReplaceAllString(brokerID, "_")
+	safeSuffix := regexp.MustCompile(`[^a-zA-Z0-9_-]`).ReplaceAllString(suffix, "_")
+	filename := fmt.Sprintf("%s_%s_%d.png", safeID, safeSuffix, time.Now().Unix())
 	filepath := filepath.Join(b.config.ScreenshotDir, filename)
 
 	if err := os.WriteFile(filepath, buf, 0644); err != nil {

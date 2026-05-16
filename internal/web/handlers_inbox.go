@@ -26,8 +26,8 @@ func (s *Server) handleAPIInboxScan(w http.ResponseWriter, r *http.Request) {
 			"BgColor":     "red",
 			"BorderColor": "red",
 			"TextColor":   "red-700",
-			"Title":       "Failed to connect to inbox:",
-			"Message":     err.Error(),
+			"Title":       "Failed to connect to inbox",
+			"Message":     "Check your IMAP settings and try again.",
 		})
 		return
 	}
@@ -39,8 +39,8 @@ func (s *Server) handleAPIInboxScan(w http.ResponseWriter, r *http.Request) {
 			"BgColor":     "red",
 			"BorderColor": "red",
 			"TextColor":   "red-700",
-			"Title":       "Failed to fetch emails:",
-			"Message":     err.Error(),
+			"Title":       "Failed to fetch emails",
+			"Message":     "An error occurred while fetching emails. Please try again.",
 		})
 		return
 	}
@@ -143,8 +143,8 @@ func (s *Server) handleAPIInboxRescan(w http.ResponseWriter, r *http.Request) {
 				"BgColor":     "red",
 				"BorderColor": "red",
 				"TextColor":   "red-700",
-				"Title":       "Failed to clear responses:",
-				"Message":     err.Error(),
+				"Title":       "Failed to clear responses",
+				"Message":     "An error occurred. Please try again.",
 			})
 			return
 		}
@@ -160,8 +160,8 @@ func (s *Server) handleAPIInboxRescan(w http.ResponseWriter, r *http.Request) {
 			"BgColor":     "red",
 			"BorderColor": "red",
 			"TextColor":   "red-700",
-			"Title":       "Failed to connect to inbox:",
-			"Message":     err.Error(),
+			"Title":       "Failed to connect to inbox",
+			"Message":     "Check your IMAP settings and try again.",
 		})
 		return
 	}
@@ -173,8 +173,8 @@ func (s *Server) handleAPIInboxRescan(w http.ResponseWriter, r *http.Request) {
 			"BgColor":     "red",
 			"BorderColor": "red",
 			"TextColor":   "red-700",
-			"Title":       "Failed to fetch emails:",
-			"Message":     err.Error(),
+			"Title":       "Failed to fetch emails",
+			"Message":     "An error occurred while fetching emails. Please try again.",
 		})
 		return
 	}
@@ -292,8 +292,8 @@ func (s *Server) handleAPIReclassify(w http.ResponseWriter, r *http.Request) {
 			"BgColor":     "red",
 			"BorderColor": "red",
 			"TextColor":   "red-700",
-			"Title":       "Failed to get responses:",
-			"Message":     err.Error(),
+			"Title":       "Failed to get responses",
+			"Message":     "An error occurred. Please try again.",
 		})
 		return
 	}

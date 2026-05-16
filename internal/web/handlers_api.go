@@ -54,7 +54,7 @@ func (s *Server) handleAPIDeleteFailed(w http.ResponseWriter, r *http.Request) {
 	deleted, err := s.historyStore.DeleteByStatus(history.StatusFailed)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(map[string]string{"error": err.Error()}) //nolint:errcheck
+		json.NewEncoder(w).Encode(map[string]string{"error": "Failed to delete records"}) //nolint:errcheck
 		return
 	}
 
@@ -94,7 +94,7 @@ func (s *Server) handleAPISendOne(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		s.renderPartial(w, "partials/send-status.html", map[string]interface{}{
 			"Status": "error",
-			"Error":  err.Error(),
+			"Error":  "Failed to create email sender",
 		})
 		return
 	}
@@ -103,7 +103,7 @@ func (s *Server) handleAPISendOne(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		s.renderPartial(w, "partials/send-status.html", map[string]interface{}{
 			"Status": "template-error",
-			"Error":  err.Error(),
+			"Error":  "Failed to render email template",
 		})
 		return
 	}
@@ -202,7 +202,7 @@ func (s *Server) handleAPISendAll(w http.ResponseWriter, r *http.Request) {
 	sender, err := email.NewSender(s.config.Email)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(map[string]string{"error": err.Error()}) //nolint:errcheck
+		json.NewEncoder(w).Encode(map[string]string{"error": "Failed to initialize email sender"}) //nolint:errcheck
 		return
 	}
 

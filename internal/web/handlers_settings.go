@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/robindubreuil/eraser/internal/config"
+	"github.com/robindubreuil/eraser/internal/email"
 )
 
 func (s *Server) handleSettingsInbox(w http.ResponseWriter, r *http.Request) {
@@ -12,11 +13,16 @@ func (s *Server) handleSettingsInbox(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	email := r.FormValue("inbox_email")
+	emailAddr := r.FormValue("inbox_email")
 	password := r.FormValue("inbox_password")
 
-	if email == "" || password == "" {
+	if emailAddr == "" || password == "" {
 		s.renderSettingsWithMessage(w, r, "Email and password are required", false)
+		return
+	}
+
+	if err := email.ValidateEmail(emailAddr); err != nil {
+		s.renderSettingsWithMessage(w, r, "Invalid email address", false)
 		return
 	}
 
@@ -27,12 +33,12 @@ func (s *Server) handleSettingsInbox(w http.ResponseWriter, r *http.Request) {
 	s.config.Inbox = config.InboxConfig{
 		Enabled:  true,
 		Provider: "gmail",
-		Email:    email,
+		Email:    emailAddr,
 		Password: password,
 	}
 
 	if err := config.Save(s.configPath, s.config); err != nil {
-		s.renderSettingsWithMessage(w, r, "Failed to save configuration: "+err.Error(), false)
+		s.renderSettingsWithMessage(w, r, "Failed to save configuration", false)
 		return
 	}
 

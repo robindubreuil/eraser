@@ -202,7 +202,7 @@ func (db *BrokerDatabase) SaveWithBackup(path string) error {
 			return fmt.Errorf("failed to read file for backup: %w", err)
 		}
 		backupPath := path + ".bak"
-		if err := os.WriteFile(backupPath, data, 0644); err != nil {
+		if err := os.WriteFile(backupPath, data, 0600); err != nil {
 			return fmt.Errorf("failed to create backup: %w", err)
 		}
 	}

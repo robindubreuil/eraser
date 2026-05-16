@@ -1,8 +1,6 @@
 module github.com/robindubreuil/eraser
 
-go 1.23
-
-toolchain go1.24.12
+go 1.23.0
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
@@ -35,11 +33,12 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	golang.org/x/mod v0.10.0 // indirect
-	golang.org/x/net v0.10.0 // indirect
-	golang.org/x/sys v0.16.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
-	golang.org/x/tools v0.9.3 // indirect
+	golang.org/x/mod v0.22.0 // indirect
+	golang.org/x/net v0.30.0 // indirect
+	golang.org/x/sync v0.10.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/tools v0.26.0 // indirect
 	lukechampine.com/uint128 v1.2.0 // indirect
 	modernc.org/cc/v3 v3.41.0 // indirect
 	modernc.org/ccgo/v3 v3.16.15 // indirect
