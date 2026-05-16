@@ -29,14 +29,45 @@ jobs:
           path: broker-audit-report.json
           retention-days: 30
 
-      - name: Check for new dead brokers
+      - name: Quality gate
         run: |
-          DEAD=$(python3 -c "
-          import json
+          python3 -c "
+          import json, sys
           with open('broker-audit-report.json') as f:
               r = json.load(f)
-          dead = [s for s in r.get('suggestions',[]) if 'dead' in s.lower() or 'unreachable' in s.lower()]
-          print(len(dead))
-          ")
-          echo "Dead URL suggestions: $DEAD"
-          # Don't fail the workflow, just report
+          errors = []
+          total = r.get('our_broker_count', 0)
+          
+          # No gmail emails
+          gmail = len(r.get('gmail_brokers', []))
+          if gmail > 0:
+              errors.append(f'{gmail} gmail/webmail emails found: {r[\"gmail_brokers\"]}')
+          
+          # No duplicate names
+          dup_names = len(r.get('duplicate_names', []))
+          if dup_names > 0:
+              errors.append(f'{dup_names} duplicate names: {r[\"duplicate_names\"]}')
+          
+          # CPPA coverage > 95%
+          cppa_total = r.get('cppa_broker_count', 0)
+          cppa_matched = r.get('cppa_matched', 0)
+          if cppa_total > 0:
+              coverage = cppa_matched / cppa_total * 100
+              if coverage < 95:
+                  errors.append(f'CPPA coverage {coverage:.1f}% < 95% threshold')
+          
+          # Minimum opt_out_url coverage > 70%
+          missing_optout = len(r.get('missing_optout', []))
+          if total > 0:
+              optout_pct = (total - missing_optout) / total * 100
+              if optout_pct < 70:
+                  errors.append(f'Opt-out URL coverage {optout_pct:.1f}% < 70% threshold')
+          
+          if errors:
+              print('QUALITY GATE FAILED:')
+              for e in errors:
+                  print(f'  - {e}')
+              sys.exit(1)
+          else:
+              print(f'QUALITY GATE PASSED: {total} brokers, {gmail} gmail, {dup_names} dup names, CPPA {cppa_matched}/{cppa_total}')
+          "

@@ -35,16 +35,18 @@ func sanitizeBroker(b *Broker) {
 }
 
 type Broker struct {
-	ID         string   `yaml:"id"`
-	Name       string   `yaml:"name"`
-	Email      string   `yaml:"email"`
-	Website    string   `yaml:"website,omitempty"`
-	OptOutURL  string   `yaml:"opt_out_url,omitempty"`
-	Region     string   `yaml:"region"`             // "us", "eu", "global"
-	Category   string   `yaml:"category,omitempty"` // "people-search", "marketing", "background-check", etc.
-	Notes      string   `yaml:"notes,omitempty"`
-	RequiresID bool     `yaml:"requires_id,omitempty"` // If they require ID verification
-	Tags       []string `yaml:"tags,omitempty"`
+	ID           string   `yaml:"id"`
+	Name         string   `yaml:"name"`
+	Email        string   `yaml:"email"`
+	Website      string   `yaml:"website,omitempty"`
+	OptOutURL    string   `yaml:"opt_out_url,omitempty"`
+	Region       string   `yaml:"region"`             // "us", "eu", "uk", "global"
+	Category     string   `yaml:"category,omitempty"` // "people-search", "marketing", "background-check", "credit", etc.
+	Notes        string   `yaml:"notes,omitempty"`
+	RequiresID   bool     `yaml:"requires_id,omitempty"` // If they require ID verification
+	Tags         []string `yaml:"tags,omitempty"`
+	LastVerified string   `yaml:"last_verified,omitempty"` // ISO 8601 date when data was last verified
+	Source       string   `yaml:"source,omitempty"`        // "cppa", "manual", "verified", etc.
 }
 
 type BrokerDatabase struct {
