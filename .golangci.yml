@@ -1,0 +1,35 @@
+run:
+  go: "1.23"
+  timeout: 5m
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - revive
+    - gofmt
+    - goimports
+    - ineffassign
+    - staticcheck
+    - unused
+    - misspell
+
+linters-settings:
+  errcheck:
+    check-type-assertions: false
+  revive:
+    rules:
+      - name: unused-parameter
+        severity: warning
+  misspell:
+    locale: US
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck
+        - revive
+    - path: ".*_gen\\.go"
+      linters:
+        - all
