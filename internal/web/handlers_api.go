@@ -100,7 +100,7 @@ func (s *Server) handleAPISendOne(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmplName := template.TemplateForRegion(br.Region, s.config.Options.Locale, s.config.Options.Template)
+	tmplName := template.TemplateForLocale(s.config.Options.Locale, s.config.Options.Template)
 	rendered, err := s.tmplEngine.Render(tmplName, s.config.Profile, *br)
 	if err != nil {
 		s.renderPartial(w, "partials/send-status.html", map[string]interface{}{
@@ -272,7 +272,7 @@ func (s *Server) processSendJob(job *Job, toSend []BrokerWithStatus, sender emai
 
 		job.Update(sent, failed, b.Name)
 
-		tmplName := template.TemplateForRegion(b.Region, s.config.Options.Locale, s.config.Options.Template)
+		tmplName := template.TemplateForLocale(s.config.Options.Locale, s.config.Options.Template)
 		rendered, err := s.tmplEngine.Render(tmplName, s.config.Profile, b.Broker)
 		if err != nil {
 			failed++

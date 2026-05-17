@@ -6308,6 +6308,7 @@ brokers:
     name: Societe.com
     email: dpo@societe.com
     website: https://www.societe.com
+    opt_out_url: https://statut-diffusion-sirene.insee.fr
     region: eu
     category: people-search
     notes: Aggregates INPI/RNE company data. Displays dirigeant names, financials
@@ -6315,6 +6316,7 @@ brokers:
     name: Verif.com
     email: dpo@verif.com
     website: https://www.verif.com
+    opt_out_url: https://www.verif.com/data_privacy/
     region: eu
     category: people-search
     notes: Company information aggregator. Displays dirigeant/financial data
@@ -6322,6 +6324,7 @@ brokers:
     name: Manageo
     email: dpo@manageo.fr
     website: https://www.manageo.fr
+    opt_out_url: https://www.manageo.fr/infos/politique-gestion-donnees.html
     region: eu
     category: people-search
     notes: 13M+ company records. Free SIRENE access
@@ -6336,6 +6339,7 @@ brokers:
     name: Pappers SAS
     email: contact@pappers.fr
     website: https://www.pappers.fr
+    opt_out_url: https://www.pappers.fr/reclamation
     region: eu
     category: people-search
     notes: Free company data from INSEE/INPI/BODACC. Dirigeants, shareholders, bilans
@@ -6343,6 +6347,7 @@ brokers:
     name: Europages SA
     email: dpo@europages.com
     website: https://www.europages.co.uk
+    opt_out_url: https://www.europages.co.uk/company/legal-notice/privacy-notice
     region: eu
     category: people-search
     notes: European B2B directory. Company listings with contact details
@@ -6365,6 +6370,7 @@ brokers:
     name: Dropcontact
     email: dpo@dropcontact.io
     website: https://www.dropcontact.io
+    opt_out_url: https://www.dropcontact.com/personal-data-charter
     region: eu
     category: people-search
     notes: B2B email finder / contact data enrichment
@@ -6435,6 +6441,7 @@ brokers:
     name: Allianz Trade (formerly Euler Hermes)
     email: dpo@allianz-trade.com
     website: https://www.allianz-trade.com/fr_FR.html
+    opt_out_url: https://privacyportal-de.onetrust.com/webform/6e169bd0-974f-447d-9d66-cbc7c16a4ace/811cbbd7-3de0-4dab-9a68-67a0e30312d5
     region: eu
     category: credit
     notes: Trade credit insurance, B2B financial risk data
@@ -6442,6 +6449,7 @@ brokers:
     name: TransUnion France
     email: dpo@transunion.com
     website: https://www.transunion.fr
+    opt_out_url: https://www.transunion.fr/privacy/droit-d-acces
     region: eu
     category: credit
     notes: Credit reporting / identity verification. French subsidiary
@@ -6483,6 +6491,7 @@ brokers:
     name: Adikteev SA
     email: dpo@adikteev.com
     website: https://www.adikteev.com
+    opt_out_url: https://www.adikteev.com/your-personal-data
     region: eu
     category: marketing
     notes: App retargeting / predictive CRM. Paris
@@ -6497,6 +6506,7 @@ brokers:
     name: Base Plus SAS
     email: dpo@base-plus.fr
     website: https://www.base-plus.fr
+    opt_out_url: https://www.base-plus.fr/politique-de-donnees-personnelles.html
     region: eu
     category: marketing
     notes: Data marketing / prospection. Also operates Europrogres SAS
@@ -6504,6 +6514,7 @@ brokers:
     name: Solocal Marketing Services
     email: dpo@solocal.com
     website: https://www.solocal.com
+    opt_out_url: https://www.solocal.com/donnees-personnelles/
     region: eu
     category: marketing
     notes: CNIL 900K EUR (2025). Bought data from brokers via jeux-concours sites
@@ -6511,6 +6522,7 @@ brokers:
     name: Europrogres SAS
     email: dpo@base-plus.fr
     website: https://www.europrogres.fr
+    opt_out_url: https://www.europrogres.fr/politique-de-confidentialite/
     region: eu
     category: marketing
     notes: Data brokering / prospection. Subsidiary of Base Plus SAS
@@ -6518,6 +6530,7 @@ brokers:
     name: Tinyclues (Splio group)
     email: dpo@tinyclues.com
     website: https://www.tinyclues.com
+    opt_out_url: https://www.tinyclues.com/privacy-policy/
     region: eu
     category: marketing
     notes: AI-driven marketing, predictive audience targeting. Merged into Splio
@@ -6525,6 +6538,7 @@ brokers:
     name: Splio SAS
     email: dpo@splio.com
     website: https://splio.com
+    opt_out_url: https://splio.com/donnees-personnelles/
     region: eu
     category: marketing
     notes: CRM/CDP/loyalty platform. Acquired Tinyclues. Paris
@@ -6532,6 +6546,7 @@ brokers:
     name: Batch
     email: support@batch.com
     website: https://batch.com
+    opt_out_url: https://batch.com/privacy-policy
     region: eu
     category: marketing
     notes: Push notification / mobile CRM platform. Paris
@@ -6539,6 +6554,7 @@ brokers:
     name: CitrusAd (Criteo group)
     email: dpo@citrusad.com
     website: https://citrusad.com
+    opt_out_url: https://citrusad.com/privacy-policy/
     region: eu
     category: marketing
     notes: Retail media / sponsored product ads. Acquired by Criteo 2023
@@ -6554,6 +6570,7 @@ brokers:
     name: Teemo
     email: dpo@teemo.co
     website: https://www.teemo.co
+    opt_out_url: https://www.teemo.co/politique-de-confidentialite/
     region: eu
     category: marketing
     notes: Performance marketing / drive-to-store. Paris. Location/behavioral data
@@ -6561,6 +6578,7 @@ brokers:
     name: Commanders Act
     email: dpo@commandersact.com
     website: https://www.commandersact.com
+    opt_out_url: https://www.commandersact.com/en/privacy/
     region: eu
     category: marketing
     notes: Tag management / customer data platform. Paris
@@ -6568,6 +6586,7 @@ brokers:
     name: Eulerian Technologies
     email: dpo@eulerian.com
     website: https://www.eulerian.com
+    opt_out_url: https://www.eulerian.com/vie-privee
     region: eu
     category: marketing
     notes: Attribution/analytics platform. Collects user journey data. Paris
@@ -6575,6 +6594,7 @@ brokers:
     name: DataDome
     email: dpo@datadome.co
     website: https://www.datadome.co
+    opt_out_url: https://www.datadome.co/privacy-policy/
     region: eu
     category: marketing
     notes: Bot protection / fraud detection. Processes browsing behavioral data. Paris
@@ -6582,6 +6602,7 @@ brokers:
     name: Scibids
     email: dpo@scibids.com
     website: https://www.scibids.com
+    opt_out_url: https://www.scibids.com/privacy-policy/
     region: eu
     category: marketing
     notes: AI for programmatic ad buying optimization. Paris
@@ -6589,6 +6610,7 @@ brokers:
     name: Mediaperformances
     email: dpo@mediaperformances.com
     website: https://www.mediaperformances.com
+    opt_out_url: https://www.mediaperformances.com/politique-de-confidentialite/
     region: eu
     category: marketing
     notes: Lead generation via jeux-concours and product testing sites
@@ -6596,6 +6618,7 @@ brokers:
     name: Kadomi
     email: dpo@kadomi.com
     website: https://www.kadomi.com
+    opt_out_url: https://www.kadomi.com/privacy/
     region: eu
     category: marketing
     notes: B2B data enrichment and prospecting platform
@@ -6644,6 +6667,7 @@ brokers:
     name: Mediametrie
     email: dpo@mediametrie.fr
     website: https://www.mediametrie.fr
+    opt_out_url: https://www.mediametrie.fr/fr/la-protection-des-donnees-personnelles-chez-mediametrie
     region: eu
     category: marketing
     notes: French audience measurement (TV, web, radio). Collects viewing/browsing data
@@ -6651,6 +6675,7 @@ brokers:
     name: Quantis (formerly Mazeberry)
     email: dpo@quantis.io
     website: https://www.quantis.io
+    opt_out_url: https://www.quantis.io/privacy-policy/
     region: eu
     category: marketing
     notes: Attribution / marketing analytics. Collects user conversion data
@@ -6658,6 +6683,7 @@ brokers:
     name: Effilab
     email: dpo@effilab.com
     website: https://www.effilab.com
+    opt_out_url: https://www.effilab.com/privacy-policy/
     region: eu
     category: marketing
     notes: Programmatic ad buying. SEM/SEO data collection. Paris
@@ -6665,6 +6691,7 @@ brokers:
     name: CMI France
     email: dpo@cmifrance.com
     website: https://www.cmifrance.com
+    opt_out_url: https://www.cmifrance.com/politique-de-confidentialite/
     region: eu
     category: marketing
     notes: Ad sales house for Le Figaro group. Behavioral data for ad targeting
@@ -6672,6 +6699,7 @@ brokers:
     name: Le Figaro (data division)
     email: dpo@lefigaro.fr
     website: https://www.lefigaro.fr
+    opt_out_url: https://www.lefigaro.fr/politique-de-confidentialite
     region: eu
     category: marketing
     notes: Major media. Collects reader behavioral data for ad targeting via CMI France
@@ -6679,6 +6707,7 @@ brokers:
     name: Profitable (PFLB)
     email: dpo@pflb.com
     website: https://pflb.com
+    opt_out_url: https://pflb.com/privacy-policy/
     region: eu
     category: marketing
     notes: A/B testing and conversion optimization. Collects user behavior data
@@ -6704,6 +6733,7 @@ brokers:
     name: Bouygues Telecom
     email: dpo@bouyguestelecom.fr
     website: https://www.bouyguestelecom.fr
+    opt_out_url: https://www.corporate.bouyguestelecom.fr/mentions-legales/politique-de-confidentialite/
     region: eu
     category: telecom
     notes: Telecom operator. Collects subscriber/usage data for marketing
@@ -6711,6 +6741,7 @@ brokers:
     name: Free (Iliad)
     email: dpo@free.fr
     website: https://www.free.fr
+    opt_out_url: https://www.free.fr/freebox/informations/informations-legales/
     region: eu
     category: telecom
     notes: Iliad group. Subscriber data collection for marketing/profiling
@@ -6720,6 +6751,7 @@ brokers:
     name: Titan Hive
     email: dpo@titanhive.com
     website: https://www.titanhive.com
+    opt_out_url: https://www.titanhive.com/privacy-policy/
     region: eu
     category: loyalty
     notes: Customer data / loyalty platform. French operations
@@ -6727,6 +6759,7 @@ brokers:
     name: Mediego
     email: dpo@mediego.com
     website: https://www.mediego.com
+    opt_out_url: https://www.mediego.com/politique-de-confidentialite/
     region: eu
     category: loyalty
     notes: Personalized content recommendation for media/e-commerce
@@ -6734,6 +6767,7 @@ brokers:
     name: Yasna
     email: dpo@yasna.ai
     website: https://www.yasna.ai
+    opt_out_url: https://www.yasna.ai/privacy-policy
     region: eu
     category: loyalty
     notes: Employee experience / survey platform. Collects personal data for analytics
@@ -6741,6 +6775,7 @@ brokers:
     name: La Poste
     email: dpo@laposte.fr
     website: https://www.laposte.fr
+    opt_out_url: https://aide.laposte.fr/mesdonneespersonnelles
     region: eu
     category: loyalty
     notes: Collects address/change-of-address data. Sells marketing data services
@@ -6748,6 +6783,7 @@ brokers:
     name: Data Publica
     email: contact@data-publica.com
     website: https://www.data-publica.com
+    opt_out_url: https://www.data-publica.com/politique-de-confidentialite
     region: eu
     category: identity
     notes: Open data aggregator. Public records, company data
@@ -6755,6 +6791,7 @@ brokers:
     name: Wizbii
     email: dpo@wizbii.com
     website: https://www.wizbii.com
+    opt_out_url: https://www.wizbii.com/privacy-policy
     region: eu
     category: identity
     notes: Youth banking/finance platform. Collects financial/identity data
@@ -6762,6 +6799,7 @@ brokers:
     name: MAIF
     email: dpo@maif.fr
     website: https://www.maif.fr
+    opt_out_url: https://www.maif.fr/protection-donnees
     region: eu
     category: insurance
     notes: Insurance. Collects policyholder data for risk profiling
@@ -6779,6 +6817,7 @@ brokers:
     name: Riverty Group GmbH (formerly Arvato Infoscore)
     email: dataprotection@riverty.com
     website: https://www.riverty.com
+    opt_out_url: https://www.riverty.com/en/privacy-policy/
     region: eu
     category: credit
     notes: Part of Bertelsmann. BNPL + debt collection
@@ -6786,6 +6825,7 @@ brokers:
     name: EOS Holding GmbH
     email: info@eos-solutions.com
     website: https://www.eos-solutions.com
+    opt_out_url: https://www.eos-solutions.com/privacy-policy/
     region: eu
     category: credit
     notes: Debt purchaser + collection. Part of Otto Group. 6000+ employees
@@ -6825,6 +6865,7 @@ brokers:
     name: Wer liefert was (wlw) GmbH
     email: datenschutz@wlw.de
     website: https://www.wlw.de
+    opt_out_url: https://www.wlw.de/de/datenschutz
     region: eu
     category: people-search
     notes: B2B supplier search directory. Lists company + contact data
@@ -6850,6 +6891,7 @@ brokers:
     name: Spotler Group B.V.
     email: privacy@spotler.com
     website: https://www.spotler.com
+    opt_out_url: https://www.spotler.com/privacy-policy/
     region: eu
     category: marketing
     notes: Email marketing + marketing automation. Formerly Copernica
@@ -6865,6 +6907,7 @@ brokers:
     name: Telefoonboek.nl
     email: info@telefoonboek.nl
     website: https://www.telefoonboek.nl
+    opt_out_url: https://www.telefoonboek.nl/privacy
     region: eu
     category: people-search
     notes: Dutch phone directory / people search
@@ -6872,6 +6915,7 @@ brokers:
     name: Nationale Telefoongids
     email: info@nationaletelefoongids.nl
     website: https://www.nationaletelefoongids.nl
+    opt_out_url: https://www.nationaletelefoongids.nl/privacy
     region: eu
     category: people-search
     notes: Dutch national phone directory
@@ -6889,6 +6933,7 @@ brokers:
     name: ASNEF (Asociacion Nacional de Establecimientos Financieros de Credito)
     email: dpd@asnef.com
     website: https://asnef.com
+    opt_out_url: https://www.equifax.es/personas/solicitud-derechos
     region: eu
     category: credit
     notes: Trade association. Joint controller of ASNEF credit database with Equifax
@@ -6904,6 +6949,7 @@ brokers:
     name: Fluzo S.L.
     email: privacy@fluzo.com
     website: https://www.fluzo.com
+    opt_out_url: https://www.fluzo.com/politica-de-privacidad/
     region: eu
     category: marketing
     notes: Spanish digital advertising + DOOH ad network
@@ -6918,6 +6964,7 @@ brokers:
     name: QDQ Media S.L.
     email: protecciondedatos@qdigital.es
     website: https://www.qdq.com
+    opt_out_url: https://www.qdq.com/politica-de-privacidad
     region: eu
     category: people-search
     notes: Spanish business directory + local search
@@ -6935,6 +6982,7 @@ brokers:
     name: Experian Italy S.p.A.
     email: privacy.italy@experian.com
     website: https://www.experian.it
+    opt_out_url: https://www.experian.it/privacy
     region: eu
     category: credit
     notes: Italian subsidiary of Experian. Credit information + decision analytics
@@ -6942,6 +6990,7 @@ brokers:
     name: Mediamond S.p.A.
     email: privacy@mediamond.it
     website: https://www.mediamond.it
+    opt_out_url: https://www.mediamond.it/privacy-policy
     region: eu
     category: marketing
     notes: Italian digital advertising company. Ad network + programmatic
@@ -6949,6 +6998,7 @@ brokers:
     name: PagineBianche (Seat Pagine Gialle S.p.A.)
     email: privacy@paginebianche.it
     website: https://www.paginebianche.it
+    opt_out_url: https://www.paginebianche.it/privacy
     region: eu
     category: people-search
     notes: Italian white pages phone directory
@@ -6956,6 +7006,7 @@ brokers:
     name: Virgilio (Italiaonline S.p.A.)
     email: privacy@italiaonline.it
     website: https://www.virgilio.it
+    opt_out_url: https://www.italiaonline.it/privacy/
     region: eu
     category: people-search
     notes: Italian portal + search engine. Email, news, directory services
@@ -6965,6 +7016,7 @@ brokers:
     name: Pages d'Or / Gouden Gids (Truvo Belgium)
     email: privacy@truvo.com
     website: https://www.pagesdor.be
+    opt_out_url: https://www.pagesdor.be/fr/politique-de-vie-privee
     region: eu
     category: people-search
     notes: Belgian yellow/white pages directory
@@ -6980,6 +7032,7 @@ brokers:
     name: Selligent (CM.com)
     email: privacy@cm.com
     website: https://www.cm.com
+    opt_out_url: https://www.cm.com/fr-fr/privacy-policy/
     region: eu
     category: marketing
     notes: Marketing automation platform. Now part of CM.com
@@ -6989,6 +7042,7 @@ brokers:
     name: Creditsafe Sweden AB
     email: privacy@creditsafe.com
     website: https://www.creditsafe.com
+    opt_out_url: https://www.creditsafe.com/us/en/product/legal/privacy-policy.html
     region: eu
     category: credit
     notes: Global credit information company. Swedish operations
@@ -6996,6 +7050,7 @@ brokers:
     name: Eniro Sverige AB
     email: dataskyddsombud@eniro.se
     website: https://www.eniro.se
+    opt_out_url: https://uppdatera.eniro.se/person
     region: eu
     category: people-search
     notes: Swedish people + business search directory
@@ -7003,6 +7058,7 @@ brokers:
     name: Hitta.se
     email: kundtjanst@hitta.se
     website: https://www.hitta.se
+    opt_out_url: https://www.hitta.se/din-integritet
     region: eu
     category: people-search
     notes: Swedish people search + business directory. Shows addresses, phone numbers
@@ -7028,6 +7084,7 @@ brokers:
     name: Experian Ireland DAC
     email: privacy.ireland@experian.com
     website: https://www.experian.ie
+    opt_out_url: https://www.experian.ie/privacy
     region: eu
     category: credit
     notes: Irish operations of Experian. Credit analytics + decisioning

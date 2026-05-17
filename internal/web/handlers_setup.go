@@ -141,6 +141,7 @@ func (s *Server) handleSetupEmail(w http.ResponseWriter, r *http.Request) {
 
 		errors := make(map[string]string)
 
+		provider := r.FormValue("email_provider")
 		emailCfg.SMTP.Host = strings.TrimSpace(r.FormValue("smtp_host"))
 		if _, err := fmt.Sscanf(r.FormValue("smtp_port"), "%d", &emailCfg.SMTP.Port); err != nil {
 			emailCfg.SMTP.Port = 0
@@ -150,19 +151,39 @@ func (s *Server) handleSetupEmail(w http.ResponseWriter, r *http.Request) {
 		emailCfg.SMTP.UseTLS = r.FormValue("smtp_tls") == "on"
 
 		if emailCfg.SMTP.Host == "" {
+			switch provider {
+			case "orange":
+				emailCfg.SMTP.Host = "smtp.orange.fr"
+			case "sfr":
+				emailCfg.SMTP.Host = "smtp.sfr.fr"
+			case "free":
+				emailCfg.SMTP.Host = "smtp.free.fr"
+			case "bouygues":
+				emailCfg.SMTP.Host = "smtp.bbox.fr"
+			case "outlook":
+				emailCfg.SMTP.Host = "smtp-mail.outlook.com"
+			default:
+				emailCfg.SMTP.Host = "smtp.gmail.com"
+			}
+		}
+		if emailCfg.SMTP.Port == 0 {
+			emailCfg.SMTP.Port = 465
+		}
+		if !emailCfg.SMTP.UseTLS {
+			emailCfg.SMTP.UseTLS = true
+		}
+
+		if emailCfg.SMTP.Host == "" {
 			errors["smtp_host"] = "SMTP host is required"
 		}
 		if emailCfg.SMTP.Port == 0 {
 			errors["smtp_port"] = "SMTP port is required"
 		}
 		if emailCfg.SMTP.Username == "" {
-			errors["smtp_username"] = "Gmail address is required"
+			errors["smtp_username"] = "Email address is required"
 		}
 		if emailCfg.SMTP.Password == "" {
-			errors["smtp_password"] = "App password is required"
-		}
-		if !emailCfg.SMTP.UseTLS && emailCfg.SMTP.Username != "" {
-			errors["smtp_tls"] = "TLS is required for Gmail"
+			errors["smtp_password"] = "Password is required"
 		}
 
 		if len(errors) > 0 {

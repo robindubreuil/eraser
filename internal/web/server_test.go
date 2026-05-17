@@ -838,14 +838,14 @@ func TestHandleSetupEmail_POST_Validation(t *testing.T) {
 		wantStatus int
 	}{
 		{
-			name:       "missing SMTP host re-renders",
-			form:       url.Values{"smtp_host": {""}, "smtp_port": {"587"}, "smtp_username": {"u"}, "smtp_password": {"p"}, "smtp_tls": {"on"}},
-			wantStatus: http.StatusOK,
+			name:       "missing SMTP host uses default",
+			form:       url.Values{"email_provider": {"gmail"}, "smtp_host": {""}, "smtp_port": {"587"}, "smtp_username": {"u"}, "smtp_password": {"p"}, "smtp_tls": {"on"}},
+			wantStatus: http.StatusFound,
 		},
 		{
-			name:       "missing port re-renders",
-			form:       url.Values{"smtp_host": {"smtp.gmail.com"}, "smtp_port": {"0"}, "smtp_username": {"u"}, "smtp_password": {"p"}, "smtp_tls": {"on"}},
-			wantStatus: http.StatusOK,
+			name:       "missing port uses default",
+			form:       url.Values{"email_provider": {"gmail"}, "smtp_host": {"smtp.gmail.com"}, "smtp_port": {"0"}, "smtp_username": {"u"}, "smtp_password": {"p"}, "smtp_tls": {"on"}},
+			wantStatus: http.StatusFound,
 		},
 		{
 			name:       "missing username re-renders",
@@ -858,9 +858,9 @@ func TestHandleSetupEmail_POST_Validation(t *testing.T) {
 			wantStatus: http.StatusOK,
 		},
 		{
-			name:       "TLS disabled re-renders",
-			form:       url.Values{"smtp_host": {"smtp.gmail.com"}, "smtp_port": {"587"}, "smtp_username": {"u"}, "smtp_password": {"p"}, "smtp_tls": {""}},
-			wantStatus: http.StatusOK,
+			name:       "TLS disabled forced on",
+			form:       url.Values{"email_provider": {"gmail"}, "smtp_host": {"smtp.gmail.com"}, "smtp_port": {"587"}, "smtp_username": {"u"}, "smtp_password": {"p"}, "smtp_tls": {""}},
+			wantStatus: http.StatusFound,
 		},
 	}
 
