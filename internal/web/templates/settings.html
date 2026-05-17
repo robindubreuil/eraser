@@ -232,10 +232,19 @@
             <div class="space-y-4">
                 <div class="flex items-start justify-between py-3 border-b border-[var(--border-subtle)]">
                     <div>
-                        <p class="text-sm text-muted">Default Template</p>
+                        <p class="text-sm text-muted">Template Mode</p>
+                        <p class="text-xs text-muted mt-1">{{if eq .Config.Options.Template "auto"}}Auto-select based on broker region and locale{{else}}{{.Config.Options.Template}}{{end}}</p>
                     </div>
-                    <span class="badge badge-neutral">{{.Config.Options.Template}}</span>
+                    <span class="badge badge-neutral">{{if eq .Config.Options.Template "auto"}}Auto{{else}}{{.Config.Options.Template}}{{end}}</span>
                 </div>
+                {{if .Config.Options.Locale}}
+                <div class="flex items-start justify-between py-3 border-b border-[var(--border-subtle)]">
+                    <div>
+                        <p class="text-sm text-muted">Locale</p>
+                    </div>
+                    <span class="badge badge-neutral">{{.Config.Options.Locale}}</span>
+                </div>
+                {{end}}
                 <div class="flex items-start justify-between py-3 border-b border-[var(--border-subtle)]">
                     <div>
                         <p class="text-sm text-muted">Rate Limit</p>

@@ -64,6 +64,7 @@ type MXDomainResult struct {
 type AuditReport struct {
 	Timestamp         string           `json:"timestamp"`
 	OurBrokerCount    int              `json:"our_broker_count"`
+	EUBrokerCount     int              `json:"eu_broker_count"`
 	CPPABrokerCount   int              `json:"cppa_broker_count"`
 	CPPAMatched       int              `json:"cppa_matched"`
 	CPPAMissing       int              `json:"cppa_missing"`
@@ -119,6 +120,14 @@ func main() {
 		Timestamp:      time.Now().UTC().Format(time.RFC3339),
 		OurBrokerCount: len(db.Brokers),
 	}
+
+	euCount := 0
+	for _, b := range db.Brokers {
+		if strings.EqualFold(b.Region, "eu") || strings.EqualFold(b.Region, "uk") {
+			euCount++
+		}
+	}
+	report.EUBrokerCount = euCount
 
 	fmt.Printf("Loaded %d brokers from %s\n", len(db.Brokers), brokersFile)
 

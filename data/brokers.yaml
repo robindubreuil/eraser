@@ -392,7 +392,7 @@ brokers:
     region: eu
     category: credit
     opt_out_url: https://www.altares.fr/politique-de-confidentialite
-    notes: French business credit; D&B subsidiary
+    notes: Exclusive D&B partner France/Benelux. SIREN 572 014 199. Puteaux
   - id: altisource-holdings
     name: Altisource Holdings, LLC
     email: privacy@altisource.com
@@ -1384,13 +1384,13 @@ brokers:
     category: marketing
     opt_out_url: https://www.criteo.com/privacy/
   - id: criteo-eu
-    name: Criteo (EU)
-    email: privacy@criteo.com
+    name: Criteo SA
+    email: dpo@criteo.com
     website: https://www.criteo.com
     region: eu
-    category: ad-tech
-    opt_out_url: https://www.criteo.com/privacy/
-    notes: Retargeting; major French ad-tech broker; AI-driven product recommendations
+    category: marketing
+    opt_out_url: https://www.criteo.com/privacy/your-rights/
+    notes: CNIL fine 40M EUR (2023, upheld 2026). Retargeting, commerce data. Paris
   - id: cross-pixel-media
     name: Cross Pixel Media, Inc.
     email: privacy@knowcompany.com
@@ -1419,14 +1419,14 @@ brokers:
     opt_out_url: https://www.smartmove.us/company/do-not-sell
     region: us
     category: marketing
-  - id: cternay-ellisphere-france
-    name: cternay / Ellisphere (France)
-    email: dpo@ellisphere.fr
-    website: https://www.ellisphere.fr
+  - id: ellisphere
+    name: Ellisphere
+    email: dpo@ellisphere.com
+    website: https://www.ellisphere.com
     region: eu
     category: credit
     opt_out_url: https://www.ellisphere.fr/politique-de-protection-des-donnees
-    notes: French B2B credit & risk data
+    notes: 130+ years, 225M companies, 230 countries. Risk management, compliance, B2B data
   - id: cuebiq-group
     name: Cuebiq Group, LLC
     email: privacy@cuebiq.com
@@ -3492,7 +3492,7 @@ brokers:
     email: ukprivacy@liveramp.com
     website: https://www.liveramp.com
     region: uk
-    category: ad-tech
+    category: marketing
     opt_out_url: https://liveramp.com/opt_out/
     notes: 'Identity resolution; country-specific: privacy.de, cil (FR), privacy.es, privacy.it, privacy.nl, privacy.be'
   - id: liveramp-2
@@ -3555,7 +3555,7 @@ brokers:
     email: privacy@lotame.com
     website: https://www.lotame.com
     region: uk
-    category: ad-tech
+    category: marketing
     opt_out_url: https://www.lotame.com/privacy-center/
     notes: Audience data platform; Panorama ID; acquired by Publicis
   - id: lucid-holdings
@@ -4103,7 +4103,7 @@ brokers:
     email: privacy@nielsen.com
     website: https://www.nielsen.com
     region: uk
-    category: ad-tech
+    category: marketing
     opt_out_url: https://www.nielsen.com/us/en/legal/privacy/
     notes: Audience measurement; panel data across EU
   - id: nordic-data-resources-as
@@ -4251,7 +4251,7 @@ brokers:
     email: privacy_ww@oracle.com
     website: https://www.oracle.com/advertising/
     region: uk
-    category: ad-tech
+    category: marketing
     opt_out_url: https://www.oracle.com/legal/privacy/privacy-data-cloud.html
     notes: Acquired Datalogix, Crosswise, AddThis; scaled back EU ops
   - id: orgio
@@ -4721,7 +4721,7 @@ brokers:
     email: privacy@quantcast.com
     website: https://www.quantcast.com
     region: uk
-    category: ad-tech
+    category: marketing
     opt_out_url: https://www.quantcast.com/privacy/
     notes: Audience measurement & targeting; Quantcast Choice CMP
   - id: qurium-solutions-inc
@@ -5675,7 +5675,7 @@ brokers:
     email: privacy@thetradedesk.com
     website: https://www.thetradedesk.com
     region: uk
-    category: ad-tech
+    category: marketing
     opt_out_url: https://www.thetradedesk.com/general/privacy
     notes: DSP with Unified ID 2.0; major EU ad-tech presence
   - id: throtle
@@ -6303,3 +6303,749 @@ brokers:
     opt_out_url: https://www.zs.com/data-request
     region: us
     category: marketing
+# French data brokers - people-search
+  - id: societe-com
+    name: Societe.com
+    email: dpo@societe.com
+    website: https://www.societe.com
+    region: eu
+    category: people-search
+    notes: Aggregates INPI/RNE company data. Displays dirigeant names, financials
+  - id: verif-com
+    name: Verif.com
+    email: dpo@verif.com
+    website: https://www.verif.com
+    region: eu
+    category: people-search
+    notes: Company information aggregator. Displays dirigeant/financial data
+  - id: manageo
+    name: Manageo
+    email: dpo@manageo.fr
+    website: https://www.manageo.fr
+    region: eu
+    category: people-search
+    notes: 13M+ company records. Free SIRENE access
+  - id: infogreffe
+    name: Infogreffe (GIE INFOGREFFE)
+    email: dpo@infogreffe.fr
+    website: https://www.infogreffe.fr
+    region: eu
+    category: people-search
+    notes: Official registry of tribunaux de commerce. Certified company data
+  - id: pappers
+    name: Pappers SAS
+    email: contact@pappers.fr
+    website: https://www.pappers.fr
+    region: eu
+    category: people-search
+    notes: Free company data from INSEE/INPI/BODACC. Dirigeants, shareholders, bilans
+  - id: europages
+    name: Europages SA
+    email: dpo@europages.com
+    website: https://www.europages.co.uk
+    region: eu
+    category: people-search
+    notes: European B2B directory. Company listings with contact details
+  - id: kompass-france
+    name: Kompass France
+    email: dpo@kompass.com
+    website: https://fr.kompass.com
+    region: eu
+    category: people-search
+    notes: B2B directory with company/contact data
+  - id: pagesjaunes
+    name: PagesJaunes / Solocal
+    email: dpo@solocal.com
+    website: https://www.pagesjaunes.fr
+    opt_out_url: https://www.pagesjaunes.fr/donnees-personnelles
+    region: eu
+    category: people-search
+    notes: CNIL sanction 900K EUR (2025) for data brokering without consent
+  - id: dropcontact
+    name: Dropcontact
+    email: dpo@dropcontact.io
+    website: https://www.dropcontact.io
+    region: eu
+    category: people-search
+    notes: B2B email finder / contact data enrichment
+  - id: lusha
+    name: Lusha
+    email: dpo@lusha.com
+    website: https://www.lusha.com
+    opt_out_url: https://www.lusha.com/opt-out/
+    region: eu
+    category: people-search
+    notes: B2B contact data. Israeli with major French office
+  - id: hunter-io
+    name: Hunter (Hunter.io)
+    email: privacy@hunter.io
+    website: https://hunter.io
+    opt_out_url: https://hunter.io/opt-out
+    region: eu
+    category: people-search
+    notes: Email finder / B2B prospecting. French company
+  - id: aeroleads
+    name: Aeroleads
+    email: privacy@aeroleads.com
+    website: https://aeroleads.com
+    opt_out_url: https://aeroleads.com/opt-out
+    region: eu
+    category: people-search
+    notes: B2B prospecting / email extraction tool
+  - id: annuaire-entreprises
+    name: Annuaire des Entreprises (APIO)
+    email: dpo@data.gouv.fr
+    website: https://www.annuaire-entreprises.data.gouv.fr
+    region: eu
+    category: people-search
+    notes: Government directory of French companies. Open data
+  - id: inpi
+    name: INPI (Institut National de la Propriete Industrielle)
+    email: dpo@inpi.fr
+    website: https://www.inpi.fr
+    region: eu
+    category: people-search
+    notes: Official register of enterprises (RNE). Public company/dirigeant data
+
+# French data brokers - credit
+  - id: banque-de-france
+    name: Banque de France (FICP/FCC)
+    email: dpo@banque-france.fr
+    website: https://www.banque-france.fr
+    opt_out_url: https://particuliers.banque-france.fr/droits-acces
+    region: eu
+    category: credit
+    notes: Manages FICP (payment incidents) and FCC (check incidents)
+  - id: experian-france
+    name: Experian France SAS
+    email: dpo.france@experian.com
+    website: https://www.experian.fr
+    opt_out_url: https://www.experian.fr/consumer-information
+    region: eu
+    category: credit
+    notes: Credit scoring, B2B risk data. Paris 8e
+  - id: equifax-france
+    name: Equifax France
+    email: dpo@equifax.com
+    website: https://www.equifax.fr
+    region: eu
+    category: credit
+    notes: Credit information and scoring. Limited French presence
+  - id: allianz-trade
+    name: Allianz Trade (formerly Euler Hermes)
+    email: dpo@allianz-trade.com
+    website: https://www.allianz-trade.com/fr_FR.html
+    region: eu
+    category: credit
+    notes: Trade credit insurance, B2B financial risk data
+  - id: transunion-france
+    name: TransUnion France
+    email: dpo@transunion.com
+    website: https://www.transunion.fr
+    region: eu
+    category: credit
+    notes: Credit reporting / identity verification. French subsidiary
+
+# French data brokers - marketing/adtech
+  - id: equativ
+    name: Equativ (formerly Smart AdServer)
+    email: dpo@equativ.com
+    website: https://www.equativ.com
+    opt_out_url: https://www.equativ.com/fr/privacy-choice/
+    region: eu
+    category: marketing
+    notes: Major French adtech. Programmatic advertising platform. Paris
+  - id: teads
+    name: Teads France SA
+    email: dpo@teads.com
+    website: https://www.teads.com
+    opt_out_url: https://user-privacy.teads.tv
+    region: eu
+    category: marketing
+    notes: Video advertising platform. Paris
+  - id: weborama
+    name: Weborama SA
+    email: privacy@weborama.com
+    website: https://www.weborama.com
+    opt_out_url: http://www.youronlinechoices.com/
+    region: eu
+    category: marketing
+    notes: Semantic AI, 200M+ behavioral profiles. Levallois-Perret
+  - id: sirdata
+    name: Sirdata SAS
+    email: dpo@sirdata.com
+    website: https://www.sirdata.com
+    opt_out_url: https://registry.sirdata.fr/
+    region: eu
+    category: marketing
+    notes: Audience data, cookieless targeting, CMP. Paris
+  - id: adikteev
+    name: Adikteev SA
+    email: dpo@adikteev.com
+    website: https://www.adikteev.com
+    region: eu
+    category: marketing
+    notes: App retargeting / predictive CRM. Paris
+  - id: adagio
+    name: Adagio (Onfocus SAS)
+    email: dpo@adagio.io
+    website: https://adagio.io
+    region: eu
+    category: marketing
+    notes: Attention-based programmatic advertising. Montpellier
+  - id: base-plus
+    name: Base Plus SAS
+    email: dpo@base-plus.fr
+    website: https://www.base-plus.fr
+    region: eu
+    category: marketing
+    notes: Data marketing / prospection. Also operates Europrogres SAS
+  - id: solocal-marketing
+    name: Solocal Marketing Services
+    email: dpo@solocal.com
+    website: https://www.solocal.com
+    region: eu
+    category: marketing
+    notes: CNIL 900K EUR (2025). Bought data from brokers via jeux-concours sites
+  - id: europrogres
+    name: Europrogres SAS
+    email: dpo@base-plus.fr
+    website: https://www.europrogres.fr
+    region: eu
+    category: marketing
+    notes: Data brokering / prospection. Subsidiary of Base Plus SAS
+  - id: tinyclues
+    name: Tinyclues (Splio group)
+    email: dpo@tinyclues.com
+    website: https://www.tinyclues.com
+    region: eu
+    category: marketing
+    notes: AI-driven marketing, predictive audience targeting. Merged into Splio
+  - id: splio
+    name: Splio SAS
+    email: dpo@splio.com
+    website: https://splio.com
+    region: eu
+    category: marketing
+    notes: CRM/CDP/loyalty platform. Acquired Tinyclues. Paris
+  - id: batch
+    name: Batch
+    email: support@batch.com
+    website: https://batch.com
+    region: eu
+    category: marketing
+    notes: Push notification / mobile CRM platform. Paris
+  - id: citrusad
+    name: CitrusAd (Criteo group)
+    email: dpo@citrusad.com
+    website: https://citrusad.com
+    region: eu
+    category: marketing
+    notes: Retail media / sponsored product ads. Acquired by Criteo 2023
+  - id: ogury
+    name: Ogury
+    email: dpo@ogury.com
+    website: https://www.ogury.com
+    opt_out_url: https://www.ogury.com/choices/
+    region: eu
+    category: marketing
+    notes: Mobile advertising / attention platform. Paris
+  - id: teemo
+    name: Teemo
+    email: dpo@teemo.co
+    website: https://www.teemo.co
+    region: eu
+    category: marketing
+    notes: Performance marketing / drive-to-store. Paris. Location/behavioral data
+  - id: commanders-act
+    name: Commanders Act
+    email: dpo@commandersact.com
+    website: https://www.commandersact.com
+    region: eu
+    category: marketing
+    notes: Tag management / customer data platform. Paris
+  - id: eulerian
+    name: Eulerian Technologies
+    email: dpo@eulerian.com
+    website: https://www.eulerian.com
+    region: eu
+    category: marketing
+    notes: Attribution/analytics platform. Collects user journey data. Paris
+  - id: datadome
+    name: DataDome
+    email: dpo@datadome.co
+    website: https://www.datadome.co
+    region: eu
+    category: marketing
+    notes: Bot protection / fraud detection. Processes browsing behavioral data. Paris
+  - id: scibids
+    name: Scibids
+    email: dpo@scibids.com
+    website: https://www.scibids.com
+    region: eu
+    category: marketing
+    notes: AI for programmatic ad buying optimization. Paris
+  - id: mediaperformances
+    name: Mediaperformances
+    email: dpo@mediaperformances.com
+    website: https://www.mediaperformances.com
+    region: eu
+    category: marketing
+    notes: Lead generation via jeux-concours and product testing sites
+  - id: kadomi
+    name: Kadomi
+    email: dpo@kadomi.com
+    website: https://www.kadomi.com
+    region: eu
+    category: marketing
+    notes: B2B data enrichment and prospecting platform
+  - id: acxiom-france
+    name: Acxiom France
+    email: dpo.france@acxiom.com
+    website: https://www.acxiom.fr
+    opt_out_url: https://www.acxiom.fr/opt-out/
+    region: eu
+    category: marketing
+    notes: Global data broker. Consumer profiling for marketing
+  - id: oracle-data-cloud
+    name: Oracle Data Cloud (BlueKai)
+    email: privacy_ww@oracle.com
+    website: https://www.oracle.com/fr/data-cloud/
+    opt_out_url: https://www.oracle.com/fr/legal/privacy/preferences.html
+    region: eu
+    category: marketing
+    notes: DMP/data platform. BlueKai audience data marketplace
+  - id: the-trade-desk
+    name: The Trade Desk
+    email: privacy@thetradedesk.com
+    website: https://www.thetradedesk.com
+    opt_out_url: https://www.thetradedesk.com/privacy/your-choices
+    region: eu
+    category: marketing
+    notes: DSP with audience data partnerships. Partnered with Weborama in France
+  - id: liveramp-france
+    name: LiveRamp France
+    email: dpo@liveramp.com
+    website: https://liveramp.com
+    opt_out_url: https://liveramp.com/opt-out/
+    region: eu
+    category: marketing
+    notes: Identity resolution / data onboarding. Connects offline and online data
+
+  - id: quantcast
+    name: Quantcast
+    email: privacy@quantcast.com
+    website: https://www.quantcast.com
+    opt_out_url: https://www.quantcast.com/privacy/opt-out/
+    region: eu
+    category: marketing
+    notes: Audience measurement / behavioral profiling. Major French web traffic coverage
+  - id: mediametrie
+    name: Mediametrie
+    email: dpo@mediametrie.fr
+    website: https://www.mediametrie.fr
+    region: eu
+    category: marketing
+    notes: French audience measurement (TV, web, radio). Collects viewing/browsing data
+  - id: quantis
+    name: Quantis (formerly Mazeberry)
+    email: dpo@quantis.io
+    website: https://www.quantis.io
+    region: eu
+    category: marketing
+    notes: Attribution / marketing analytics. Collects user conversion data
+  - id: effilab
+    name: Effilab
+    email: dpo@effilab.com
+    website: https://www.effilab.com
+    region: eu
+    category: marketing
+    notes: Programmatic ad buying. SEM/SEO data collection. Paris
+  - id: cmi-france
+    name: CMI France
+    email: dpo@cmifrance.com
+    website: https://www.cmifrance.com
+    region: eu
+    category: marketing
+    notes: Ad sales house for Le Figaro group. Behavioral data for ad targeting
+  - id: le-figaro
+    name: Le Figaro (data division)
+    email: dpo@lefigaro.fr
+    website: https://www.lefigaro.fr
+    region: eu
+    category: marketing
+    notes: Major media. Collects reader behavioral data for ad targeting via CMI France
+  - id: pflb
+    name: Profitable (PFLB)
+    email: dpo@pflb.com
+    website: https://pflb.com
+    region: eu
+    category: marketing
+    notes: A/B testing and conversion optimization. Collects user behavior data
+
+# French data brokers - telecom
+  - id: orange-sa
+    name: Orange SA
+    email: dpo@orange.com
+    website: https://www.orange.fr
+    opt_out_url: https://www.orange.fr/donnees-personnelles
+    region: eu
+    category: telecom
+    notes: Major telecom. Collects usage/location/billing data. Advertising division
+  - id: sfr
+    name: SFR (Altice France)
+    email: dpo@sfr.fr
+    website: https://www.sfr.fr
+    opt_out_url: https://www.sfr.fr/donnees-personnelles
+    region: eu
+    category: telecom
+    notes: Altice group. Telecom data, advertising targeting capabilities
+  - id: bouygues-telecom
+    name: Bouygues Telecom
+    email: dpo@bouyguestelecom.fr
+    website: https://www.bouyguestelecom.fr
+    region: eu
+    category: telecom
+    notes: Telecom operator. Collects subscriber/usage data for marketing
+  - id: free-iliad
+    name: Free (Iliad)
+    email: dpo@free.fr
+    website: https://www.free.fr
+    region: eu
+    category: telecom
+    notes: Iliad group. Subscriber data collection for marketing/profiling
+
+# French data brokers - loyalty/insurance/identity
+  - id: titan-hive
+    name: Titan Hive
+    email: dpo@titanhive.com
+    website: https://www.titanhive.com
+    region: eu
+    category: loyalty
+    notes: Customer data / loyalty platform. French operations
+  - id: mediego
+    name: Mediego
+    email: dpo@mediego.com
+    website: https://www.mediego.com
+    region: eu
+    category: loyalty
+    notes: Personalized content recommendation for media/e-commerce
+  - id: yasna
+    name: Yasna
+    email: dpo@yasna.ai
+    website: https://www.yasna.ai
+    region: eu
+    category: loyalty
+    notes: Employee experience / survey platform. Collects personal data for analytics
+  - id: la-poste
+    name: La Poste
+    email: dpo@laposte.fr
+    website: https://www.laposte.fr
+    region: eu
+    category: loyalty
+    notes: Collects address/change-of-address data. Sells marketing data services
+  - id: data-publica
+    name: Data Publica
+    email: contact@data-publica.com
+    website: https://www.data-publica.com
+    region: eu
+    category: identity
+    notes: Open data aggregator. Public records, company data
+  - id: wizbii
+    name: Wizbii
+    email: dpo@wizbii.com
+    website: https://www.wizbii.com
+    region: eu
+    category: identity
+    notes: Youth banking/finance platform. Collects financial/identity data
+  - id: maif
+    name: MAIF
+    email: dpo@maif.fr
+    website: https://www.maif.fr
+    region: eu
+    category: insurance
+    notes: Insurance. Collects policyholder data for risk profiling
+
+# German data brokers
+  - id: creditreform
+    name: Verband der Vereine Creditreform e.V.
+    email: datenschutz@verband.creditreform.de
+    website: https://www.creditreform.com
+    opt_out_url: https://www.firmeneintrag.creditreform.de
+    region: eu
+    category: credit
+    notes: Major German credit bureau. Processes creditworthiness and marketing data
+  - id: riverty
+    name: Riverty Group GmbH (formerly Arvato Infoscore)
+    email: dataprotection@riverty.com
+    website: https://www.riverty.com
+    region: eu
+    category: credit
+    notes: Part of Bertelsmann. BNPL + debt collection
+  - id: eos-holding
+    name: EOS Holding GmbH
+    email: info@eos-solutions.com
+    website: https://www.eos-solutions.com
+    region: eu
+    category: credit
+    notes: Debt purchaser + collection. Part of Otto Group. 6000+ employees
+  - id: emetriq
+    name: emetriq GmbH
+    email: datenschutz@telekom.de
+    website: https://www.emetriq.com
+    opt_out_url: https://www.emetriq.com/datenschutz/
+    region: eu
+    category: marketing
+    notes: Telekom subsidiary. Largest German data pool for ad targeting
+  - id: 11880-solutions
+    name: 11880 Solutions AG
+    email: datenschutz@11880.com
+    website: https://www.11880.com
+    opt_out_url: https://www.11880.com/datenschutz
+    region: eu
+    category: people-search
+    notes: Directory assistance + people search. Also operates 11890, 11877
+  - id: meinestadt
+    name: Meinestadt.de GmbH
+    email: info@meinestadt.de
+    website: https://www.meinestadt.de
+    opt_out_url: https://www.meinestadt.de/datenschutzerklaerung
+    region: eu
+    category: people-search
+    notes: Local directory for all German cities. Jobs, real estate
+  - id: virtual-minds
+    name: Virtual Minds GmbH (Adition / Smart Ad)
+    email: data.privacy@virtualminds.com
+    website: https://www.virtualminds.de
+    opt_out_url: https://www.virtualminds.de/privacy/platform-privacy-policy/
+    region: eu
+    category: marketing
+    notes: Adtech platform. Formerly Adition Technologies. Ad serving + programmatic
+  - id: wer-liefert-was
+    name: Wer liefert was (wlw) GmbH
+    email: datenschutz@wlw.de
+    website: https://www.wlw.de
+    region: eu
+    category: people-search
+    notes: B2B supplier search directory. Lists company + contact data
+  - id: das-telefonbuch
+    name: Das Telefonbuch
+    email: datenschutz@dastelefonbuch.de
+    website: https://www.dastelefonbuch.de
+    opt_out_url: https://www.dastelefonbuch.de/unlisted
+    region: eu
+    category: people-search
+    notes: Primary German telephone directory. Run by Deutsche Telekom
+
+# Dutch data brokers
+  - id: bkr
+    name: Bureau Krediet Registratie (BKR)
+    email: privacy@bkr.nl
+    website: https://www.bkr.nl
+    opt_out_url: https://www.bkr.nl/uw-bsn-en-uw-gegevens
+    region: eu
+    category: credit
+    notes: Dutch central credit registration. Records all consumer loans
+  - id: spotler
+    name: Spotler Group B.V.
+    email: privacy@spotler.com
+    website: https://www.spotler.com
+    region: eu
+    category: marketing
+    notes: Email marketing + marketing automation. Formerly Copernica
+  - id: blueconic
+    name: BlueConic
+    email: info@blueconic.com
+    website: https://www.blueconic.com
+    opt_out_url: https://www.blueconic.com/privacy-policy/
+    region: eu
+    category: marketing
+    notes: Customer data platform. Founded in Netherlands. Processes EU user data
+  - id: telefoonboek
+    name: Telefoonboek.nl
+    email: info@telefoonboek.nl
+    website: https://www.telefoonboek.nl
+    region: eu
+    category: people-search
+    notes: Dutch phone directory / people search
+  - id: nationale-telefoongids
+    name: Nationale Telefoongids
+    email: info@nationaletelefoongids.nl
+    website: https://www.nationaletelefoongids.nl
+    region: eu
+    category: people-search
+    notes: Dutch national phone directory
+
+# Spanish data brokers
+  - id: asnef-equifax
+    name: ASNEF-Equifax Servicios de Informacion sobre Solvencia y Credito
+    email: dpo@equifax.es
+    website: https://www.equifax.es
+    opt_out_url: https://www.equifax.es/personas/solicitud-derechos
+    region: eu
+    category: credit
+    notes: Operates the ASNEF credit file. Joint venture ASNEF + Equifax
+  - id: asnef
+    name: ASNEF (Asociacion Nacional de Establecimientos Financieros de Credito)
+    email: dpd@asnef.com
+    website: https://asnef.com
+    region: eu
+    category: credit
+    notes: Trade association. Joint controller of ASNEF credit database with Equifax
+  - id: seedtag
+    name: Seedtag Advertising S.L.
+    email: gdpr@seedtag.com
+    website: https://www.seedtag.com
+    opt_out_url: https://www.seedtag.com/privacy/
+    region: eu
+    category: marketing
+    notes: Contextual advertising company. AI-powered ad targeting. Madrid
+  - id: fluzo
+    name: Fluzo S.L.
+    email: privacy@fluzo.com
+    website: https://www.fluzo.com
+    region: eu
+    category: marketing
+    notes: Spanish digital advertising + DOOH ad network
+  - id: paginasblancas
+    name: PaginasBlancas (QDQ Media)
+    email: protecciondedatos@qdigital.es
+    website: https://www.paginasblancas.es
+    region: eu
+    category: people-search
+    notes: Spanish white pages directory. Operated by QDQ Media
+  - id: qdq-media
+    name: QDQ Media S.L.
+    email: protecciondedatos@qdigital.es
+    website: https://www.qdq.com
+    region: eu
+    category: people-search
+    notes: Spanish business directory + local search
+
+# Italian data brokers
+  - id: cerved-group
+    name: Cerved Group S.p.A.
+    email: info@cerved.com
+    website: https://www.cerved.com
+    opt_out_url: https://www.cerved.com/privacy/
+    region: eu
+    category: credit
+    notes: Italy's largest credit bureau + business information provider
+  - id: experian-italy
+    name: Experian Italy S.p.A.
+    email: privacy.italy@experian.com
+    website: https://www.experian.it
+    region: eu
+    category: credit
+    notes: Italian subsidiary of Experian. Credit information + decision analytics
+  - id: mediamond
+    name: Mediamond S.p.A.
+    email: privacy@mediamond.it
+    website: https://www.mediamond.it
+    region: eu
+    category: marketing
+    notes: Italian digital advertising company. Ad network + programmatic
+  - id: paginebianche
+    name: PagineBianche (Seat Pagine Gialle S.p.A.)
+    email: privacy@paginebianche.it
+    website: https://www.paginebianche.it
+    region: eu
+    category: people-search
+    notes: Italian white pages phone directory
+  - id: virgilio
+    name: Virgilio (Italiaonline S.p.A.)
+    email: privacy@italiaonline.it
+    website: https://www.virgilio.it
+    region: eu
+    category: people-search
+    notes: Italian portal + search engine. Email, news, directory services
+
+# Belgian data brokers
+  - id: pages-dor
+    name: Pages d'Or / Gouden Gids (Truvo Belgium)
+    email: privacy@truvo.com
+    website: https://www.pagesdor.be
+    region: eu
+    category: people-search
+    notes: Belgian yellow/white pages directory
+  - id: nbb-credit
+    name: National Bank of Belgium - Central Credit Register
+    email: privacy@nbb.be
+    website: https://www.nbb.be
+    opt_out_url: https://www.nbb.be/en/central-credit-register/consult-your-file
+    region: eu
+    category: credit
+    notes: Operates Belgium's Central Credit Register. Records all consumer + mortgage loans
+  - id: selligent-cm
+    name: Selligent (CM.com)
+    email: privacy@cm.com
+    website: https://www.cm.com
+    region: eu
+    category: marketing
+    notes: Marketing automation platform. Now part of CM.com
+
+# Scandinavian data brokers
+  - id: creditsafe-sweden
+    name: Creditsafe Sweden AB
+    email: privacy@creditsafe.com
+    website: https://www.creditsafe.com
+    region: eu
+    category: credit
+    notes: Global credit information company. Swedish operations
+  - id: eniro
+    name: Eniro Sverige AB
+    email: dataskyddsombud@eniro.se
+    website: https://www.eniro.se
+    region: eu
+    category: people-search
+    notes: Swedish people + business search directory
+  - id: hitta-se
+    name: Hitta.se
+    email: kundtjanst@hitta.se
+    website: https://www.hitta.se
+    region: eu
+    category: people-search
+    notes: Swedish people search + business directory. Shows addresses, phone numbers
+
+# Irish data brokers
+  - id: airbnb-ireland
+    name: Airbnb Ireland UC
+    email: dpo@airbnb.com
+    website: https://www.airbnb.ie
+    opt_out_url: https://www.airbnb.ie/account-settings/privacy/consistent-ads
+    region: eu
+    category: marketing
+    notes: EU data controller entity for Airbnb. Processes booking + identity data
+  - id: stripe-europe
+    name: Stripe Payments Europe Ltd.
+    email: dpo@stripe.com
+    website: https://stripe.com
+    opt_out_url: https://stripe.com/privacy
+    region: eu
+    category: marketing
+    notes: EU payment processor. Controller for End User personal data
+  - id: experian-ireland
+    name: Experian Ireland DAC
+    email: privacy.ireland@experian.com
+    website: https://www.experian.ie
+    region: eu
+    category: credit
+    notes: Irish operations of Experian. Credit analytics + decisioning
+
+# Polish data brokers
+  - id: krd
+    name: KRD BIG S.A. (Krajowy Rejestr Dlugow)
+    email: iod@krd.pl
+    website: https://www.krd.pl
+    opt_out_url: https://konsument.krd.pl
+    region: eu
+    category: credit
+    notes: Polish national debt register. Credit bureau recording unpaid debts
+  - id: big-infomonitor
+    name: BIG InfoMonitor S.A.
+    email: iod@big.pl
+    website: https://www.big.pl
+    opt_out_url: https://www.big.pl/sprawdz-sie
+    region: eu
+    category: credit
+    notes: Polish economic information bureau. Consumer + business credit/debt database

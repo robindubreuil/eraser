@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"embed"
 	"fmt"
+	"strings"
 	"text/template"
 	"time"
 
@@ -59,7 +60,7 @@ func NewEngine() (*Engine, error) {
 		templates: make(map[string]*template.Template),
 	}
 
-	templateNames := []string{"gdpr", "ccpa", "generic"}
+	templateNames := []string{"gdpr", "gdpr-fr", "ccpa", "generic"}
 	for _, name := range templateNames {
 		content, err := embeddedTemplates.ReadFile("templates/" + name + ".tmpl")
 		if err != nil {
@@ -124,6 +125,8 @@ func (e *Engine) getSubject(templateName string) string {
 	switch templateName {
 	case "gdpr":
 		return "GDPR Data Erasure Request - Article 17 Right to Erasure"
+	case "gdpr-fr":
+		return "Demande d'effacement de donnees - Article 17 RGPD"
 	case "ccpa":
 		return "CCPA Data Deletion Request - Right to Delete Personal Information"
 	default:
@@ -138,4 +141,37 @@ func (e *Engine) AvailableTemplates() []string {
 		templates = append(templates, name)
 	}
 	return templates
+}
+
+// TemplateForRegion returns the best template name for a given broker region
+// and user locale. It selects based on:
+//   - EU region + FR locale → gdpr-fr
+//   - EU/UK region → gdpr
+//   - US region → ccpa
+//   - global or unknown → generic
+//
+// If the user has explicitly set a template in config, that takes precedence.
+func TemplateForRegion(brokerRegion, userLocale, configTemplate string) string {
+	if configTemplate != "" && configTemplate != "auto" {
+		return configTemplate
+	}
+
+	r := strings.ToLower(strings.TrimSpace(brokerRegion))
+	l := strings.ToLower(strings.TrimSpace(userLocale))
+
+	switch r {
+	case "eu":
+		if strings.HasPrefix(l, "fr") {
+			return "gdpr-fr"
+		}
+		return "gdpr"
+	case "uk":
+		return "gdpr"
+	case "us":
+		return "ccpa"
+	case "global":
+		return "generic"
+	default:
+		return "generic"
+	}
 }

@@ -187,7 +187,8 @@ func runSend(resume bool) error {
 
 		fmt.Printf("[%d/%d] %s (%s)\n", i+1, len(brokers), b.Name, b.Email)
 
-		emailMsg, err := tmplEngine.Render(cfg.Options.Template, cfg.Profile, b)
+		tmplName := template.TemplateForRegion(b.Region, cfg.Options.Locale, cfg.Options.Template)
+		emailMsg, err := tmplEngine.Render(tmplName, cfg.Profile, b)
 		if err != nil {
 			fmt.Printf("  Failed to render template: %v\n", err)
 			state.Failed++
@@ -215,7 +216,7 @@ func runSend(resume bool) error {
 				BrokerID:   b.ID,
 				BrokerName: b.Name,
 				Email:      b.Email,
-				Template:   cfg.Options.Template,
+				Template:   tmplName,
 				SentAt:     time.Now(),
 			}
 

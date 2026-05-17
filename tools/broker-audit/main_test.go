@@ -398,6 +398,7 @@ func TestAuditReportJSON(t *testing.T) {
 	rpt := &AuditReport{
 		Timestamp:       ts,
 		OurBrokerCount:  5,
+		EUBrokerCount:   2,
 		CPPABrokerCount: 100,
 		CPPAMatched:     3,
 		CPPAMissing:     97,
@@ -503,6 +504,7 @@ func TestPrintReportNoPanic(t *testing.T) {
 	rpt := &AuditReport{
 		Timestamp:       time.Now().UTC().Format(time.RFC3339),
 		OurBrokerCount:  2,
+		EUBrokerCount:   1,
 		CPPABrokerCount: 10,
 		CPPAMatched:     1,
 		CPPAMissing:     9,

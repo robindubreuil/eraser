@@ -85,6 +85,7 @@ type SMTPConfig struct {
 
 type Options struct {
 	Template        string   `yaml:"template"`
+	Locale          string   `yaml:"locale,omitempty"`
 	DryRun          bool     `yaml:"dry_run"`
 	RateLimitMs     int      `yaml:"rate_limit_ms"`
 	Regions         []string `yaml:"regions"`
@@ -115,7 +116,7 @@ func Load(path string) (*Config, error) {
 	}
 
 	if cfg.Options.Template == "" {
-		cfg.Options.Template = "generic"
+		cfg.Options.Template = "auto"
 	}
 	if cfg.Options.RateLimitMs == 0 {
 		cfg.Options.RateLimitMs = defaultRateLimitMs

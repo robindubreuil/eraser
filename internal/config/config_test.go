@@ -89,11 +89,45 @@ email:
 		if err != nil {
 			t.Fatal(err)
 		}
-		if cfg.Options.Template != "generic" {
-			t.Errorf("default Template = %q, want %q", cfg.Options.Template, "generic")
+		if cfg.Options.Template != "auto" {
+			t.Errorf("default Template = %q, want %q", cfg.Options.Template, "auto")
 		}
 		if cfg.Options.RateLimitMs != defaultRateLimitMs {
 			t.Errorf("default RateLimitMs = %d, want %d", cfg.Options.RateLimitMs, defaultRateLimitMs)
+		}
+	})
+
+	t.Run("locale field parsed", func(t *testing.T) {
+		dir := t.TempDir()
+		path := filepath.Join(dir, "config.yaml")
+		yaml := `profile:
+  first_name: Jean
+  last_name: Dupont
+  email: jean@example.com
+email:
+  provider: smtp
+  from: jean@example.com
+  smtp:
+    host: smtp.example.com
+    port: 587
+options:
+  template: auto
+  locale: fr
+  regions:
+    - eu
+`
+		if err := os.WriteFile(path, []byte(yaml), 0600); err != nil {
+			t.Fatal(err)
+		}
+		cfg, err := Load(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if cfg.Options.Locale != "fr" {
+			t.Errorf("Locale = %q, want %q", cfg.Options.Locale, "fr")
+		}
+		if cfg.Options.Template != "auto" {
+			t.Errorf("Template = %q, want %q", cfg.Options.Template, "auto")
 		}
 	})
 

@@ -12,6 +12,46 @@ import (
 	"github.com/robindubreuil/eraser/internal/email"
 )
 
+func countryToLocale(country string) string {
+	c := strings.ToLower(strings.TrimSpace(country))
+	switch c {
+	case "france", "fr":
+		return "fr"
+	case "belgium", "be", "belgique":
+		return "fr-be"
+	case "switzerland", "ch", "suisse":
+		return "fr-ch"
+	case "luxembourg", "lu":
+		return "fr-lu"
+	case "germany", "de", "allemagne":
+		return "de"
+	case "spain", "es", "espagne":
+		return "es"
+	case "italy", "it", "italie":
+		return "it"
+	case "netherlands", "nl", "pays-bas":
+		return "nl"
+	case "united kingdom", "uk", "gb", "royaume-uni":
+		return "en-gb"
+	case "united states", "us", "usa", "etats-unis":
+		return "en-us"
+	case "canada":
+		return "en-ca"
+	case "poland", "pl", "pologne":
+		return "pl"
+	case "sweden", "se", "suede":
+		return "sv"
+	case "ireland", "ie", "irlande":
+		return "en-ie"
+	case "portugal", "pt":
+		return "pt"
+	case "brazil", "br", "bresil":
+		return "pt-br"
+	default:
+		return ""
+	}
+}
+
 func (s *Server) handleSetupWelcome(w http.ResponseWriter, r *http.Request) { //nolint:revive
 	data := map[string]interface{}{
 		"Title": "Setup",
@@ -266,7 +306,8 @@ func (s *Server) handleSetupComplete(w http.ResponseWriter, r *http.Request) {
 		Profile: session.Profile,
 		Email:   session.Email,
 		Options: config.Options{
-			Template:    "generic",
+			Template:    "auto",
+			Locale:      countryToLocale(session.Profile.Country),
 			RateLimitMs: 2000,
 		},
 	}

@@ -394,6 +394,40 @@ func TestHandleAPIDeleteFailed(t *testing.T) {
 	})
 }
 
+func TestCountryToLocale(t *testing.T) {
+	tests := []struct {
+		country string
+		want    string
+	}{
+		{"France", "fr"},
+		{"fr", "fr"},
+		{"Belgium", "fr-be"},
+		{"Switzerland", "fr-ch"},
+		{"Luxembourg", "fr-lu"},
+		{"Germany", "de"},
+		{"Spain", "es"},
+		{"Italy", "it"},
+		{"Netherlands", "nl"},
+		{"United Kingdom", "en-gb"},
+		{"uk", "en-gb"},
+		{"United States", "en-us"},
+		{"Poland", "pl"},
+		{"Sweden", "sv"},
+		{"Ireland", "en-ie"},
+		{"Brazil", "pt-br"},
+		{"", ""},
+		{"Unknown", ""},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.country, func(t *testing.T) {
+			got := countryToLocale(tt.country)
+			if got != tt.want {
+				t.Errorf("countryToLocale(%q) = %q, want %q", tt.country, got, tt.want)
+			}
+		})
+	}
+}
 func TestRateLimiter_Boundary(t *testing.T) {
 	tests := []struct {
 		name   string

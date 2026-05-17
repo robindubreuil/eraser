@@ -61,14 +61,19 @@ func runInit() error {
 	cfg.Email.SMTP.Password = prompt(reader, "  App password (16-character code): ")
 
 	fmt.Println()
-	fmt.Println("⚙️  Options")
+	fmt.Println("Options")
 	fmt.Println()
 
-	templateChoice := prompt(reader, "Default template (gdpr/ccpa/generic) [generic]: ")
+	templateChoice := prompt(reader, "Template mode (auto/gdpr/gdpr-fr/ccpa/generic) [auto]: ")
 	if templateChoice == "" {
-		templateChoice = "generic"
+		templateChoice = "auto"
 	}
 	cfg.Options.Template = templateChoice
+
+	localeChoice := prompt(reader, "Locale (fr/en/de/es/it/nl/...) [auto-detect from country]: ")
+	if localeChoice != "" {
+		cfg.Options.Locale = localeChoice
+	}
 	cfg.Options.RateLimitMs = 2000
 
 	configPath := resolveConfigPath()

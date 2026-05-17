@@ -2,13 +2,13 @@
 
 > **Maintained fork** of [eraser-privacy/eraser](https://github.com/eraser-privacy/eraser) by Robin Dubreuil.
 
-Take back your privacy. Eraser sends data removal requests to **903 data brokers** on your behalf—for free.
+Take back your privacy. Eraser sends data removal requests to **1,001 data brokers** on your behalf—for free.
 
 You know those sites like Spokeo, BeenVerified, and Whitepages that have your home address, phone number, and family members' names? They're called data brokers, and there are hundreds of them. Services like Incogni and DeleteMe charge $100+/year to send opt-out requests to these companies. Eraser does the same thing, but it's open source and completely free.
 
 ### What to Expect
 
-**The good:** Eraser automatically sends removal request emails to 903 data brokers across the US, UK, EU, and global regions. Many brokers process these requests automatically—you send the email, they remove your data, done.
+**The good:** Eraser automatically sends removal request emails to 1,001 data brokers across the US, UK, EU, and global regions. Many brokers process these requests automatically—you send the email, they remove your data, done.
 
 **The reality:** Some brokers require additional steps. They might send you a confirmation link to click, ask you to fill out a form on their website, or request identity verification. Eraser tracks these responses and shows you exactly what needs manual attention.
 
@@ -52,7 +52,7 @@ The wizard walks you through entering your personal information (the data broker
 **Step 4: Send Removal Requests**
 
 From the dashboard, you can:
-- Browse the list of 903 data brokers
+- Browse the list of 1,001 data brokers
 - Send requests one at a time or in bulk
 - Track which requests have been sent and their status
 
@@ -111,7 +111,7 @@ go build -o eraser ./cmd/eraser
 | `eraser init` | Interactive config setup |
 | `eraser send` | Send removal requests |
 | `eraser send --dry-run` | Preview without sending |
-| `eraser list-brokers` | Show all 903 brokers |
+| `eraser list-brokers` | Show all 1,001 brokers |
 | `eraser status` | View history and stats |
 | `eraser status --limit 50` | Show more history |
 | `eraser add-broker` | Add a custom broker |
@@ -148,13 +148,14 @@ email:
     use_tls: true
 
 options:
-  template: generic  # or "gdpr" or "ccpa"
+  template: auto  # auto-selects based on broker region (gdpr/ccpa/gdpr-fr/generic)
+  locale: fr      # your locale (fr, en, de, es, it, nl, ...) — auto-detected from country
   rate_limit_ms: 2000  # delay between emails
 
   # Optional: only target specific regions
-  # regions:
-  #   - us
-  #   - global
+  regions:
+    - eu
+    - uk
 
   # Optional: skip specific brokers
   # excluded_brokers:
@@ -164,13 +165,18 @@ options:
 
 ### Email Templates
 
-Eraser includes three templates:
+Eraser includes four templates, with **auto-selection** based on broker region and your locale:
 
-- **GDPR** — Invokes Article 17 "Right to Erasure" under EU law
-- **CCPA** — Invokes California Consumer Privacy Act rights
-- **Generic** — References multiple privacy laws, works anywhere
+- **GDPR** — Articles 17, 19, 21, 77; references relevant supervisory authority
+- **GDPR-FR** — French-language GDPR template citing RGPD, Loi Informatique et Libertes, CNIL, ePrivacy
+- **CCPA** — California Consumer Privacy Act / CPRA rights
+- **Generic** — References GDPR, CCPA, UK GDPR, LGPD, PIPEDA — works globally
 
-The generic template is a good default if you're not sure.
+With `template: auto`, Eraser automatically selects:
+- **EU brokers + French locale** → GDPR-FR template
+- **EU/UK brokers** → GDPR template
+- **US brokers** → CCPA template
+- **Global/other** → Generic template
 
 ### Adding Brokers
 
@@ -196,13 +202,13 @@ Or use the interactive command:
 
 ## Broker Database
 
-The broker database covers **903 data brokers** across 4 regions and 7 categories:
+The broker database covers **1,001 data brokers** across 4 regions and 9 categories:
 
 | Region | Count |
 |--------|-------|
 | US | 839 |
+| EU | 117 |
 | UK | 31 |
-| EU | 19 |
 | Global | 14 |
 
 | Category | Description |
@@ -211,12 +217,15 @@ The broker database covers **903 data brokers** across 4 regions and 7 categorie
 | people-search | People-search directories |
 | background-check | Background check and screening services |
 | credit | Credit reporting and financial data |
-| ad-tech | Advertising technology platforms |
-| financial | Financial data aggregators |
 | identity | Identity verification and lookup services |
+| financial | Financial data aggregators |
+| telecom | Telecommunications data |
+| loyalty | Customer data / loyalty platforms |
+| insurance | Insurance data |
 
-- **92% opt-out URL coverage** (832/903 brokers)
+- **86.5% opt-out URL coverage** (866/1,001 brokers)
 - **98%+ coverage** of the CA CPPA registry
+- **117 EU brokers** including France, Germany, Spain, Italy, Netherlands, Belgium, Scandinavia, Ireland, Poland
 - **Weekly CI validation with quality gates** to catch stale emails and broken links
 
 ---
@@ -251,7 +260,7 @@ Yes, with caveats:
 - **It's not instant.** Brokers have up to 30-45 days to process requests (varies by law). Some are faster.
 - **You'll need to repeat this.** Data brokers buy and sell data continuously. Running Eraser monthly keeps you off their lists.
 
-**The Pipeline view** in Eraser's web UI shows you exactly which brokers need manual attention. It's not fully automated, but it's free—and it does the tedious work of sending 903 emails and tracking responses for you.
+**The Pipeline view** in Eraser's web UI shows you exactly which brokers need manual attention. It's not fully automated, but it's free—and it does the tedious work of sending 1,001 emails and tracking responses for you.
 
 ---
 
@@ -259,7 +268,7 @@ Yes, with caveats:
 
 | Service | Price | Brokers | Open Source |
 |---------|-------|---------|-------------|
-| **Eraser** *(this fork)* | Free | 903 | Yes |
+| **Eraser** *(this fork)* | Free | 1,001 | Yes |
 | Incogni | $77/year | 180+ | No |
 | DeleteMe | $129/year | 750+ | No |
 | Privacy Duck | $500+/year | 500+ | No |
@@ -270,15 +279,15 @@ Yes, with caveats:
 
 | Package | Coverage |
 |---------|----------|
-| cmd/eraser | 6.1% |
+| cmd/eraser | 6.0% |
 | broker | 91.8% |
-| config | 93.0% |
+| config | 91.5% |
 | email | 89.9% |
 | history | 86.2% |
 | inbox | 60.3% |
-| template | 89.7% |
-| web | 76.3% |
-| broker-audit | 68.2% |
+| template | 92.9% |
+| web | 76.0% |
+| broker-audit | 67.2% |
 
 ---
 
@@ -346,6 +355,7 @@ eraser/
 │   │   └── templates/
 │   │       ├── ccpa.tmpl
 │   │       ├── gdpr.tmpl
+│   │       ├── gdpr-fr.tmpl
 │   │       └── generic.tmpl
 │   └── web/                       # Web UI
 │       ├── server.go              # Server setup and routing
@@ -364,7 +374,7 @@ eraser/
 ├── tools/broker-audit/            # Broker validation tooling
 │   ├── main.go
 │   └── main_test.go
-├── data/brokers.yaml              # 903 broker database
+├── data/brokers.yaml              # 1,001 broker database
 ├── .github/workflows/             # CI: broker-validation (weekly), ci
 ├── .golangci.yml                  # Linter config
 ├── go.mod

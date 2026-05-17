@@ -8,6 +8,8 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
 
@@ -62,6 +64,11 @@ jobs:
               optout_pct = (total - missing_optout) / total * 100
               if optout_pct < 70:
                   errors.append(f'Opt-out URL coverage {optout_pct:.1f}% < 70% threshold')
+          
+          # EU broker minimum > 80
+          eu_brokers = r.get('eu_broker_count', 0)
+          if eu_brokers < 80:
+              errors.append(f'EU broker count {eu_brokers} < 80 threshold')
           
           if errors:
               print('QUALITY GATE FAILED:')

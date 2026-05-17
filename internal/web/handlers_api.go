@@ -13,6 +13,7 @@ import (
 
 	"github.com/robindubreuil/eraser/internal/email"
 	"github.com/robindubreuil/eraser/internal/history"
+	"github.com/robindubreuil/eraser/internal/template"
 )
 
 func (s *Server) handleAPIStats(w http.ResponseWriter, r *http.Request) { //nolint:revive
@@ -99,7 +100,8 @@ func (s *Server) handleAPISendOne(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rendered, err := s.tmplEngine.Render("generic", s.config.Profile, *br)
+	tmplName := template.TemplateForRegion(br.Region, s.config.Options.Locale, s.config.Options.Template)
+	rendered, err := s.tmplEngine.Render(tmplName, s.config.Profile, *br)
 	if err != nil {
 		s.renderPartial(w, "partials/send-status.html", map[string]interface{}{
 			"Status": "template-error",
@@ -124,7 +126,7 @@ func (s *Server) handleAPISendOne(w http.ResponseWriter, r *http.Request) {
 		BrokerID:   br.ID,
 		BrokerName: br.Name,
 		Email:      br.Email,
-		Template:   "generic",
+		Template:   tmplName,
 		SentAt:     time.Now(),
 	}
 
@@ -270,7 +272,8 @@ func (s *Server) processSendJob(job *Job, toSend []BrokerWithStatus, sender emai
 
 		job.Update(sent, failed, b.Name)
 
-		rendered, err := s.tmplEngine.Render("generic", s.config.Profile, b.Broker)
+		tmplName := template.TemplateForRegion(b.Region, s.config.Options.Locale, s.config.Options.Template)
+		rendered, err := s.tmplEngine.Render(tmplName, s.config.Profile, b.Broker)
 		if err != nil {
 			failed++
 			job.Update(sent, failed, b.Name)
@@ -294,7 +297,7 @@ func (s *Server) processSendJob(job *Job, toSend []BrokerWithStatus, sender emai
 			BrokerID:   b.ID,
 			BrokerName: b.Name,
 			Email:      b.Email,
-			Template:   "generic",
+			Template:   tmplName,
 			SentAt:     time.Now(),
 		}
 
